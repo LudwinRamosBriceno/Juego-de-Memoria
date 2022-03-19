@@ -1,8 +1,5 @@
 #include "game.h"
-#include "./ui_game.h"
-
-#include <iostream>
-using namespace std;
+#include "ui_game.h"
 
 Game::Game(QWidget *parent)
     : QMainWindow(parent)
