@@ -1,0 +1,35 @@
+Performing C++ SOURCE FILE Test CMAKE_HAVE_LIBC_PTHREAD failed with the following output:
+Change Dir: /home/ludwinr/Escritorio/Proyectos/Proyecto 1/Juego-de-Memoria/build-JuegoMemoria-Desktop_Qt_6_2_3_GCC_64bit-Debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/home/ludwinr/Qt/Tools/Ninja/ninja cmTC_b6375 && [1/2] Building CXX object CMakeFiles/cmTC_b6375.dir/src.cxx.o
+[2/2] Linking CXX executable cmTC_b6375
+FAILED: cmTC_b6375 
+: && /usr/bin/clang++  -DCMAKE_HAVE_LIBC_PTHREAD   CMakeFiles/cmTC_b6375.dir/src.cxx.o  -o cmTC_b6375   && :
+/usr/bin/ld: CMakeFiles/cmTC_b6375.dir/src.cxx.o: en la función `main':
+src.cxx:(.text+0x35): referencia a `pthread_create' sin definir
+/usr/bin/ld: src.cxx:(.text+0x41): referencia a `pthread_detach' sin definir
+/usr/bin/ld: src.cxx:(.text+0x53): referencia a `pthread_join' sin definir
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+ninja: build stopped: subcommand failed.
+
+
+Source file was:
+#include <pthread.h>
+
+void* test_func(void* data)
+{
+  return data;
+}
+
+int main(void)
+{
+  pthread_t thread;
+  pthread_create(&thread, NULL, test_func, NULL);
+  pthread_detach(thread);
+  pthread_join(thread, NULL);
+  pthread_atfork(NULL, NULL, NULL);
+  pthread_exit(NULL);
+
+  return 0;
+}
+

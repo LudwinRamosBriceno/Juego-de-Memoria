@@ -1,0 +1,4 @@
+/home/ludwinr/Escritorio/Proyectos/Proyecto 1/Juego-de-Memoria/build-JuegoMemoria-Desktop_Qt_6_2_3_GCC_64bit-Debug/CMakeFiles/edit_cache.dir
+/home/ludwinr/Escritorio/Proyectos/Proyecto 1/Juego-de-Memoria/build-JuegoMemoria-Desktop_Qt_6_2_3_GCC_64bit-Debug/CMakeFiles/rebuild_cache.dir
+/home/ludwinr/Escritorio/Proyectos/Proyecto 1/Juego-de-Memoria/build-JuegoMemoria-Desktop_Qt_6_2_3_GCC_64bit-Debug/CMakeFiles/JuegoMemoria.dir
+/home/ludwinr/Escritorio/Proyectos/Proyecto 1/Juego-de-Memoria/build-JuegoMemoria-Desktop_Qt_6_2_3_GCC_64bit-Debug/CMakeFiles/JuegoMemoria_autogen.dir

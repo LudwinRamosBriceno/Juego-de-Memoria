@@ -1,0 +1,81 @@
+{
+	"BUILD_DIR" : "/home/ludwinr/Escritorio/Proyectos/Proyecto 1/Juego-de-Memoria/build-JuegoMemoria-Desktop_Qt_6_2_3_GCC_64bit-Debug/JuegoMemoria_autogen",
+	"CMAKE_BINARY_DIR" : "/home/ludwinr/Escritorio/Proyectos/Proyecto 1/Juego-de-Memoria/build-JuegoMemoria-Desktop_Qt_6_2_3_GCC_64bit-Debug",
+	"CMAKE_CURRENT_BINARY_DIR" : "/home/ludwinr/Escritorio/Proyectos/Proyecto 1/Juego-de-Memoria/build-JuegoMemoria-Desktop_Qt_6_2_3_GCC_64bit-Debug",
+	"CMAKE_CURRENT_SOURCE_DIR" : "/home/ludwinr/Escritorio/Proyectos/Proyecto 1/Juego-de-Memoria/JuegoMemoria",
+	"CMAKE_EXECUTABLE" : "/usr/bin/cmake",
+	"CMAKE_SOURCE_DIR" : "/home/ludwinr/Escritorio/Proyectos/Proyecto 1/Juego-de-Memoria/JuegoMemoria",
+	"HEADERS" : 
+	[
+		[
+			"/home/ludwinr/Escritorio/Proyectos/Proyecto 1/Juego-de-Memoria/JuegoMemoria/game.h",
+			"MU",
+			"EWIEGA46WW/moc_game.cpp"
+		]
+	],
+	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
+	"INCLUDE_DIR" : "/home/ludwinr/Escritorio/Proyectos/Proyecto 1/Juego-de-Memoria/build-JuegoMemoria-Desktop_Qt_6_2_3_GCC_64bit-Debug/JuegoMemoria_autogen/include",
+	"MOC_COMPILATION_FILE" : "/home/ludwinr/Escritorio/Proyectos/Proyecto 1/Juego-de-Memoria/build-JuegoMemoria-Desktop_Qt_6_2_3_GCC_64bit-Debug/JuegoMemoria_autogen/mocs_compilation.cpp",
+	"MOC_DEFINITIONS" : [ "QT_CORE_LIB", "QT_GUI_LIB", "QT_WIDGETS_LIB" ],
+	"MOC_DEPEND_FILTERS" : 
+	[
+		[
+			"Q_PLUGIN_METADATA",
+			"[\n][ \t]*Q_PLUGIN_METADATA[ \t]*\\([^\\)]*FILE[ \t]*\"([^\"]+)\""
+		]
+	],
+	"MOC_INCLUDES" : 
+	[
+		"/home/ludwinr/Escritorio/Proyectos/Proyecto 1/Juego-de-Memoria/build-JuegoMemoria-Desktop_Qt_6_2_3_GCC_64bit-Debug",
+		"/home/ludwinr/Escritorio/Proyectos/Proyecto 1/Juego-de-Memoria/JuegoMemoria",
+		"/home/ludwinr/Qt/6.2.3/gcc_64/include/QtCore",
+		"/home/ludwinr/Qt/6.2.3/gcc_64/include",
+		"/home/ludwinr/Qt/6.2.3/gcc_64/mkspecs/linux-g++",
+		"/home/ludwinr/Qt/6.2.3/gcc_64/include/QtWidgets",
+		"/home/ludwinr/Qt/6.2.3/gcc_64/include/QtGui",
+		"/usr/include",
+		"/usr/include/c++/9",
+		"/usr/include/x86_64-linux-gnu/c++/9",
+		"/usr/include/c++/9/backward",
+		"/usr/local/include",
+		"/usr/lib/llvm-10/lib/clang/10.0.0/include",
+		"/usr/include/x86_64-linux-gnu"
+	],
+	"MOC_MACRO_NAMES" : [ "Q_OBJECT", "Q_GADGET", "Q_NAMESPACE", "Q_NAMESPACE_EXPORT" ],
+	"MOC_OPTIONS" : [],
+	"MOC_PATH_PREFIX" : true,
+	"MOC_PREDEFS_CMD" : 
+	[
+		"/usr/bin/clang++",
+		"-dM",
+		"-E",
+		"-c",
+		"/usr/share/cmake-3.16/Modules/CMakeCXXCompilerABI.cpp"
+	],
+	"MOC_PREDEFS_FILE" : "/home/ludwinr/Escritorio/Proyectos/Proyecto 1/Juego-de-Memoria/build-JuegoMemoria-Desktop_Qt_6_2_3_GCC_64bit-Debug/JuegoMemoria_autogen/moc_predefs.h",
+	"MOC_RELAXED_MODE" : false,
+	"MOC_SKIP" : [],
+	"MULTI_CONFIG" : false,
+	"PARALLEL" : 1,
+	"PARSE_CACHE_FILE" : "/home/ludwinr/Escritorio/Proyectos/Proyecto 1/Juego-de-Memoria/build-JuegoMemoria-Desktop_Qt_6_2_3_GCC_64bit-Debug/CMakeFiles/JuegoMemoria_autogen.dir/ParseCache.txt",
+	"QT_MOC_EXECUTABLE" : "/home/ludwinr/Qt/6.2.3/gcc_64/./libexec/moc",
+	"QT_UIC_EXECUTABLE" : "/home/ludwinr/Qt/6.2.3/gcc_64/./libexec/uic",
+	"QT_VERSION_MAJOR" : 6,
+	"SETTINGS_FILE" : "/home/ludwinr/Escritorio/Proyectos/Proyecto 1/Juego-de-Memoria/build-JuegoMemoria-Desktop_Qt_6_2_3_GCC_64bit-Debug/CMakeFiles/JuegoMemoria_autogen.dir/AutogenUsed.txt",
+	"SOURCES" : 
+	[
+		[
+			"/home/ludwinr/Escritorio/Proyectos/Proyecto 1/Juego-de-Memoria/JuegoMemoria/game.cpp",
+			"MU"
+		],
+		[
+			"/home/ludwinr/Escritorio/Proyectos/Proyecto 1/Juego-de-Memoria/JuegoMemoria/main.cpp",
+			"MU"
+		]
+	],
+	"UIC_OPTIONS" : [],
+	"UIC_SEARCH_PATHS" : [],
+	"UIC_SKIP" : [],
+	"UIC_UI_FILES" : [],
+	"VERBOSITY" : 0
+}
