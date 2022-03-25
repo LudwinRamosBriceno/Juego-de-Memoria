@@ -2,7 +2,6 @@
 #define GAME_H
 
 #include <QMainWindow>
-#include <QTcpServer>
 #include <QTcpSocket>
 
 QT_BEGIN_NAMESPACE
@@ -17,10 +16,13 @@ public:
     Game(QWidget *parent = nullptr);
     ~Game();
 
+private slots:
+    void on_buttonComenzar_clicked();
+    void leer_mensaje();
+
 private:
     Ui::Game *ui;
-    QTcpServer server;
-    QTcpSocket socket;
+    QTcpSocket *socket;
 
 };
 #endif // GAME_H
