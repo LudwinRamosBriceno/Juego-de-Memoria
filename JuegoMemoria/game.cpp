@@ -15,7 +15,7 @@ void Game::on_buttonComenzar_clicked() {
     QString jugador2 = QString(ui->textJugador2->text());
 
     if (jugador1 !="" && jugador2 !="" && jugador1.length()<11 && jugador2.length()<11){
-        QString nombresJugadores = jugador1+","+jugador2;
+        QString nombresJugadores = "iniciar,"+jugador1+","+jugador2;
         socket->write(nombresJugadores.toUtf8().constData(),nombresJugadores.size());
     }
     else{

@@ -29,11 +29,10 @@ void Servidor::leer_mensaje(){
     socket->read(bufferMensaje.data(),bufferMensaje.size()); // se guarda la información en bufferMensaje.
 
     if (QString(bufferMensaje).contains("iniciar")){
-        qDebug()<<"si";
-        //QString mensaje ="nombres";
+
+
         //socket->write(mensaje.toUtf8().constData(),mensaje.size());
     }
-    qDebug()<<"no";
 }
 
 void Servidor::setNombresJugadores(){

@@ -52,15 +52,13 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = ../JuegoMemoria/buildermatriz.cpp \
-		../JuegoMemoria/informacioncliente.cpp \
+SOURCES       = ../JuegoMemoria/informacioncliente.cpp \
 		../JuegoMemoria/main.cpp \
 		../JuegoMemoria/game.cpp \
 		../JuegoMemoria/servidor.cpp qrc_qmake_qmake_qm_files.cpp \
 		moc_game.cpp \
 		moc_servidor.cpp
-OBJECTS       = buildermatriz.o \
-		informacioncliente.o \
+OBJECTS       = informacioncliente.o \
 		main.o \
 		game.o \
 		servidor.o \
@@ -319,11 +317,9 @@ DIST          = /home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/spec_pre.prf \
 		/home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/exceptions.prf \
 		/home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/yacc.prf \
 		/home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/lex.prf \
-		../JuegoMemoria/JuegoMemoria.pro ../JuegoMemoria/buildermatriz.h \
-		../JuegoMemoria/game.h \
+		../JuegoMemoria/JuegoMemoria.pro ../JuegoMemoria/game.h \
 		../JuegoMemoria/informacioncliente.h \
-		../JuegoMemoria/servidor.h ../JuegoMemoria/buildermatriz.cpp \
-		../JuegoMemoria/informacioncliente.cpp \
+		../JuegoMemoria/servidor.h ../JuegoMemoria/informacioncliente.cpp \
 		../JuegoMemoria/main.cpp \
 		../JuegoMemoria/game.cpp \
 		../JuegoMemoria/servidor.cpp
@@ -872,8 +868,8 @@ distdir: FORCE
 	$(COPY_FILE) --parents ../JuegoMemoria/JuegoMemoria_es_419.ts $(DISTDIR)/
 	$(COPY_FILE) --parents qmake_qmake_qm_files.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../JuegoMemoria/buildermatriz.h ../JuegoMemoria/game.h ../JuegoMemoria/informacioncliente.h ../JuegoMemoria/servidor.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../JuegoMemoria/buildermatriz.cpp ../JuegoMemoria/informacioncliente.cpp ../JuegoMemoria/main.cpp ../JuegoMemoria/game.cpp ../JuegoMemoria/servidor.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../JuegoMemoria/game.h ../JuegoMemoria/informacioncliente.h ../JuegoMemoria/servidor.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../JuegoMemoria/informacioncliente.cpp ../JuegoMemoria/main.cpp ../JuegoMemoria/game.cpp ../JuegoMemoria/servidor.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../JuegoMemoria/game.ui $(DISTDIR)/
 	$(COPY_FILE) --parents ../JuegoMemoria/JuegoMemoria_es_419.ts $(DISTDIR)/
 
@@ -1052,14 +1048,12 @@ moc_game.cpp: ../JuegoMemoria/game.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qnativeinterface.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qtabwidget.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qicon.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/QTcpServer \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/qtcpserver.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/QTcpSocket \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/qtcpsocket.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/qtnetworkglobal.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/qtnetwork-config.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/qabstractsocket.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/qhostaddress.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/QTcpSocket \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/qtcpsocket.h \
 		moc_predefs.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/libexec/moc
 	/home/ludwinr/Qt/6.2.4/gcc_64/libexec/moc $(DEFINES) --include '/home/ludwinr/Escritorio/Proyectos/Proyecto 1/Juego-de-Memoria/build-JuegoMemoria-Desktop_Qt_6_2_4_GCC_64bit-Debug/moc_predefs.h' -I/home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/linux-g++ -I'/home/ludwinr/Escritorio/Proyectos/Proyecto 1/Juego-de-Memoria/JuegoMemoria' -I/home/ludwinr/Qt/6.2.4/gcc_64/include -I/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets -I/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui -I/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork -I/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../JuegoMemoria/game.h -o moc_game.cpp
@@ -1175,9 +1169,6 @@ compiler_lex_clean:
 compiler_clean: compiler_lrelease_clean compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_header_clean compiler_uic_clean 
 
 ####### Compile
-
-buildermatriz.o: ../JuegoMemoria/buildermatriz.cpp ../JuegoMemoria/buildermatriz.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o buildermatriz.o ../JuegoMemoria/buildermatriz.cpp
 
 informacioncliente.o: ../JuegoMemoria/informacioncliente.cpp ../JuegoMemoria/informacioncliente.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QString \
@@ -1353,14 +1344,12 @@ main.o: ../JuegoMemoria/main.cpp ../JuegoMemoria/game.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qnativeinterface.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qtabwidget.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qicon.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/QTcpServer \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/qtcpserver.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/QTcpSocket \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/qtcpsocket.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/qtnetworkglobal.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/qtnetwork-config.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/qabstractsocket.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/qhostaddress.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/QTcpSocket \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/qtcpsocket.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/QApplication \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qapplication.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcoreapplication.h \
@@ -1517,14 +1506,12 @@ game.o: ../JuegoMemoria/game.cpp ../JuegoMemoria/game.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qnativeinterface.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qtabwidget.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qicon.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/QTcpServer \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/qtcpserver.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/QTcpSocket \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/qtcpsocket.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/qtnetworkglobal.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/qtnetwork-config.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/qabstractsocket.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/qhostaddress.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/QTcpSocket \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/qtcpsocket.h \
 		ui_game.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QVariant \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/QApplication \
@@ -1548,11 +1535,22 @@ game.o: ../JuegoMemoria/game.cpp ../JuegoMemoria/game.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qinputmethod.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qlocale.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qguiapplication_platform.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/QGridLayout \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qgridlayout.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qlayout.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qlayoutitem.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qboxlayout.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/QLabel \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qlabel.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qframe.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qpicture.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtextdocument.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/QLineEdit \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qlineedit.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtextcursor.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtextformat.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qpen.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtextoption.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/QPushButton \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qpushbutton.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qabstractbutton.h \
