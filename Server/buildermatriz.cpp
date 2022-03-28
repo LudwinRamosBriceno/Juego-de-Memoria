@@ -1,46 +1,57 @@
 #include "buildermatriz.h"
 #include <tarjeta.h>
+#include <creartxt.h>
 #include <QString>
 #include <time.h>
 #include <stdlib.h>
+
 
 
 builderMatriz::builderMatriz() {
 
 }
 
-void builderMatriz::construirMatriz(){
+tarjeta* builderMatriz::construirMatriz(){
     int numeroFilas = 6;
     int numeroColumnas = 6;
-    int contadorTarjetasCargadas =0;
-    int indiceTarjeta = 0;
+    int contadorTarjetasCargadas =0; // se lleva un contador de cuantas tarjetas ya estan cargadas
+    int indiceTarjeta = 0; // asigna el identificador de cada tarjeta
     tarjeta *tarjetasCargadas = new tarjeta[(numeroFilas*numeroColumnas)/3];
     char tiposTarjetas[3] ={'A','B','C'};
     srand(time(NULL));
+    creartxt txt;
 
     for (int fila = 0; fila < numeroFilas; fila++){
         for (int columna = 0; fila < numeroColumnas; fila++){
-
+            int numRandom = rand()%3;
             if (contadorTarjetasCargadas<12){
-                int numRandom = rand()%5;
+
                 contadorTarjetasCargadas++;
                 tarjetasCargadas[indiceTarjeta].setFila(fila);
                 tarjetasCargadas[indiceTarjeta].setColumna(columna);
                 tarjetasCargadas[indiceTarjeta].setIdentificador(contadorTarjetasCargadas);
                 tarjetasCargadas[indiceTarjeta].setRevelada(false);
                 tarjetasCargadas[indiceTarjeta].setTipoTarjeta(verificarCantidadTipos(tiposTarjetas[numRandom]));
+
+                txt.almacenarTarjetas(tarjetasCargadas[indiceTarjeta].getTipoTarjeta(),tarjetasCargadas[indiceTarjeta].getIdentificador());
+                indiceTarjeta++;
+
+            }else{
+                txt.almacenarTarjetas(verificarCantidadTipos(tiposTarjetas[numRandom]),indiceTarjeta);
                 indiceTarjeta++;
             }
-
         }
     }
+    return tarjetasCargadas;
 }
+
 char builderMatriz::verificarCantidadTipos(char tipoTarjeta){
     char tipoTarjetaResultado =' ';
+    srand(time(NULL));
+    int numRandom = rand()%2;
+
     if (cantidadTarjetasTipoA>=12 && tipoTarjeta=='A'){
-        srand(time(NULL));
         char tiposTarjetasRestantes[2] ={'B','C'};
-        int numRandom = rand()%3;
 
         if (tiposTarjetasRestantes[numRandom]=='B' && cantidadTarjetasTipoB<12){
             tipoTarjetaResultado = 'B';
@@ -51,9 +62,7 @@ char builderMatriz::verificarCantidadTipos(char tipoTarjeta){
         }
     }
     if (cantidadTarjetasTipoB>=12 && tipoTarjeta=='B'){
-        srand(time(NULL));
         char tiposTarjetasRestantes[2] ={'A','C'};
-        int numRandom = rand()%3;
 
         if (tiposTarjetasRestantes[numRandom]=='A' && cantidadTarjetasTipoA<12){
             tipoTarjetaResultado = 'A';
@@ -64,9 +73,7 @@ char builderMatriz::verificarCantidadTipos(char tipoTarjeta){
         }
     }
     if (cantidadTarjetasTipoC>=12 && tipoTarjeta=='C'){
-        srand(time(NULL));
         char tiposTarjetasRestantes[2] ={'A','B'};
-        int numRandom = rand()%3;
 
         if (tiposTarjetasRestantes[numRandom]=='A' && cantidadTarjetasTipoA<12){
             tipoTarjetaResultado = 'A';

@@ -16,7 +16,10 @@ void Game::on_buttonComenzar_clicked() {
 
     if (jugador1 !="" && jugador2 !="" && jugador1.length()<11 && jugador2.length()<11){
         QString nombresJugadores = "iniciar,"+jugador1+","+jugador2;
+
+        // se envia al servidor el aviso de iniciar el juego junto con los nombres de los jugadores;
         socket->write(nombresJugadores.toUtf8().constData(),nombresJugadores.size());
+        ui->pantallas->setCurrentIndex(1);
     }
     else{
         ui->AvisoCaracteres->setVisible(true);

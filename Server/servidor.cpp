@@ -1,4 +1,6 @@
 #include "servidor.h"
+#include <tarjeta.h>
+#include <buildermatriz.h>
 #include <QTcpSocket>
 #include <string>
 #include <iostream>
@@ -6,6 +8,8 @@
 Servidor::Servidor(QObject *parent)
     : QObject(parent)
 {
+    matrizTarjetasCargadas = new matrizpaginada();
+    cliente = new informacioncliente();
     server = new QTcpServer(this);
     server->listen(QHostAddress::Any,2080);
     socket = new QTcpSocket(this);
@@ -29,12 +33,32 @@ void Servidor::leer_mensaje(){
     socket->read(bufferMensaje.data(),bufferMensaje.size()); // se guarda la información en bufferMensaje.
 
     if (QString(bufferMensaje).contains("iniciar")){
-
+        builderMatriz *constructorMatriz = new builderMatriz();
+        tarjeta* construccionMatrizPaginada = constructorMatriz->construirMatriz();
+        matrizTarjetasCargadas->setTarjetasCargadas(construccionMatrizPaginada);
+        cliente->setNombreJugador1(splitMensajes(2,QString(bufferMensaje)));
+        cliente->setNombreJugador2(splitMensajes(3,QString(bufferMensaje)));
 
         //socket->write(mensaje.toUtf8().constData(),mensaje.size());
     }
 }
 
-void Servidor::setNombresJugadores(){
+// busqueda de un dato en conjunto datos delimitados con comas, que provienen del mensaje del cliente.
+QString Servidor::splitMensajes(int indiceDato,QString mensaje_a_separar){
+    QString dato ="";
+    char separadorDatos = ',';
+    int contadorDatos =1;
+    for(int i=0;i<mensaje_a_separar.length();i++){
+        if (mensaje_a_separar[i]==separadorDatos && contadorDatos==indiceDato){
+            return dato;
 
+        }else if(mensaje_a_separar[i]==separadorDatos){
+            dato = "";
+            contadorDatos++;
+
+        }else{
+            dato+=mensaje_a_separar[i];
+        }
+    }
+    return dato;
 }

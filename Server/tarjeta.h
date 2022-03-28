@@ -11,6 +11,8 @@ public:
     void setTipoTarjeta(char tipoTarjeta);
     void setFila(int fila);
     void setColumna(int columna);
+    int getIdentificador();
+    char getTipoTarjeta();
 
 private:
     int identificador;

@@ -7,6 +7,8 @@ class matrizpaginada
 {
 public:
     matrizpaginada();
+    void setTarjetasCargadas(tarjeta* punteroTarjetasCargadas);
+    tarjeta* getTarjetasCargadas();
 
 private:
     tarjeta *tarjetasCargadas;

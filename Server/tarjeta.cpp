@@ -23,3 +23,9 @@ void tarjeta::setFila(int fila){
 void tarjeta::setColumna(int columna){
 
 }
+int tarjeta::getIdentificador(){
+
+}
+char tarjeta::getTipoTarjeta(){
+
+}

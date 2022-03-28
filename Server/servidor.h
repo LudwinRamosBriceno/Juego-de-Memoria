@@ -1,5 +1,7 @@
 #ifndef SERVIDOR_H
 #define SERVIDOR_H
+#include <matrizpaginada.h>
+#include <informacioncliente.h>
 #include <QTcpServer>
 #include <QTcpSocket>
 #include <QObject>
@@ -16,9 +18,13 @@ public:
 private slots:
     void leer_mensaje();
     void conexion_nueva();
+    QString splitMensajes(int indiceDato,QString mensaje_a_separar);
+
 private:
     QTcpSocket *socket;
     QTcpServer *server;
+    matrizpaginada *matrizTarjetasCargadas;
+    informacioncliente *cliente;
 
 signals:
 

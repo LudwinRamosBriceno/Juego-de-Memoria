@@ -1,12 +1,13 @@
 #ifndef BUILDERMATRIZ_H
 #define BUILDERMATRIZ_H
+#include <tarjeta.h>
 
 
 class builderMatriz {
 
 public:
     builderMatriz();
-    void construirMatriz();
+    tarjeta* construirMatriz();
     char verificarCantidadTipos(char tipoTarjeta);
 
 private:
