@@ -3,8 +3,8 @@
 #include <QString>
 
 
-class imgtarjetas
-{
+class imgtarjetas {
+
 public:
     imgtarjetas();
     QString gettarjetaTipoA();

@@ -35,7 +35,8 @@ void Servidor::leer_mensaje(){
     if (QString(bufferMensaje).contains("iniciar")){
         builderMatriz *constructorMatriz = new builderMatriz();
         tarjeta* construccionMatrizPaginada = constructorMatriz->construirMatriz();
-        matrizTarjetasCargadas->setTarjetasCargadas(construccionMatrizPaginada);
+        matrizTarjetasCargadas->setTarjetasCargadas(construccionMatrizPaginada); /* se envia la matriz paginada a
+                                                                                   a la clase matriz paginada*/
         cliente->setNombreJugador1(splitMensajes(2,QString(bufferMensaje)));
         cliente->setNombreJugador2(splitMensajes(3,QString(bufferMensaje)));
 
@@ -43,7 +44,7 @@ void Servidor::leer_mensaje(){
     }
 }
 
-// busqueda de un dato en conjunto datos delimitados con comas, que provienen del mensaje del cliente.
+// busqueda de un dato en un conjunto datos delimitados con comas, que provienen del mensaje del cliente.
 QString Servidor::splitMensajes(int indiceDato,QString mensaje_a_separar){
     QString dato ="";
     char separadorDatos = ',';

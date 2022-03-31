@@ -1,10 +1,9 @@
 #include "buildermatriz.h"
 #include <tarjeta.h>
-#include <creartxt.h>
+#include <crearArchivoBin.h>
 #include <QString>
 #include <time.h>
 #include <stdlib.h>
-
 
 
 builderMatriz::builderMatriz() {
@@ -19,25 +18,27 @@ tarjeta* builderMatriz::construirMatriz(){
     tarjeta *tarjetasCargadas = new tarjeta[(numeroFilas*numeroColumnas)/3];
     char tiposTarjetas[3] ={'A','B','C'};
     srand(time(NULL));
-    creartxt txt;
+    crearArchivoBin *BIN = new crearArchivoBin();
 
     for (int fila = 0; fila < numeroFilas; fila++){
         for (int columna = 0; fila < numeroColumnas; fila++){
+
             int numRandom = rand()%3;
             if (contadorTarjetasCargadas<12){
 
                 contadorTarjetasCargadas++;
-                tarjetasCargadas[indiceTarjeta].setFila(fila);
-                tarjetasCargadas[indiceTarjeta].setColumna(columna);
+                //tarjetasCargadas[indiceTarjeta].setFila(fila);
+                //tarjetasCargadas[indiceTarjeta].setColumna(columna);
                 tarjetasCargadas[indiceTarjeta].setIdentificador(contadorTarjetasCargadas);
                 tarjetasCargadas[indiceTarjeta].setRevelada(false);
                 tarjetasCargadas[indiceTarjeta].setTipoTarjeta(verificarCantidadTipos(tiposTarjetas[numRandom]));
 
-                txt.almacenarTarjetas(tarjetasCargadas[indiceTarjeta].getTipoTarjeta(),tarjetasCargadas[indiceTarjeta].getIdentificador());
+                BIN->almacenarTarjetas(tarjetasCargadas[indiceTarjeta]);
                 indiceTarjeta++;
 
             }else{
-                txt.almacenarTarjetas(verificarCantidadTipos(tiposTarjetas[numRandom]),indiceTarjeta);
+                tarjeta nuevaTarjeta;
+                BIN->almacenarTarjetas(nuevaTarjeta);
                 indiceTarjeta++;
             }
         }

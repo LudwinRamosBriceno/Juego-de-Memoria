@@ -16,16 +16,20 @@ void tarjeta::setTipoTarjeta(char tipoTarjeta){
 
 }
 
-void tarjeta::setFila(int fila){
 
-}
-
-void tarjeta::setColumna(int columna){
-
-}
 int tarjeta::getIdentificador(){
 
 }
 char tarjeta::getTipoTarjeta(){
 
 }
+bool tarjeta::getRevelada(){
+
+}
+/*void tarjeta::setFila(int fila){
+
+}
+
+void tarjeta::setColumna(int columna){
+
+}*/

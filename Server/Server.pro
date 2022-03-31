@@ -9,7 +9,7 @@ CONFIG -= app_bundle
 
 SOURCES += \
         buildermatriz.cpp \
-        creartxt.cpp \
+        crearArchivoBin.cpp \
         imgtarjetas.cpp \
         informacioncliente.cpp \
         main.cpp \
@@ -24,9 +24,12 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     buildermatriz.h \
-    creartxt.h \
+    crearArchivoBin.h \
     imgtarjetas.h \
     informacioncliente.h \
     matrizpaginada.h \
     servidor.h \
     tarjeta.h
+
+RESOURCES += \
+    recursos.qrc

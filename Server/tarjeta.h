@@ -9,15 +9,16 @@ public:
     void setIdentificador(int identificador);
     void setRevelada(bool revelada);
     void setTipoTarjeta(char tipoTarjeta);
-    void setFila(int fila);
-    void setColumna(int columna);
+    //void setFila(int fila);
+    //void setColumna(int columna);
     int getIdentificador();
     char getTipoTarjeta();
+    bool getRevelada();
 
 private:
     int identificador;
-    bool revelada;
     char tipoTarjeta;
+    bool revelada;
     int fila;
     int columna;
 };
