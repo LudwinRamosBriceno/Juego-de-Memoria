@@ -18,12 +18,11 @@ public:
 private slots:
     void leer_mensaje();
     void conexion_nueva();
-    QString splitMensajes(int indiceDato,QString mensaje_a_separar);
 
 private:
     QTcpSocket *socket;
     QTcpServer *server;
-    matrizpaginada *matrizTarjetasCargadas;
+    matrizpaginada *matrizPaginada;
     informacioncliente *cliente;
 
 signals:

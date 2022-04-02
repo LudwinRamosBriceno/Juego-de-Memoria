@@ -4,11 +4,11 @@
 #include <QTcpSocket>
 #include <string>
 #include <iostream>
+#include <splitmensaje.h>
 
-Servidor::Servidor(QObject *parent)
-    : QObject(parent)
-{
-    matrizTarjetasCargadas = new matrizpaginada();
+Servidor::Servidor(QObject *parent): QObject(parent){
+
+    matrizPaginada = new matrizpaginada();
     cliente = new informacioncliente();
     server = new QTcpServer(this);
     server->listen(QHostAddress::Any,2080);
@@ -28,38 +28,26 @@ void Servidor::conexion_nueva(){
 }
 void Servidor::leer_mensaje(){
 
+    splitMensaje interpreteMensaje;
     QByteArray bufferMensaje;
     bufferMensaje.resize(socket->bytesAvailable()); // indica el tamaño de la información enviada.
     socket->read(bufferMensaje.data(),bufferMensaje.size()); // se guarda la información en bufferMensaje.
 
     if (QString(bufferMensaje).contains("iniciar")){
-        builderMatriz *constructorMatriz = new builderMatriz();
-        tarjeta* construccionMatrizPaginada = constructorMatriz->construirMatriz();
-        matrizTarjetasCargadas->setTarjetasCargadas(construccionMatrizPaginada); /* se envia la matriz paginada a
-                                                                                   a la clase matriz paginada*/
-        cliente->setNombreJugador1(splitMensajes(2,QString(bufferMensaje)));
-        cliente->setNombreJugador2(splitMensajes(3,QString(bufferMensaje)));
 
+        builderMatriz constructorMatriz;
+
+        tarjeta* construccionMatrizPaginada = constructorMatriz.construirMatriz();// se construye la matrizPaginada
+        matrizPaginada->setTarjetasCargadas(construccionMatrizPaginada); /* se envia la matriz paginada a
+                                                                                   a la clase matriz paginada*/
+        cliente->setNombreJugador1(interpreteMensaje.interpretarMensaje(2,QString(bufferMensaje)));
+        cliente->setNombreJugador2(interpreteMensaje.interpretarMensaje(3,QString(bufferMensaje)));
+        cliente->setPuntajeJugador1(0);
+        cliente->setPuntajeJugador1(0);
+        cliente->setparTarjetasReveladasJugador1(0);
+        cliente->setparTarjetasReveladasJugador1(0);
+        qDebug()<<cliente->getNombreJugador1();
         //socket->write(mensaje.toUtf8().constData(),mensaje.size());
     }
 }
 
-// busqueda de un dato en un conjunto datos delimitados con comas, que provienen del mensaje del cliente.
-QString Servidor::splitMensajes(int indiceDato,QString mensaje_a_separar){
-    QString dato ="";
-    char separadorDatos = ',';
-    int contadorDatos =1;
-    for(int i=0;i<mensaje_a_separar.length();i++){
-        if (mensaje_a_separar[i]==separadorDatos && contadorDatos==indiceDato){
-            return dato;
-
-        }else if(mensaje_a_separar[i]==separadorDatos){
-            dato = "";
-            contadorDatos++;
-
-        }else{
-            dato+=mensaje_a_separar[i];
-        }
-    }
-    return dato;
-}

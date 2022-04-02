@@ -30,8 +30,9 @@ void Game::leer_mensaje(){
     QByteArray bufferMensaje;
     bufferMensaje.resize(socket->bytesAvailable());
     socket->read(bufferMensaje.data(),bufferMensaje.size());
-
 }
+
+
 
 Game::~Game()
 {

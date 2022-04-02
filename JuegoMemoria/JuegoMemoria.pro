@@ -10,12 +10,10 @@ CONFIG += c++11
 
 SOURCES += \
     main.cpp \
-    game.cpp \
-    servidor.cpp
+    game.cpp
 
 HEADERS += \
-    game.h \
-    servidor.h
+    game.h
 
 FORMS += \
     game.ui
@@ -29,3 +27,6 @@ CONFIG += embed_translations
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    Recursos.qrc

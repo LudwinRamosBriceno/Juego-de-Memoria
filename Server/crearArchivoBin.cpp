@@ -12,7 +12,7 @@ void crearArchivoBin::almacenarTarjetas(tarjeta nuevaTarjeta){
     tarjetaAdisco = {nuevaTarjeta.getIdentificador(),nuevaTarjeta.getTipoTarjeta(),nuevaTarjeta.getRevelada()};
     fstream file;
 
-    file.open("://matrizPaginada.matriz",ios::app|ios::binary);
+    file.open(":/matrizPaginada.matriz",ios::app|ios::out|ios::binary);
 
     if(file.fail()){
         cout<<"El archivo de la matriz no se pudo cargar";

@@ -15,6 +15,7 @@ SOURCES += \
         main.cpp \
         matrizpaginada.cpp \
         servidor.cpp \
+        splitmensaje.cpp \
         tarjeta.cpp
 
 # Default rules for deployment.
@@ -29,6 +30,7 @@ HEADERS += \
     informacioncliente.h \
     matrizpaginada.h \
     servidor.h \
+    splitmensaje.h \
     tarjeta.h
 
 RESOURCES += \

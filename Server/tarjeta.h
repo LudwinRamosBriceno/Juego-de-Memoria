@@ -16,11 +16,11 @@ public:
     bool getRevelada();
 
 private:
-    int identificador;
+    int identificadorTarjeta;
     char tipoTarjeta;
-    bool revelada;
-    int fila;
-    int columna;
+    bool tarjetaRevelada;
+    //int fila;
+    //int columna;
 };
 
 #endif // TARJETA_H

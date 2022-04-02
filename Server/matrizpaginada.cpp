@@ -1,10 +1,8 @@
 #include "matrizpaginada.h"
 
-matrizpaginada::matrizpaginada()
-{
+matrizpaginada::matrizpaginada() {
 
 }
-
 
 void matrizpaginada::setTarjetasCargadas(tarjeta* punteroTarjetasCargadas){
     tarjetasCargadas = punteroTarjetasCargadas;
