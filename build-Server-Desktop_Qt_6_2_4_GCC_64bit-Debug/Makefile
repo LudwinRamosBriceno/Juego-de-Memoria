@@ -60,8 +60,7 @@ SOURCES       = ../Server/buildermatriz.cpp \
 		../Server/matrizpaginada.cpp \
 		../Server/servidor.cpp \
 		../Server/splitmensaje.cpp \
-		../Server/tarjeta.cpp qrc_recursos.cpp \
-		moc_servidor.cpp
+		../Server/tarjeta.cpp moc_servidor.cpp
 OBJECTS       = buildermatriz.o \
 		crearArchivoBin.o \
 		imgtarjetas.o \
@@ -71,7 +70,6 @@ OBJECTS       = buildermatriz.o \
 		servidor.o \
 		splitmensaje.o \
 		tarjeta.o \
-		qrc_recursos.o \
 		moc_servidor.o
 DIST          = /home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/spec_pre.prf \
 		/home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/common/unix.conf \
@@ -599,7 +597,6 @@ Makefile: ../Server/Server.pro /home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/linux-g++/q
 		/home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/yacc.prf \
 		/home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/lex.prf \
 		../Server/Server.pro \
-		../Server/recursos.qrc \
 		/home/ludwinr/Qt/6.2.4/gcc_64/lib/libQt6Network.prl \
 		/home/ludwinr/Qt/6.2.4/gcc_64/lib/libQt6Core.prl
 	$(QMAKE) -o Makefile ../Server/Server.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug
@@ -853,7 +850,6 @@ Makefile: ../Server/Server.pro /home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/linux-g++/q
 /home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/yacc.prf:
 /home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/lex.prf:
 ../Server/Server.pro:
-../Server/recursos.qrc:
 /home/ludwinr/Qt/6.2.4/gcc_64/lib/libQt6Network.prl:
 /home/ludwinr/Qt/6.2.4/gcc_64/lib/libQt6Core.prl:
 qmake: FORCE
@@ -870,7 +866,6 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../Server/recursos.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../Server/buildermatriz.h ../Server/crearArchivoBin.h ../Server/imgtarjetas.h ../Server/informacioncliente.h ../Server/matrizpaginada.h ../Server/servidor.h ../Server/splitmensaje.h ../Server/tarjeta.h $(DISTDIR)/
 	$(COPY_FILE) --parents ../Server/buildermatriz.cpp ../Server/crearArchivoBin.cpp ../Server/imgtarjetas.cpp ../Server/informacioncliente.cpp ../Server/main.cpp ../Server/matrizpaginada.cpp ../Server/servidor.cpp ../Server/splitmensaje.cpp ../Server/tarjeta.cpp $(DISTDIR)/
@@ -897,17 +892,8 @@ check: first
 
 benchmark: first
 
-compiler_rcc_make_all: qrc_recursos.cpp
+compiler_rcc_make_all:
 compiler_rcc_clean:
-	-$(DEL_FILE) qrc_recursos.cpp
-qrc_recursos.cpp: ../Server/recursos.qrc \
-		/home/ludwinr/Qt/6.2.4/gcc_64/libexec/rcc \
-		../Server/matrizPaginada.matriz \
-		../Server/Img_verduras.png \
-		../Server/Img_bola-masa.png \
-		../Server/Img_comida-rapida.png
-	/home/ludwinr/Qt/6.2.4/gcc_64/libexec/rcc -name recursos ../Server/recursos.qrc -o qrc_recursos.cpp
-
 compiler_moc_predefs_make_all: moc_predefs.h
 compiler_moc_predefs_clean:
 	-$(DEL_FILE) moc_predefs.h
@@ -1023,7 +1009,7 @@ compiler_yacc_impl_make_all:
 compiler_yacc_impl_clean:
 compiler_lex_make_all:
 compiler_lex_clean:
-compiler_clean: compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_header_clean 
+compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean 
 
 ####### Compile
 
@@ -1464,9 +1450,6 @@ splitmensaje.o: ../Server/splitmensaje.cpp ../Server/splitmensaje.h \
 
 tarjeta.o: ../Server/tarjeta.cpp ../Server/tarjeta.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o tarjeta.o ../Server/tarjeta.cpp
-
-qrc_recursos.o: qrc_recursos.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_recursos.o qrc_recursos.cpp
 
 moc_servidor.o: moc_servidor.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_servidor.o moc_servidor.cpp

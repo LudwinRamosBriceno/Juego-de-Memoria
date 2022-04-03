@@ -2,9 +2,9 @@
 
 imgtarjetas::imgtarjetas() {
 
-    QString imgtarjetaA="://Img_verduras.png";
-    QString imgtarjetaB="://Img_comida-rapida.png";
-    QString imgtarjetaC="://Img_bola-masa.png";
+    QString imgtarjetaA=":/recursos/Img_verduras.png";
+    QString imgtarjetaB=":/recursos/Img_comida-rapida.png";
+    QString imgtarjetaC=":/recursos/Img_bola-masa.png";
 
 }
 

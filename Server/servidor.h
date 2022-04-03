@@ -6,8 +6,7 @@
 #include <QTcpSocket>
 #include <QObject>
 
-class Servidor : public QObject
-{
+class Servidor : public QObject {
     Q_OBJECT
 public:
     explicit Servidor(QObject *parent = nullptr);

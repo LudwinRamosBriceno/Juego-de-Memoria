@@ -32,6 +32,3 @@ HEADERS += \
     servidor.h \
     splitmensaje.h \
     tarjeta.h
-
-RESOURCES += \
-    recursos.qrc

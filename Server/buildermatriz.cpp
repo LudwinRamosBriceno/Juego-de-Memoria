@@ -2,8 +2,7 @@
 #include <tarjeta.h>
 #include <crearArchivoBin.h>
 #include <QString>
-#include <time.h>
-#include <stdlib.h>
+#include <QDebug>
 
 
 builderMatriz::builderMatriz() {
@@ -18,8 +17,8 @@ tarjeta* builderMatriz::construirMatriz(){
     //int indiceTarjeta = 0;  asigna el identificador de cada tarjeta
     tarjeta *tarjetasCargadas = new tarjeta[totalTarjetas/3];
     char tiposTarjetas[3] ={'A','B','C'};
-    srand(time(NULL));
-    crearArchivoBin *BIN = new crearArchivoBin();
+
+    crearArchivoBin BIN;
 
     // Cada tarjeta estara enumerada del 0 al 35, es decir las tarjetas en juego son 36
     for (int identificadorTarjeta = 0; identificadorTarjeta < totalTarjetas; identificadorTarjeta++){
@@ -36,7 +35,7 @@ tarjeta* builderMatriz::construirMatriz(){
             tarjetasCargadas[identificadorTarjeta].setRevelada(false);
             tarjetasCargadas[identificadorTarjeta].setTipoTarjeta(verificarCantidadTipos(tiposTarjetas[numRandom]));
 
-            BIN->almacenarTarjetas(tarjetasCargadas[identificadorTarjeta]);
+            BIN.almacenarTarjetas(tarjetasCargadas[identificadorTarjeta]);
             //indiceTarjeta++;
 
         }else{
@@ -44,7 +43,7 @@ tarjeta* builderMatriz::construirMatriz(){
             nuevaTarjeta.setIdentificador(identificadorTarjeta);
             nuevaTarjeta.setRevelada(false);
             nuevaTarjeta.setTipoTarjeta(verificarCantidadTipos(tiposTarjetas[numRandom]));
-            BIN->almacenarTarjetas(nuevaTarjeta);
+            BIN.almacenarTarjetas(nuevaTarjeta);
             //indiceTarjeta++;
             }
         //}
@@ -53,42 +52,47 @@ tarjeta* builderMatriz::construirMatriz(){
 }
 
 char builderMatriz::verificarCantidadTipos(char tipoTarjeta){
-    char tipoTarjetaResultado =' ';
-    srand(time(NULL));
+    char tipoTarjetaResultado =tipoTarjeta;
     int numRandom = rand()%2;
 
     if (cantidadTarjetasTipoA>=12 && tipoTarjeta=='A'){
         char tiposTarjetasRestantes[2] ={'B','C'};
 
-        if (tiposTarjetasRestantes[numRandom]=='B' && cantidadTarjetasTipoB<12){
-            tipoTarjetaResultado = 'B';
-            cantidadTarjetasTipoB++;
-        }else if(tiposTarjetasRestantes[numRandom]=='C'&& cantidadTarjetasTipoC<12){
-            tipoTarjetaResultado = 'C';
-            cantidadTarjetasTipoC++;
-        }
+        if (tiposTarjetasRestantes[numRandom]=='B' && cantidadTarjetasTipoB >=12){
+            tipoTarjetaResultado ='C';
+            //cantidadTarjetasTipoB++;
+        }else if(tiposTarjetasRestantes[numRandom]=='C'&& cantidadTarjetasTipoC >=12){
+            tipoTarjetaResultado ='B';
+            //cantidadTarjetasTipoC++;
+        }else{tipoTarjetaResultado = tiposTarjetasRestantes[numRandom];}
     }
     if (cantidadTarjetasTipoB>=12 && tipoTarjeta=='B'){
         char tiposTarjetasRestantes[2] ={'A','C'};
 
-        if (tiposTarjetasRestantes[numRandom]=='A' && cantidadTarjetasTipoA<12){
-            tipoTarjetaResultado = 'A';
-            cantidadTarjetasTipoA++;
-        }else if(tiposTarjetasRestantes[numRandom]=='C'&& cantidadTarjetasTipoC<12){
-            tipoTarjetaResultado = 'C';
-            cantidadTarjetasTipoC++;
-        }
+        if (tiposTarjetasRestantes[numRandom]=='A' && cantidadTarjetasTipoA >=12){
+            tipoTarjetaResultado ='C';
+            //cantidadTarjetasTipoA++;
+        }else if(tiposTarjetasRestantes[numRandom]=='C'&& cantidadTarjetasTipoC>=12){
+            tipoTarjetaResultado ='A';
+            //cantidadTarjetasTipoC++;
+        } else{tipoTarjetaResultado = tiposTarjetasRestantes[numRandom];}
     }
     if (cantidadTarjetasTipoC>=12 && tipoTarjeta=='C'){
         char tiposTarjetasRestantes[2] ={'A','B'};
 
-        if (tiposTarjetasRestantes[numRandom]=='A' && cantidadTarjetasTipoA<12){
-            tipoTarjetaResultado = 'A';
-            cantidadTarjetasTipoA++;
-        }else if(tiposTarjetasRestantes[numRandom]=='B'&& cantidadTarjetasTipoB<12){
-            tipoTarjetaResultado = 'B';
-            cantidadTarjetasTipoB++;
-        }
+        if (tiposTarjetasRestantes[numRandom]=='A' && cantidadTarjetasTipoA>=12){
+            tipoTarjetaResultado ='B';
+            //cantidadTarjetasTipoA++;
+        }else if(tiposTarjetasRestantes[numRandom]=='B'&& cantidadTarjetasTipoB>=12){
+            tipoTarjetaResultado ='A';
+            //cantidadTarjetasTipoB++;
+        }else{tipoTarjetaResultado = tiposTarjetasRestantes[numRandom];}
     }
+    switch (tipoTarjetaResultado) {
+        case 'A': cantidadTarjetasTipoA++;break;
+        case 'B': cantidadTarjetasTipoB++;break;
+        case 'C': cantidadTarjetasTipoC++;break;
+    }
+    qDebug()<< tipoTarjetaResultado;
     return tipoTarjetaResultado;
 }

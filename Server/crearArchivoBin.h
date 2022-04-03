@@ -8,7 +8,6 @@ struct tarjetaAAlmacenar{
     int identificador;
     char tipoTarjeta;
     bool revelada;
-
 };
 
 class crearArchivoBin {
@@ -16,6 +15,7 @@ class crearArchivoBin {
 public:
     crearArchivoBin();
     void almacenarTarjetas(tarjeta nuevaTarjeta);
+    void leerBin();
 
 };
 

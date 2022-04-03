@@ -1,7 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file>Img_bola-masa.png</file>
-        <file>Img_comida-rapida.png</file>
-        <file>Img_verduras.png</file>
-    </qresource>
-</RCC>

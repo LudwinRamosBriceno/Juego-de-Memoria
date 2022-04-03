@@ -5,6 +5,8 @@
 #include <string>
 #include <iostream>
 #include <splitmensaje.h>
+#include <crearArchivoBin.h>
+
 
 Servidor::Servidor(QObject *parent): QObject(parent){
 
@@ -47,6 +49,10 @@ void Servidor::leer_mensaje(){
         cliente->setparTarjetasReveladasJugador1(0);
         cliente->setparTarjetasReveladasJugador1(0);
         qDebug()<<cliente->getNombreJugador1();
+
+        //crearArchivoBin tt;
+        //tt.leerBin();
+
         //socket->write(mensaje.toUtf8().constData(),mensaje.size());
     }
 }

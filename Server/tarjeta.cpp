@@ -1,5 +1,6 @@
 #include "tarjeta.h"
 
+
 tarjeta::tarjeta() {
 
 }
