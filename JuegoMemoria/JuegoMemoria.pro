@@ -10,10 +10,12 @@ CONFIG += c++11
 
 SOURCES += \
     main.cpp \
-    game.cpp
+    game.cpp \
+    splitmensaje.cpp
 
 HEADERS += \
-    game.h
+    game.h \
+    splitmensaje.h
 
 FORMS += \
     game.ui

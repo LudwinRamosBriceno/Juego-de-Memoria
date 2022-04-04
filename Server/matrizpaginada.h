@@ -9,6 +9,7 @@ public:
     matrizpaginada();
     void setTarjetasCargadas(tarjeta* punteroTarjetasCargadas);
     tarjeta* getTarjetasCargadas();
+    void liberarMatrizPaginada();
 
 private:
     tarjeta *tarjetasCargadas;

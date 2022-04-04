@@ -5,13 +5,13 @@
 #include <QTcpServer>
 #include <QTcpSocket>
 #include <QObject>
+#include <handlerserver.h>
 
 class Servidor : public QObject {
     Q_OBJECT
 public:
     explicit Servidor(QObject *parent = nullptr);
     void enviar(const QString mensaje);
-    void setNombresJugadores();
     void conectar();
 
 private slots:
@@ -23,6 +23,7 @@ private:
     QTcpServer *server;
     matrizpaginada *matrizPaginada;
     informacioncliente *cliente;
+    handlerServer *manejadorMensajes;
 
 signals:
 

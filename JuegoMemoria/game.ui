@@ -155,7 +155,7 @@ color: rgb(211, 215, 207);</string>
       <property name="geometry">
        <rect>
         <x>80</x>
-        <y>70</y>
+        <y>80</y>
         <width>661</width>
         <height>411</height>
        </rect>
@@ -813,6 +813,84 @@ border-radius: 8px;</string>
         </widget>
        </item>
       </layout>
+     </widget>
+     <widget class="QLabel" name="puntajePJugador1">
+      <property name="geometry">
+       <rect>
+        <x>190</x>
+        <y>50</y>
+        <width>101</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background: teal;
+border: 3px solid white; 
+border-radius: 7px;</string>
+      </property>
+      <property name="text">
+       <string>Puntaje:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="namePJugador1">
+      <property name="geometry">
+       <rect>
+        <x>190</x>
+        <y>20</y>
+        <width>101</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 700 italic 12pt &quot;Ubuntu&quot;;</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="namePJugador2">
+      <property name="geometry">
+       <rect>
+        <x>540</x>
+        <y>20</y>
+        <width>91</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="puntajePJugador2">
+      <property name="geometry">
+       <rect>
+        <x>540</x>
+        <y>50</y>
+        <width>91</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background: teal;
+border: 3px solid white; 
+border-radius: 7px;</string>
+      </property>
+      <property name="text">
+       <string>Puntaje:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="tituloGanador">
+      <property name="geometry">
+       <rect>
+        <x>380</x>
+        <y>50</y>
+        <width>67</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
      </widget>
     </widget>
    </widget>

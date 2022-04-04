@@ -11,3 +11,7 @@ void matrizpaginada::setTarjetasCargadas(tarjeta* punteroTarjetasCargadas){
 tarjeta* matrizpaginada::getTarjetasCargadas(){
     return tarjetasCargadas;
 }
+void matrizpaginada::liberarMatrizPaginada(){
+
+
+}

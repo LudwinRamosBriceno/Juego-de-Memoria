@@ -10,8 +10,7 @@
 
 Servidor::Servidor(QObject *parent): QObject(parent){
 
-    matrizPaginada = new matrizpaginada();
-    cliente = new informacioncliente();
+    manejadorMensajes = new handlerServer();
     server = new QTcpServer(this);
     server->listen(QHostAddress::Any,2080);
     socket = new QTcpSocket(this);
@@ -37,23 +36,24 @@ void Servidor::leer_mensaje(){
 
     if (QString(bufferMensaje).contains("iniciar")){
 
-        builderMatriz constructorMatriz;
-
-        tarjeta* construccionMatrizPaginada = constructorMatriz.construirMatriz();// se construye la matrizPaginada
-        matrizPaginada->setTarjetasCargadas(construccionMatrizPaginada); /* se envia la matriz paginada a
-                                                                                   a la clase matriz paginada*/
-        cliente->setNombreJugador1(interpreteMensaje.interpretarMensaje(2,QString(bufferMensaje)));
-        cliente->setNombreJugador2(interpreteMensaje.interpretarMensaje(3,QString(bufferMensaje)));
-        cliente->setPuntajeJugador1(0);
-        cliente->setPuntajeJugador1(0);
-        cliente->setparTarjetasReveladasJugador1(0);
-        cliente->setparTarjetasReveladasJugador1(0);
-        qDebug()<<cliente->getNombreJugador1();
-
+        /* El número 2 indica que el nombre del jugador 1 viene como segundo dato en un mensaje delimitado por
+         * comas, donde el interpreteMensaje retornará el dato según la posición que se le indique con un entero*/
+        QString nombreJugador1 = interpreteMensaje.interpretarMensaje(2,QString(bufferMensaje));
+        QString nombreJugador2 = interpreteMensaje.interpretarMensaje(3,QString(bufferMensaje));
+        manejadorMensajes->iniciarJuego(nombreJugador1,nombreJugador2);
         //crearArchivoBin tt;
         //tt.leerBin();
 
         //socket->write(mensaje.toUtf8().constData(),mensaje.size());
+    }
+    else if (QString(bufferMensaje).contains("finalizar")){
+        manejadorMensajes->finalizarJuego();
+        free(manejadorMensajes);
+        manejadorMensajes = nullptr;
+        server->close();
+
+    } else{
+        manejadorMensajes->logicHandler(QString(bufferMensaje));
     }
 }
 
