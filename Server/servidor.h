@@ -21,8 +21,6 @@ private slots:
 private:
     QTcpSocket *socket;
     QTcpServer *server;
-    matrizpaginada *matrizPaginada;
-    informacioncliente *cliente;
     handlerServer *manejadorMensajes;
 
 signals:

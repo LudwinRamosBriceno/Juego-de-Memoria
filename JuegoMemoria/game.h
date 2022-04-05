@@ -3,6 +3,7 @@
 #include <QMainWindow>
 #include <QTcpSocket>
 #include <QPushButton>
+#include <identificadortarjetas.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Game; }
@@ -19,13 +20,14 @@ public:
 private slots:
     void on_buttonComenzar_clicked();
     void leer_mensaje();
-    void descubrirTarjeta(int numTarjeta);
+    void descubrirTarjeta();
 
 private:
     Ui::Game *ui;
     QTcpSocket *socket;
-    QPushButton *primerTarjetaRevelada;
-    QPushButton *segundaTarjetaRevelada;
+    QPushButton *TarjetaRevelada;
+    bool inicioTurno;
+    identificadorTarjetas identificadorTarjetaSeleccionada;
 
 };
 #endif // GAME_H

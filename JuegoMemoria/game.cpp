@@ -1,7 +1,8 @@
 #include "game.h"
 #include "ui_game.h"
 #include <splitmensaje.h>
-
+#include <iostream>
+#include <QVector>
 Game::Game(QWidget *parent) : QMainWindow(parent), ui(new Ui::Game){
     ui->setupUi(this);
 
@@ -10,15 +11,16 @@ Game::Game(QWidget *parent) : QMainWindow(parent), ui(new Ui::Game){
     socket = new QTcpSocket(this);
     socket->connectToHost("localhost",2080);
     connect(socket,SIGNAL(readyRead()),this,SLOT(leer_mensaje()));
-    QPushButton *listaBotones [36] = {ui->button1,ui->button2,ui->button3,ui->button4,ui->button5,ui->button6,ui->button7,
+    QVector <QPushButton*> listaBotones {ui->button1,ui->button2,ui->button3,ui->button4,ui->button5,ui->button6,ui->button7,
                                ui->button8,ui->button9,ui->button10,ui->button11,ui->button12,ui->button13,
                                ui->button14,ui->button15,ui->button16,ui->button17,ui->button18,ui->button19,
                                ui->button20,ui->button21,ui->button22,ui->button23,ui->button24,ui->button25,
                                ui->button26,ui->button27,ui->button28,ui->button29,ui->button30,ui->button31,
                                ui->button32,ui->button33,ui->button34,ui->button35,ui->button36};
-
+    ui->button1->objectName();
     for (int i=0;i<2;i++){
-        connect(listaBotones[i],SIGNAL(clicked(numTarjeta)),this,SLOT(descubrirTarjeta()));
+        connect(listaBotones[i],SIGNAL(clicked()),this,SLOT(descubrirTarjeta()));
+        identificadorTarjetaSeleccionada.setListaTarjetas(listaBotones[i]->objectName(),listaBotones.length());
     }
 }
 
@@ -50,10 +52,18 @@ void Game::leer_mensaje(){
     }else{
 
     }
-
 }
-void Game::descubrirTarjeta(int numTarjeta){
-    qDebug()<<"todo bien";
+void Game::descubrirTarjeta(){
+    TarjetaRevelada = qobject_cast<QPushButton*>(sender()); // se castea el boton que dispara el evento
+    int identificadorTarjetaRevelada = identificadorTarjetaSeleccionada.encontrarIdentificador(TarjetaRevelada->objectName());
+
+    if (!inicioTurno){
+        QString mensajeEnviar ="primeraTarjeta,"+QString::number(identificadorTarjetaRevelada);
+        inicioTurno = true;
+        socket->write(mensajeEnviar.toUtf8().constData(),mensajeEnviar.size());
+    }
+
+
     //se castea el boton
 
 }

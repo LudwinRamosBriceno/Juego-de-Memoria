@@ -1,6 +1,7 @@
 #include "handlerserver.h"
 #include <splitmensaje.h>
 #include <buildermatriz.h>
+#include <splitmensaje.h>
 
 
 handlerServer::handlerServer()
@@ -33,7 +34,12 @@ void handlerServer::finalizarJuego(){
 
 }
 QString handlerServer::logicHandler(QString mensajeCliente){
+    splitMensaje interpreteMensaje;
 
+    if(mensajeCliente.contains("primeraTarjeta")){
+
+
+    }
 }
 
 

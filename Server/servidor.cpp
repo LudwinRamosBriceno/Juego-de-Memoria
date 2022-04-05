@@ -25,8 +25,8 @@ void Servidor::conexion_nueva(){
     //bool cerrarConexion = false;
     socket = server->nextPendingConnection();
     connect(socket,SIGNAL(readyRead()),this,SLOT(leer_mensaje()));
-
 }
+
 void Servidor::leer_mensaje(){
 
     splitMensaje interpreteMensaje;
@@ -41,9 +41,6 @@ void Servidor::leer_mensaje(){
         QString nombreJugador1 = interpreteMensaje.interpretarMensaje(2,QString(bufferMensaje));
         QString nombreJugador2 = interpreteMensaje.interpretarMensaje(3,QString(bufferMensaje));
         manejadorMensajes->iniciarJuego(nombreJugador1,nombreJugador2);
-        //crearArchivoBin tt;
-        //tt.leerBin();
-
         //socket->write(mensaje.toUtf8().constData(),mensaje.size());
     }
     else if (QString(bufferMensaje).contains("finalizar")){
