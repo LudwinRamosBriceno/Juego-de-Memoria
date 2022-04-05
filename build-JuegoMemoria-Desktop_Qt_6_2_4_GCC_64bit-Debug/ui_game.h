@@ -73,6 +73,11 @@ public:
     QPushButton *button8;
     QPushButton *button19;
     QPushButton *button28;
+    QLabel *puntajePJugador1;
+    QLabel *namePJugador1;
+    QLabel *namePJugador2;
+    QLabel *puntajePJugador2;
+    QLabel *tituloGanador;
 
     void setupUi(QMainWindow *Game)
     {
@@ -122,7 +127,7 @@ public:
         pantalla_2->setStyleSheet(QString::fromUtf8("background-color: rgb(46, 52, 54);"));
         tablero = new QWidget(pantalla_2);
         tablero->setObjectName(QString::fromUtf8("tablero"));
-        tablero->setGeometry(QRect(80, 70, 661, 411));
+        tablero->setGeometry(QRect(80, 80, 661, 411));
         gridLayout = new QGridLayout(tablero);
         gridLayout->setObjectName(QString::fromUtf8("gridLayout"));
         button33 = new QPushButton(tablero);
@@ -489,6 +494,28 @@ public:
 
         gridLayout->addWidget(button28, 4, 3, 1, 1);
 
+        puntajePJugador1 = new QLabel(pantalla_2);
+        puntajePJugador1->setObjectName(QString::fromUtf8("puntajePJugador1"));
+        puntajePJugador1->setGeometry(QRect(190, 50, 101, 31));
+        puntajePJugador1->setStyleSheet(QString::fromUtf8("background: teal;\n"
+"border: 3px solid white; \n"
+"border-radius: 7px;"));
+        namePJugador1 = new QLabel(pantalla_2);
+        namePJugador1->setObjectName(QString::fromUtf8("namePJugador1"));
+        namePJugador1->setGeometry(QRect(190, 20, 101, 17));
+        namePJugador1->setStyleSheet(QString::fromUtf8("font: 700 italic 12pt \"Ubuntu\";"));
+        namePJugador2 = new QLabel(pantalla_2);
+        namePJugador2->setObjectName(QString::fromUtf8("namePJugador2"));
+        namePJugador2->setGeometry(QRect(540, 20, 91, 17));
+        puntajePJugador2 = new QLabel(pantalla_2);
+        puntajePJugador2->setObjectName(QString::fromUtf8("puntajePJugador2"));
+        puntajePJugador2->setGeometry(QRect(540, 50, 91, 31));
+        puntajePJugador2->setStyleSheet(QString::fromUtf8("background: teal;\n"
+"border: 3px solid white; \n"
+"border-radius: 7px;"));
+        tituloGanador = new QLabel(pantalla_2);
+        tituloGanador->setObjectName(QString::fromUtf8("tituloGanador"));
+        tituloGanador->setGeometry(QRect(380, 50, 67, 17));
         pantallas->addWidget(pantalla_2);
         Game->setCentralWidget(centralwidget);
 
@@ -541,6 +568,11 @@ public:
         button8->setText(QString());
         button19->setText(QString());
         button28->setText(QString());
+        puntajePJugador1->setText(QCoreApplication::translate("Game", "Puntaje:", nullptr));
+        namePJugador1->setText(QString());
+        namePJugador2->setText(QString());
+        puntajePJugador2->setText(QCoreApplication::translate("Game", "Puntaje:", nullptr));
+        tituloGanador->setText(QString());
     } // retranslateUi
 
 };

@@ -53,11 +53,13 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = ../JuegoMemoria/main.cpp \
-		../JuegoMemoria/game.cpp qrc_Recursos.cpp \
+		../JuegoMemoria/game.cpp \
+		../JuegoMemoria/splitmensaje.cpp qrc_Recursos.cpp \
 		qrc_qmake_qmake_qm_files.cpp \
 		moc_game.cpp
 OBJECTS       = main.o \
 		game.o \
+		splitmensaje.o \
 		qrc_Recursos.o \
 		qrc_qmake_qmake_qm_files.o \
 		moc_game.o
@@ -313,8 +315,10 @@ DIST          = /home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/spec_pre.prf \
 		/home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/exceptions.prf \
 		/home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/yacc.prf \
 		/home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/lex.prf \
-		../JuegoMemoria/JuegoMemoria.pro ../JuegoMemoria/game.h ../JuegoMemoria/main.cpp \
-		../JuegoMemoria/game.cpp
+		../JuegoMemoria/JuegoMemoria.pro ../JuegoMemoria/game.h \
+		../JuegoMemoria/splitmensaje.h ../JuegoMemoria/main.cpp \
+		../JuegoMemoria/game.cpp \
+		../JuegoMemoria/splitmensaje.cpp
 QMAKE_TARGET  = JuegoMemoria
 DESTDIR       = 
 TARGET        = JuegoMemoria
@@ -862,8 +866,8 @@ distdir: FORCE
 	$(COPY_FILE) --parents ../JuegoMemoria/JuegoMemoria_es_419.ts $(DISTDIR)/
 	$(COPY_FILE) --parents ../JuegoMemoria/Recursos.qrc qmake_qmake_qm_files.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../JuegoMemoria/game.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../JuegoMemoria/main.cpp ../JuegoMemoria/game.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../JuegoMemoria/game.h ../JuegoMemoria/splitmensaje.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../JuegoMemoria/main.cpp ../JuegoMemoria/game.cpp ../JuegoMemoria/splitmensaje.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../JuegoMemoria/game.ui $(DISTDIR)/
 	$(COPY_FILE) --parents ../JuegoMemoria/JuegoMemoria_es_419.ts $(DISTDIR)/
 
@@ -1376,8 +1380,98 @@ game.o: ../JuegoMemoria/game.cpp ../JuegoMemoria/game.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/qtnetwork-config.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/qabstractsocket.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/qhostaddress.h \
-		ui_game.h
+		ui_game.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QVariant \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/QApplication \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qapplication.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcoreapplication.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qeventloop.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcoreapplication_platform.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qfuture.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qfutureinterface.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmutex.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qresultstore.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qfuture_impl.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qthreadpool.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qthread.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qdeadlinetimer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qelapsedtimer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qrunnable.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qexception.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qpromise.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qguiapplication.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qinputmethod.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qlocale.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qguiapplication_platform.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/QGridLayout \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qgridlayout.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qlayout.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qlayoutitem.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qboxlayout.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/QLabel \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qlabel.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qframe.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qpicture.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtextdocument.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/QLineEdit \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qlineedit.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtextcursor.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtextformat.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qpen.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtextoption.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/QPushButton \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qpushbutton.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qabstractbutton.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/QStackedWidget \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qstackedwidget.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/QWidget \
+		../JuegoMemoria/splitmensaje.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QString
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o game.o ../JuegoMemoria/game.cpp
+
+splitmensaje.o: ../JuegoMemoria/splitmensaje.cpp ../JuegoMemoria/splitmensaje.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QString \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstring.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qchar.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qglobal.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qconfig.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtcore-config.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qsystemdetection.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qprocessordetection.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcompilerdetection.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtypeinfo.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcontainerfwd.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qsysinfo.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qlogging.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qflags.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qatomic.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbasicatomic.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qgenericatomic.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qglobalstatic.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qnumeric.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qversiontagging.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringview.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbytearray.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qrefcount.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qnamespace.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtmetamacros.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qarraydata.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qpair.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qarraydatapointer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qarraydataops.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcontainertools_impl.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbytearrayalgorithms.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbytearrayview.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringliteral.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringalgorithms.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qanystringview.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qutf8stringview.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringtokenizer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringbuilder.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o splitmensaje.o ../JuegoMemoria/splitmensaje.cpp
 
 qrc_Recursos.o: qrc_Recursos.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_Recursos.o qrc_Recursos.cpp

@@ -34,7 +34,6 @@ void handlerServer::finalizarJuego(){
 }
 QString handlerServer::logicHandler(QString mensajeCliente){
 
-
 }
 
 

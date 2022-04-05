@@ -1,8 +1,8 @@
 #ifndef GAME_H
 #define GAME_H
-
 #include <QMainWindow>
 #include <QTcpSocket>
+#include <QPushButton>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Game; }
@@ -19,10 +19,13 @@ public:
 private slots:
     void on_buttonComenzar_clicked();
     void leer_mensaje();
+    void descubrirTarjeta(int numTarjeta);
 
 private:
     Ui::Game *ui;
     QTcpSocket *socket;
+    QPushButton *primerTarjetaRevelada;
+    QPushButton *segundaTarjetaRevelada;
 
 };
 #endif // GAME_H
