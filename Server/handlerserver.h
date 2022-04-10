@@ -7,9 +7,10 @@ class handlerServer {
 public:
     handlerServer();
     void iniciarJuego(QString nombreJugador1, QString nombreJugador2);
-    void finalizarJuego();
     QString logicHandler(QString mensajeCliente);
 
+private:
+    void finalizarJuego();
 
 private:
     matrizpaginada *matrizPaginada;

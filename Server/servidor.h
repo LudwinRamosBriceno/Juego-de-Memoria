@@ -11,7 +11,7 @@ class Servidor : public QObject {
     Q_OBJECT
 public:
     explicit Servidor(QObject *parent = nullptr);
-    void enviar(const QString mensaje);
+    void enviar(QString mensaje);
     void conectar();
 
 private slots:

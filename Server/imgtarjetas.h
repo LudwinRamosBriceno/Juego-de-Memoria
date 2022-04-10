@@ -16,6 +16,7 @@ private:
     QString imgtarjetaA;
     QString imgtarjetaB;
     QString imgtarjetaC;
+    QString imgDesabilitada;
 };
 
 #endif // IMGTARJETAS_H

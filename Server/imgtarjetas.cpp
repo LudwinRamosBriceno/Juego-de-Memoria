@@ -2,10 +2,10 @@
 
 imgtarjetas::imgtarjetas() {
 
-    QString imgtarjetaA=":/recursos/Img_verduras.png";
-    QString imgtarjetaB=":/recursos/Img_comida-rapida.png";
-    QString imgtarjetaC=":/recursos/Img_bola-masa.png";
-
+    QString imgtarjetaA="recursos/Img_verduras.png";
+    QString imgtarjetaB="recursos/Img_comida-rapida.png";
+    QString imgtarjetaC="recursos/Img_bola-masa.png";
+    QString imgtarjetaDesabilitada = "";
 }
 
 QString imgtarjetas::getImgTarjeta(char tipoTarjeta){
@@ -20,6 +20,8 @@ QString imgtarjetas::getImgTarjeta(char tipoTarjeta){
         case 'C':
             imgTarjeta = imgtarjetaC;
             break;
+        case 'D':
+            imgTarjeta = imgDesabilitada;
     }
     return imgTarjeta;
 }

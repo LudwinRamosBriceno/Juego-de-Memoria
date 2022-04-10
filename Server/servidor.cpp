@@ -7,7 +7,6 @@
 #include <splitmensaje.h>
 #include <crearArchivoBin.h>
 
-
 Servidor::Servidor(QObject *parent): QObject(parent){
 
     manejadorMensajes = new handlerServer();
@@ -44,7 +43,7 @@ void Servidor::leer_mensaje(){
         //socket->write(mensaje.toUtf8().constData(),mensaje.size());
     }
     else if (QString(bufferMensaje).contains("finalizar")){
-        manejadorMensajes->finalizarJuego();
+        //manejadorMensajes->finalizarJuego();
         free(manejadorMensajes);
         manejadorMensajes = nullptr;
         server->close();
@@ -52,5 +51,9 @@ void Servidor::leer_mensaje(){
     } else{
         manejadorMensajes->logicHandler(QString(bufferMensaje));
     }
+}
+void Servidor::enviar(QString mensaje){
+
+
 }
 

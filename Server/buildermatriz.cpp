@@ -34,6 +34,7 @@ tarjeta* builderMatriz::construirMatriz(){
             tarjetasCargadas[identificadorTarjeta].setIdentificador(identificadorTarjeta);
             tarjetasCargadas[identificadorTarjeta].setRevelada(false);
             tarjetasCargadas[identificadorTarjeta].setTipoTarjeta(verificarCantidadTipos(tiposTarjetas[numRandom]));
+            tarjetasCargadas[identificadorTarjeta].setImgTarjeta();
 
             BIN.almacenarTarjetas(tarjetasCargadas[identificadorTarjeta]);
             //indiceTarjeta++;

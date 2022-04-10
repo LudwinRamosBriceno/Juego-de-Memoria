@@ -3,8 +3,8 @@
 #include <tarjeta.h>
 
 
-class matrizpaginada
-{
+class matrizpaginada{
+
 public:
     matrizpaginada();
     void setTarjetasCargadas(tarjeta* punteroTarjetasCargadas);

@@ -3,9 +3,11 @@
 #include <splitmensaje.h>
 #include <iostream>
 #include <QVector>
+
 Game::Game(QWidget *parent) : QMainWindow(parent), ui(new Ui::Game){
     ui->setupUi(this);
 
+    manejadorMensajes = new handlerCliente;
     ui->tituloGanador->setVisible(false);
     ui->AvisoCaracteres->setVisible(false);
     socket = new QTcpSocket(this);
@@ -17,10 +19,9 @@ Game::Game(QWidget *parent) : QMainWindow(parent), ui(new Ui::Game){
                                ui->button20,ui->button21,ui->button22,ui->button23,ui->button24,ui->button25,
                                ui->button26,ui->button27,ui->button28,ui->button29,ui->button30,ui->button31,
                                ui->button32,ui->button33,ui->button34,ui->button35,ui->button36};
-    ui->button1->objectName();
-    for (int i=0;i<2;i++){
+    for (int i=0;i<listaBotones.length();i++){
         connect(listaBotones[i],SIGNAL(clicked()),this,SLOT(descubrirTarjeta()));
-        identificadorTarjetaSeleccionada.setListaTarjetas(listaBotones[i]->objectName(),listaBotones.length());
+        identificadorTarjetaSeleccionada.setListaTarjetas(listaBotones[i]->objectName(),i);
     }
 }
 
@@ -48,9 +49,10 @@ void Game::leer_mensaje(){
 
     if (QString(bufferMensaje).contains("ganador")){
         ui->tituloGanador->setText("El Ganador es: "+interpreteMensaje.interpretarMensaje(2,QString(bufferMensaje)));
+    }else if(QString(bufferMensaje).contains("TurnoJugador1")){
 
     }else{
-
+        manejadorMensajes->logicCliente(QString(bufferMensaje),TarjetaRevelada);
     }
 }
 void Game::descubrirTarjeta(){
@@ -62,8 +64,6 @@ void Game::descubrirTarjeta(){
         inicioTurno = true;
         socket->write(mensajeEnviar.toUtf8().constData(),mensajeEnviar.size());
     }
-
-
     //se castea el boton
 
 }

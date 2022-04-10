@@ -1,5 +1,6 @@
 #include "tarjeta.h"
-
+#include <QImage>
+#include <imgtarjetas.h>
 
 tarjeta::tarjeta() {
 
@@ -13,8 +14,9 @@ void tarjeta::setRevelada(bool revelada){
     tarjetaRevelada = revelada;
 }
 
-void tarjeta::setTipoTarjeta(char tipo){
-    tipoTarjeta=tipo;
+void tarjeta::setTipoTarjeta(char tipoImg){
+    tipoTarjeta=tipoImg;
+
 }
 int tarjeta::getIdentificador(){
     return identificadorTarjeta;
@@ -26,6 +28,16 @@ char tarjeta::getTipoTarjeta(){
 
 bool tarjeta::getRevelada(){
     return tarjetaRevelada;
+}
+
+void tarjeta::setImgTarjeta() {
+    imgtarjetas img;
+    QString rutaImagen = img.getImgTarjeta(tipoTarjeta);
+    imagenTarjeta.load(rutaImagen);
+}
+
+QImage tarjeta::getImgTarjeta() {
+    return imagenTarjeta;
 }
 /*void tarjeta::setFila(int fila){
 
