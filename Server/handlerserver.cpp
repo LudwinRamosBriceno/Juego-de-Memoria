@@ -39,6 +39,7 @@ QString handlerServer::logicHandler(QString mensajeCliente){
     if(mensajeCliente.contains("primeraTarjeta")){
 
 
+
     }
 }
 

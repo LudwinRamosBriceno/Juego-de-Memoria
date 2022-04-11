@@ -1,18 +1,20 @@
 #ifndef MATRIZPAGINADA_H
 #define MATRIZPAGINADA_H
 #include <tarjeta.h>
+#include <QHash>
 
 
 class matrizpaginada{
 
 public:
     matrizpaginada();
-    void setTarjetasCargadas(tarjeta* punteroTarjetasCargadas);
-    tarjeta* getTarjetasCargadas();
+    void setTarjetaCargada(int,tarjeta);
+    QHash<int,tarjeta> getTarjetasCargadas();
     void liberarMatrizPaginada();
 
 private:
-    tarjeta *tarjetasCargadas;
+    //tarjeta *tarjetasCargadas;
+    QHash <int,tarjeta>tarjetasCargadas;
 
 };
 

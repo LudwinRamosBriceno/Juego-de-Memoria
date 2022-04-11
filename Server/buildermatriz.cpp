@@ -9,13 +9,14 @@ builderMatriz::builderMatriz() {
 
 }
 
-tarjeta* builderMatriz::construirMatriz(){
+matrizpaginada* builderMatriz::construirMatriz(){
     int totalTarjetas =36;
     //int numeroFilas = 6;
     //int numeroColumnas = 6;
     int contadorTarjetasCargadas =0; // se lleva un contador de cuantas tarjetas ya estan cargadas
     //int indiceTarjeta = 0;  asigna el identificador de cada tarjeta
-    tarjeta *tarjetasCargadas = new tarjeta[totalTarjetas/3];
+    //tarjeta *tarjetasCargadas = new tarjeta[totalTarjetas/3];
+    matrizpaginada *matrizPaginada = new matrizpaginada();
     char tiposTarjetas[3] ={'A','B','C'};
 
     crearArchivoBin BIN;
@@ -24,6 +25,7 @@ tarjeta* builderMatriz::construirMatriz(){
     for (int identificadorTarjeta = 0; identificadorTarjeta < totalTarjetas; identificadorTarjeta++){
         //for (int columna = 0; fila < numeroColumnas; fila++){
         int numRandom = rand()%3;
+        tarjeta nuevaTarjeta;
 
         // se almacenan las tarjetas en la matriz paginada
         if (contadorTarjetasCargadas<12){
@@ -31,25 +33,22 @@ tarjeta* builderMatriz::construirMatriz(){
             contadorTarjetasCargadas++;
             //tarjetasCargadas[indiceTarjeta].setFila(fila);
             //tarjetasCargadas[indiceTarjeta].setColumna(columna);
-            tarjetasCargadas[identificadorTarjeta].setIdentificador(identificadorTarjeta);
-            tarjetasCargadas[identificadorTarjeta].setRevelada(false);
-            tarjetasCargadas[identificadorTarjeta].setTipoTarjeta(verificarCantidadTipos(tiposTarjetas[numRandom]));
-            tarjetasCargadas[identificadorTarjeta].setImgTarjeta();
+            nuevaTarjeta.setIdentificador(identificadorTarjeta);
+            nuevaTarjeta.setRevelada(false);
+            nuevaTarjeta.setTipoTarjeta(verificarCantidadTipos(tiposTarjetas[numRandom]));
+            nuevaTarjeta.setImgTarjeta();
 
-            BIN.almacenarTarjetas(tarjetasCargadas[identificadorTarjeta]);
-            //indiceTarjeta++;
+            matrizPaginada->setTarjetaCargada(identificadorTarjeta,nuevaTarjeta);
+            BIN.almacenarTarjetas(nuevaTarjeta);
 
         }else{
-            tarjeta nuevaTarjeta;
             nuevaTarjeta.setIdentificador(identificadorTarjeta);
             nuevaTarjeta.setRevelada(false);
             nuevaTarjeta.setTipoTarjeta(verificarCantidadTipos(tiposTarjetas[numRandom]));
             BIN.almacenarTarjetas(nuevaTarjeta);
-            //indiceTarjeta++;
             }
-        //}
     }
-    return tarjetasCargadas;
+    return matrizPaginada;
 }
 
 char builderMatriz::verificarCantidadTipos(char tipoTarjeta){

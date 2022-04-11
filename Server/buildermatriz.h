@@ -1,13 +1,14 @@
 #ifndef BUILDERMATRIZ_H
 #define BUILDERMATRIZ_H
 #include <tarjeta.h>
+#include <matrizpaginada.h>
 
 
 class builderMatriz {
 
 public:
     builderMatriz();
-    tarjeta* construirMatriz();
+    matrizpaginada* construirMatriz();
     char verificarCantidadTipos(char tipoTarjeta);
 
 private:

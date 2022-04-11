@@ -4,11 +4,11 @@ matrizpaginada::matrizpaginada() {
 
 }
 
-void matrizpaginada::setTarjetasCargadas(tarjeta* punteroTarjetasCargadas){
-    tarjetasCargadas = punteroTarjetasCargadas;
+void matrizpaginada::setTarjetaCargada(int keyTarjeta,tarjeta nuevaTarjeta){
+    tarjetasCargadas.insert(keyTarjeta,nuevaTarjeta);
 
 }
-tarjeta* matrizpaginada::getTarjetasCargadas(){
+QHash<int,tarjeta> matrizpaginada::getTarjetasCargadas(){
     return tarjetasCargadas;
 }
 void matrizpaginada::liberarMatrizPaginada(){
