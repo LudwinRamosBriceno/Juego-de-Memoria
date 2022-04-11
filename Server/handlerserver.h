@@ -15,6 +15,7 @@ private:
 private:
     matrizpaginada *matrizPaginada;
     informacioncliente *cliente;
+    int numTarjetaAdescargar;
 };
 
 #endif // HANDLERSERVER_H

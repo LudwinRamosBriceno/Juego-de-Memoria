@@ -11,11 +11,9 @@ builderMatriz::builderMatriz() {
 
 matrizpaginada* builderMatriz::construirMatriz(){
     int totalTarjetas =36;
-    //int numeroFilas = 6;
-    //int numeroColumnas = 6;
     int contadorTarjetasCargadas =0; // se lleva un contador de cuantas tarjetas ya estan cargadas
-    //int indiceTarjeta = 0;  asigna el identificador de cada tarjeta
     //tarjeta *tarjetasCargadas = new tarjeta[totalTarjetas/3];
+    remove("matrizPaginada.matriz");
     matrizpaginada *matrizPaginada = new matrizpaginada();
     char tiposTarjetas[3] ={'A','B','C'};
 
@@ -23,7 +21,6 @@ matrizpaginada* builderMatriz::construirMatriz(){
 
     // Cada tarjeta estara enumerada del 0 al 35, es decir las tarjetas en juego son 36
     for (int identificadorTarjeta = 0; identificadorTarjeta < totalTarjetas; identificadorTarjeta++){
-        //for (int columna = 0; fila < numeroColumnas; fila++){
         int numRandom = rand()%3;
         tarjeta nuevaTarjeta;
 
@@ -31,13 +28,10 @@ matrizpaginada* builderMatriz::construirMatriz(){
         if (contadorTarjetasCargadas<12){
 
             contadorTarjetasCargadas++;
-            //tarjetasCargadas[indiceTarjeta].setFila(fila);
-            //tarjetasCargadas[indiceTarjeta].setColumna(columna);
             nuevaTarjeta.setIdentificador(identificadorTarjeta);
             nuevaTarjeta.setRevelada(false);
             nuevaTarjeta.setTipoTarjeta(verificarCantidadTipos(tiposTarjetas[numRandom]));
             nuevaTarjeta.setImgTarjeta();
-
             matrizPaginada->setTarjetaCargada(identificadorTarjeta,nuevaTarjeta);
             BIN.almacenarTarjetas(nuevaTarjeta);
 
@@ -46,7 +40,7 @@ matrizpaginada* builderMatriz::construirMatriz(){
             nuevaTarjeta.setRevelada(false);
             nuevaTarjeta.setTipoTarjeta(verificarCantidadTipos(tiposTarjetas[numRandom]));
             BIN.almacenarTarjetas(nuevaTarjeta);
-            }
+        }
     }
     return matrizPaginada;
 }

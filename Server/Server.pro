@@ -11,8 +11,9 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 SOURCES += \
         buildermatriz.cpp \
+        buscadorTarjeta.cpp \
+        cargardescargartarjeta.cpp \
         crearArchivoBin.cpp \
-        encontrartarjeta.cpp \
         handlerserver.cpp \
         imgtarjetas.cpp \
         informacioncliente.cpp \
@@ -29,8 +30,9 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     buildermatriz.h \
+    buscadorTarjeta.h \
+    cargardescargartarjeta.h \
     crearArchivoBin.h \
-    encontrartarjeta.h \
     handlerserver.h \
     imgtarjetas.h \
     informacioncliente.h \

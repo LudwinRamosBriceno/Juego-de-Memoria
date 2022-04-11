@@ -39,10 +39,4 @@ void tarjeta::setImgTarjeta() {
 QImage tarjeta::getImgTarjeta() {
     return imagenTarjeta;
 }
-/*void tarjeta::setFila(int fila){
 
-}
-
-void tarjeta::setColumna(int columna){
-
-}*/

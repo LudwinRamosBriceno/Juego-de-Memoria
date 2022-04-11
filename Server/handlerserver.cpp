@@ -13,9 +13,8 @@ handlerServer::handlerServer()
 void handlerServer::iniciarJuego(QString nombreJugador1, QString nombreJugador2){
     builderMatriz constructorMatriz;
 
-    tarjeta* construccionMatrizPaginada = constructorMatriz.construirMatriz();// se construye la matrizPaginada
-    matrizPaginada->setTarjetasCargadas(construccionMatrizPaginada); /* se envia la matriz paginada a
-                                                                               a la clase matriz paginada*/
+    matrizPaginada = constructorMatriz.construirMatriz();// se construye la matrizPaginada
+
     cliente->setNombreJugador1(nombreJugador1);
     cliente->setNombreJugador2(nombreJugador2);
     cliente->setPuntajeJugador1(0);
@@ -37,7 +36,7 @@ QString handlerServer::logicHandler(QString mensajeCliente){
     splitMensaje interpreteMensaje;
 
     if(mensajeCliente.contains("primeraTarjeta")){
-
+        numTarjetaAdescargar = 0;
 
 
     }
