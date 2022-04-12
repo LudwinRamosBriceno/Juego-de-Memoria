@@ -21,6 +21,7 @@ void handlerServer::iniciarJuego(QString nombreJugador1, QString nombreJugador2)
     cliente->setPuntajeJugador1(0);
     cliente->setparTarjetasReveladasJugador1(0);
     cliente->setparTarjetasReveladasJugador1(0);
+    numTarjetaAdescargar = 0;
     //qDebug()<<cliente->getNombreJugador1();
 
 }

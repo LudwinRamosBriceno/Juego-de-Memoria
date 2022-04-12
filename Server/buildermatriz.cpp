@@ -13,7 +13,7 @@ matrizpaginada* builderMatriz::construirMatriz(){
     int totalTarjetas =36;
     int contadorTarjetasCargadas =0; // se lleva un contador de cuantas tarjetas ya estan cargadas
     //tarjeta *tarjetasCargadas = new tarjeta[totalTarjetas/3];
-    remove("matrizPaginada.matriz");
+    remove("matrizPaginada.matriz"); // se elimina el archivo para no acumular los datos que se guardan en ese archivo
     matrizpaginada *matrizPaginada = new matrizpaginada();
     char tiposTarjetas[3] ={'A','B','C'};
 
