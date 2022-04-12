@@ -49,7 +49,8 @@ void Servidor::leer_mensaje(){
         server->close();
 
     } else{
-        manejadorMensajes->logicHandler(QString(bufferMensaje));
+        QString mensajeAenviar = manejadorMensajes->logicHandler(QString(bufferMensaje));
+        socket->write(mensajeAenviar.toUtf8().constData(),mensajeAenviar.size());
     }
 }
 void Servidor::enviar(QString mensaje){

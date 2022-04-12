@@ -2,6 +2,8 @@
 #include <splitmensaje.h>
 #include <buildermatriz.h>
 #include <splitmensaje.h>
+#include <buscadorTarjeta.h>
+#include <QBuffer>
 
 
 handlerServer::handlerServer()
@@ -12,7 +14,6 @@ handlerServer::handlerServer()
 
 void handlerServer::iniciarJuego(QString nombreJugador1, QString nombreJugador2){
     builderMatriz constructorMatriz;
-
     matrizPaginada = constructorMatriz.construirMatriz();// se construye la matrizPaginada
 
     cliente->setNombreJugador1(nombreJugador1);
@@ -23,7 +24,6 @@ void handlerServer::iniciarJuego(QString nombreJugador1, QString nombreJugador2)
     cliente->setparTarjetasReveladasJugador1(0);
     numTarjetaAdescargar = 0;
     //qDebug()<<cliente->getNombreJugador1();
-
 }
 void handlerServer::finalizarJuego(){
     matrizPaginada->liberarMatrizPaginada();
@@ -35,12 +35,21 @@ void handlerServer::finalizarJuego(){
 }
 QString handlerServer::logicHandler(QString mensajeCliente){
     splitMensaje interpreteMensaje;
+    QString mensaje;
 
     if(mensajeCliente.contains("primeraTarjeta")){
-        numTarjetaAdescargar = 0;
-
-
+        numTarjetaAdescargar = 0; /* indice de la tarjeta que será removida en caso de que la tarjeta buscada no
+                                   esté en la matriz paginada */
+        buscadorTarjeta buscador;
+        int keyTarjetaAbuscar = interpreteMensaje.interpretarMensaje(2,mensajeCliente).toInt();
+        QImage imgTarjetaBuscada= buscador.buscarTarjeta(keyTarjetaAbuscar,matrizPaginada,numTarjetaAdescargar);
+        QByteArray bytesImg;
+        QBuffer buffer(&bytesImg);
+        imgTarjetaBuscada.save(&buffer,"png");
+        QString imgTarjetaBuscada64 = QString::fromUtf8(bytesImg.toBase64().data());
+        mensaje = "imgTarjeta," + imgTarjetaBuscada64;
     }
+    return mensaje;
 }
 
 
