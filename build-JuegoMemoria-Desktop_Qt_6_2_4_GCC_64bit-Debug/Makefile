@@ -52,12 +52,16 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = ../JuegoMemoria/main.cpp \
+SOURCES       = ../JuegoMemoria/handlercliente.cpp \
+		../JuegoMemoria/identificadortarjetas.cpp \
+		../JuegoMemoria/main.cpp \
 		../JuegoMemoria/game.cpp \
 		../JuegoMemoria/splitmensaje.cpp qrc_Recursos.cpp \
 		qrc_qmake_qmake_qm_files.cpp \
 		moc_game.cpp
-OBJECTS       = main.o \
+OBJECTS       = handlercliente.o \
+		identificadortarjetas.o \
+		main.o \
 		game.o \
 		splitmensaje.o \
 		qrc_Recursos.o \
@@ -316,7 +320,11 @@ DIST          = /home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/spec_pre.prf \
 		/home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/yacc.prf \
 		/home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/lex.prf \
 		../JuegoMemoria/JuegoMemoria.pro ../JuegoMemoria/game.h \
-		../JuegoMemoria/splitmensaje.h ../JuegoMemoria/main.cpp \
+		../JuegoMemoria/handlercliente.h \
+		../JuegoMemoria/identificadortarjetas.h \
+		../JuegoMemoria/splitmensaje.h ../JuegoMemoria/handlercliente.cpp \
+		../JuegoMemoria/identificadortarjetas.cpp \
+		../JuegoMemoria/main.cpp \
 		../JuegoMemoria/game.cpp \
 		../JuegoMemoria/splitmensaje.cpp
 QMAKE_TARGET  = JuegoMemoria
@@ -866,8 +874,8 @@ distdir: FORCE
 	$(COPY_FILE) --parents ../JuegoMemoria/JuegoMemoria_es_419.ts $(DISTDIR)/
 	$(COPY_FILE) --parents ../JuegoMemoria/Recursos.qrc qmake_qmake_qm_files.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../JuegoMemoria/game.h ../JuegoMemoria/splitmensaje.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../JuegoMemoria/main.cpp ../JuegoMemoria/game.cpp ../JuegoMemoria/splitmensaje.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../JuegoMemoria/game.h ../JuegoMemoria/handlercliente.h ../JuegoMemoria/identificadortarjetas.h ../JuegoMemoria/splitmensaje.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../JuegoMemoria/handlercliente.cpp ../JuegoMemoria/identificadortarjetas.cpp ../JuegoMemoria/main.cpp ../JuegoMemoria/game.cpp ../JuegoMemoria/splitmensaje.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../JuegoMemoria/game.ui $(DISTDIR)/
 	$(COPY_FILE) --parents ../JuegoMemoria/JuegoMemoria_es_419.ts $(DISTDIR)/
 
@@ -1057,6 +1065,18 @@ moc_game.cpp: ../JuegoMemoria/game.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/qtnetwork-config.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/qabstractsocket.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/qhostaddress.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/QPushButton \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qpushbutton.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qabstractbutton.h \
+		../JuegoMemoria/identificadortarjetas.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QHash \
+		../JuegoMemoria/handlercliente.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QString \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/QLabel \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qlabel.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qframe.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qpicture.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtextdocument.h \
 		moc_predefs.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/libexec/moc
 	/home/ludwinr/Qt/6.2.4/gcc_64/libexec/moc $(DEFINES) --include '/home/ludwinr/Escritorio/Proyectos/Proyecto 1/Juego-de-Memoria/build-JuegoMemoria-Desktop_Qt_6_2_4_GCC_64bit-Debug/moc_predefs.h' -I/home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/linux-g++ -I'/home/ludwinr/Escritorio/Proyectos/Proyecto 1/Juego-de-Memoria/JuegoMemoria' -I/home/ludwinr/Qt/6.2.4/gcc_64/include -I/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets -I/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui -I/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork -I/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../JuegoMemoria/game.h -o moc_game.cpp
@@ -1081,6 +1101,277 @@ compiler_lex_clean:
 compiler_clean: compiler_lrelease_clean compiler_rcc_clean compiler_moc_predefs_clean compiler_moc_header_clean compiler_uic_clean 
 
 ####### Compile
+
+handlercliente.o: ../JuegoMemoria/handlercliente.cpp ../JuegoMemoria/handlercliente.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QString \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstring.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qchar.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qglobal.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qconfig.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtcore-config.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qsystemdetection.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qprocessordetection.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcompilerdetection.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtypeinfo.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcontainerfwd.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qsysinfo.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qlogging.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qflags.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qatomic.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbasicatomic.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qgenericatomic.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qglobalstatic.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qnumeric.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qversiontagging.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringview.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbytearray.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qrefcount.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qnamespace.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtmetamacros.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qarraydata.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qpair.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qarraydatapointer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qarraydataops.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcontainertools_impl.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbytearrayalgorithms.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbytearrayview.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringliteral.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringalgorithms.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qanystringview.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qutf8stringview.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringtokenizer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringbuilder.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/QPushButton \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qpushbutton.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtguiglobal.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtgui-config.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qtwidgets-config.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qabstractbutton.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qicon.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qsize.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qhashfunctions.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmargins.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qlist.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qiterator.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbytearraylist.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringlist.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qalgorithms.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringmatcher.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qpixmap.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qpaintdevice.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qwindowdefs.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qobjectdefs.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qwindowdefs_win.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qrect.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qpoint.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qcolor.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qrgb.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qrgba64.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qsharedpointer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qshareddata.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qobject.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcoreevent.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qscopedpointer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmetatype.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcompare.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qvarlengtharray.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qscopeguard.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qdatastream.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qiodevicebase.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qiterable.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmetacontainer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcontainerinfo.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtaggedpointer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmath.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qobject_impl.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbindingstorage.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qimage.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qpixelformat.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtransform.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qpolygon.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qregion.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qline.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qkeysequence.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qwidget.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qpalette.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qbrush.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qfont.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qfontmetrics.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qfontinfo.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qsizepolicy.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qcursor.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qbitmap.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qevent.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qiodevice.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qpointer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qurl.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qvariant.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmap.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qshareddata_impl.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qhash.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qdebug.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtextstream.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringconverter.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qset.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcontiguouscache.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qeventpoint.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qvector2d.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qvectornd.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qpointingdevice.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qinputdevice.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qscreen.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QList \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QObject \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QRect \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QSize \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QSizeF \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/QTransform \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qnativeinterface.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/QLabel \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qlabel.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qframe.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qpicture.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtextdocument.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o handlercliente.o ../JuegoMemoria/handlercliente.cpp
+
+identificadortarjetas.o: ../JuegoMemoria/identificadortarjetas.cpp ../JuegoMemoria/identificadortarjetas.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/QPushButton \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qpushbutton.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qtwidgetsglobal.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtguiglobal.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qglobal.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qconfig.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtcore-config.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qsystemdetection.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qprocessordetection.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcompilerdetection.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtypeinfo.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcontainerfwd.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qsysinfo.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qlogging.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qflags.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qatomic.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbasicatomic.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qgenericatomic.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qglobalstatic.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qnumeric.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qversiontagging.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtgui-config.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qtwidgets-config.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qabstractbutton.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qicon.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qsize.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qnamespace.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtmetamacros.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qhashfunctions.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstring.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qchar.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringview.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbytearray.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qrefcount.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qarraydata.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qpair.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qarraydatapointer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qarraydataops.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcontainertools_impl.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbytearrayalgorithms.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbytearrayview.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringliteral.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringalgorithms.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qanystringview.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qutf8stringview.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringtokenizer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringbuilder.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmargins.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qlist.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qiterator.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbytearraylist.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringlist.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qalgorithms.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringmatcher.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qpixmap.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qpaintdevice.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qwindowdefs.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qobjectdefs.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qwindowdefs_win.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qrect.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qpoint.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qcolor.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qrgb.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qrgba64.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qsharedpointer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qshareddata.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qobject.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcoreevent.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qscopedpointer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmetatype.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcompare.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qvarlengtharray.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qscopeguard.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qdatastream.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qiodevicebase.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qiterable.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmetacontainer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcontainerinfo.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtaggedpointer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmath.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qobject_impl.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbindingstorage.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qimage.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qpixelformat.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtransform.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qpolygon.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qregion.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qline.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qkeysequence.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qwidget.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qpalette.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qbrush.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qfont.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qfontmetrics.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qfontinfo.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qsizepolicy.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qcursor.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qbitmap.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qevent.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qiodevice.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qpointer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qurl.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qvariant.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmap.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qshareddata_impl.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qhash.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qdebug.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtextstream.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringconverter.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qset.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcontiguouscache.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qeventpoint.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qvector2d.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qvectornd.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qpointingdevice.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qinputdevice.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qscreen.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QList \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QObject \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QRect \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QSize \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QSizeF \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/QTransform \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qnativeinterface.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QHash
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o identificadortarjetas.o ../JuegoMemoria/identificadortarjetas.cpp
 
 main.o: ../JuegoMemoria/main.cpp ../JuegoMemoria/game.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/QMainWindow \
@@ -1218,6 +1509,18 @@ main.o: ../JuegoMemoria/main.cpp ../JuegoMemoria/game.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/qtnetwork-config.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/qabstractsocket.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/qhostaddress.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/QPushButton \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qpushbutton.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qabstractbutton.h \
+		../JuegoMemoria/identificadortarjetas.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QHash \
+		../JuegoMemoria/handlercliente.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QString \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/QLabel \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qlabel.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qframe.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qpicture.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtextdocument.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/QApplication \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qapplication.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcoreapplication.h \
@@ -1380,6 +1683,18 @@ game.o: ../JuegoMemoria/game.cpp ../JuegoMemoria/game.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/qtnetwork-config.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/qabstractsocket.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/qhostaddress.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/QPushButton \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qpushbutton.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qabstractbutton.h \
+		../JuegoMemoria/identificadortarjetas.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QHash \
+		../JuegoMemoria/handlercliente.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QString \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/QLabel \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qlabel.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qframe.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qpicture.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtextdocument.h \
 		ui_game.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QVariant \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/QApplication \
@@ -1408,25 +1723,18 @@ game.o: ../JuegoMemoria/game.cpp ../JuegoMemoria/game.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qlayout.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qlayoutitem.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qboxlayout.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/QLabel \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qlabel.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qframe.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qpicture.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtextdocument.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/QLineEdit \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qlineedit.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtextcursor.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtextformat.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qpen.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtextoption.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/QPushButton \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qpushbutton.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qabstractbutton.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/QStackedWidget \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qstackedwidget.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/QWidget \
 		../JuegoMemoria/splitmensaje.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QString
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QVector \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qvector.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o game.o ../JuegoMemoria/game.cpp
 
 splitmensaje.o: ../JuegoMemoria/splitmensaje.cpp ../JuegoMemoria/splitmensaje.h \

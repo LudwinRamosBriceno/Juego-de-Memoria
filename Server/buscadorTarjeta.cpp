@@ -5,7 +5,7 @@ buscadorTarjeta::buscadorTarjeta() {
 
 }
 
-QImage buscadorTarjeta::buscarTarjeta(int keyTarjeta, matrizpaginada* matriz, int numTarjetaAdescargar){
+QImage buscadorTarjeta::buscarImgTarjeta(int keyTarjeta, matrizpaginada* matriz, int numTarjetaAdescargar){
 
     QHash matrizCargada = matriz->getTarjetasCargadas();
     if (matrizCargada.find(keyTarjeta)!=matrizCargada.end()){

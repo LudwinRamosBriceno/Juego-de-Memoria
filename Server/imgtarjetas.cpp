@@ -1,10 +1,11 @@
 #include "imgtarjetas.h"
 
+
 imgtarjetas::imgtarjetas() {
 
-    QString imgtarjetaA="recursos/Img_verduras.png";
-    QString imgtarjetaB="recursos/Img_comida-rapida.png";
-    QString imgtarjetaC="recursos/Img_bola-masa.png";
+    QString imgtarjetaA=":/recursos/Img_verduras.png";
+    QString imgtarjetaB=":/recursos/Img_comida-rapida.png";
+    QString imgtarjetaC=":/recursos/Img_bola-masa.png";
     QString imgtarjetaDesabilitada = "";
 }
 

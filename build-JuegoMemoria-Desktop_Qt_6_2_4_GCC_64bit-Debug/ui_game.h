@@ -77,7 +77,7 @@ public:
     QLabel *namePJugador1;
     QLabel *namePJugador2;
     QLabel *puntajePJugador2;
-    QLabel *tituloGanador;
+    QLabel *AvisosPjuego;
 
     void setupUi(QMainWindow *Game)
     {
@@ -513,9 +513,9 @@ public:
         puntajePJugador2->setStyleSheet(QString::fromUtf8("background: teal;\n"
 "border: 3px solid white; \n"
 "border-radius: 7px;"));
-        tituloGanador = new QLabel(pantalla_2);
-        tituloGanador->setObjectName(QString::fromUtf8("tituloGanador"));
-        tituloGanador->setGeometry(QRect(380, 50, 67, 17));
+        AvisosPjuego = new QLabel(pantalla_2);
+        AvisosPjuego->setObjectName(QString::fromUtf8("AvisosPjuego"));
+        AvisosPjuego->setGeometry(QRect(380, 50, 67, 17));
         pantallas->addWidget(pantalla_2);
         Game->setCentralWidget(centralwidget);
 
@@ -572,7 +572,7 @@ public:
         namePJugador1->setText(QString());
         namePJugador2->setText(QString());
         puntajePJugador2->setText(QCoreApplication::translate("Game", "Puntaje:", nullptr));
-        tituloGanador->setText(QString());
+        AvisosPjuego->setText(QString());
     } // retranslateUi
 
 };

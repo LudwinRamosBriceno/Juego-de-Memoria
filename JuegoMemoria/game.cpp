@@ -8,7 +8,6 @@ Game::Game(QWidget *parent) : QMainWindow(parent), ui(new Ui::Game){
     ui->setupUi(this);
 
     manejadorMensajes = new handlerCliente;
-    ui->tituloGanador->setVisible(false);
     ui->AvisoCaracteres->setVisible(false);
     socket = new QTcpSocket(this);
     socket->connectToHost("localhost",2080);
@@ -48,8 +47,13 @@ void Game::leer_mensaje(){
     socket->read(bufferMensaje.data(),bufferMensaje.size());
 
     if (QString(bufferMensaje).contains("ganador")){
-        ui->tituloGanador->setText("El Ganador es: "+interpreteMensaje.interpretarMensaje(2,QString(bufferMensaje)));
-    }else if(QString(bufferMensaje).contains("TurnoJugador1")){
+        ui->AvisosPjuego->move(380,50);
+        ui->AvisosPjuego->setText("El Ganador es: "+interpreteMensaje.interpretarMensaje(2,QString(bufferMensaje)));
+        QString mensaje = "finalizar";
+        socket->write(mensaje.toUtf8().constData(),mensaje.size());
+
+    }else if(QString(bufferMensaje).contains("turnoJugador")){
+        manejadorMensajes->seleccionTurno(QString(bufferMensaje),ui->AvisosPjuego);
 
     }else{
         manejadorMensajes->logicCliente(QString(bufferMensaje),TarjetaRevelada);

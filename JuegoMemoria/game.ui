@@ -879,7 +879,7 @@ border-radius: 7px;</string>
        <string>Puntaje:</string>
       </property>
      </widget>
-     <widget class="QLabel" name="tituloGanador">
+     <widget class="QLabel" name="AvisosPjuego">
       <property name="geometry">
        <rect>
         <x>380</x>
@@ -890,6 +890,9 @@ border-radius: 7px;</string>
       </property>
       <property name="text">
        <string/>
+      </property>
+      <property name="scaledContents">
+       <bool>false</bool>
       </property>
      </widget>
     </widget>

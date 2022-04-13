@@ -6,16 +6,19 @@
 class handlerServer {
 public:
     handlerServer();
-    void iniciarJuego(QString nombreJugador1, QString nombreJugador2);
+    QString iniciarJuego(QString nombreJugador1, QString nombreJugador2);
     QString logicHandler(QString mensajeCliente);
 
 private:
     void finalizarJuego();
+    QString convetirBase64(QImage);
 
 private:
     matrizpaginada *matrizPaginada;
     informacioncliente *cliente;
     int numTarjetaAdescargar;
+    int tarjeta1Presionada;
+    int tarjeta2Presionada;
 };
 
 #endif // HANDLERSERVER_H

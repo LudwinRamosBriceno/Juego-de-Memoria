@@ -39,8 +39,8 @@ void Servidor::leer_mensaje(){
          * comas, donde el interpreteMensaje retornará el dato según la posición que se le indique con un entero*/
         QString nombreJugador1 = interpreteMensaje.interpretarMensaje(2,QString(bufferMensaje));
         QString nombreJugador2 = interpreteMensaje.interpretarMensaje(3,QString(bufferMensaje));
-        manejadorMensajes->iniciarJuego(nombreJugador1,nombreJugador2);
-        //socket->write(mensaje.toUtf8().constData(),mensaje.size());
+        QString mensaje = manejadorMensajes->iniciarJuego(nombreJugador1,nombreJugador2);
+        socket->write(mensaje.toUtf8().constData(),mensaje.size());
     }
     else if (QString(bufferMensaje).contains("finalizar")){
         //manejadorMensajes->finalizarJuego();
@@ -54,7 +54,7 @@ void Servidor::leer_mensaje(){
     }
 }
 void Servidor::enviar(QString mensaje){
-
+    socket->write(mensaje.toUtf8().constData(),mensaje.size());
 
 }
 

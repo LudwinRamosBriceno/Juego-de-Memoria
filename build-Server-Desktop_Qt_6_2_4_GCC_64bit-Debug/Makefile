@@ -14,10 +14,10 @@ EQ            = =
 
 CC            = gcc
 CXX           = g++
-DEFINES       = -DQT_QML_DEBUG -DQT_NETWORK_LIB -DQT_CORE_LIB
+DEFINES       = -DQT_QML_DEBUG -DQT_NETWORK_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -g -std=gnu++1z -Wall -Wextra -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I../Server -I. -I/home/ludwinr/Qt/6.2.4/gcc_64/include -I/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork -I/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore -I. -I/home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/linux-g++
+INCPATH       = -I../Server -I. -I/home/ludwinr/Qt/6.2.4/gcc_64/include -I/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork -I/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets -I/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui -I/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore -I. -I/home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/linux-g++
 QMAKE         = /home/ludwinr/Qt/6.2.4/gcc_64/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -39,8 +39,8 @@ COMPRESS      = gzip -9f
 DISTNAME      = Server1.0.0
 DISTDIR = /home/ludwinr/Escritorio/Proyectos/Proyecto\ 1/Juego-de-Memoria/build-Server-Desktop_Qt_6_2_4_GCC_64bit-Debug/.tmp/Server1.0.0
 LINK          = g++
-LFLAGS        = -Wl,-rpath,/home/ludwinr/Qt/6.2.4/gcc_64/lib
-LIBS          = $(SUBLIBS) /home/ludwinr/Qt/6.2.4/gcc_64/lib/libQt6Network.so /home/ludwinr/Qt/6.2.4/gcc_64/lib/libQt6Core.so -lpthread   
+LFLAGS        = -Wl,-rpath,/home/ludwinr/Qt/6.2.4/gcc_64/lib -Wl,-rpath-link,/home/ludwinr/Qt/6.2.4/gcc_64/lib
+LIBS          = $(SUBLIBS) /home/ludwinr/Qt/6.2.4/gcc_64/lib/libQt6Network.so /home/ludwinr/Qt/6.2.4/gcc_64/lib/libQt6Widgets.so /home/ludwinr/Qt/6.2.4/gcc_64/lib/libQt6Gui.so /home/ludwinr/Qt/6.2.4/gcc_64/lib/libQt6Core.so -lpthread -lGL   
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -53,6 +53,8 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = ../Server/buildermatriz.cpp \
+		../Server/buscadorTarjeta.cpp \
+		../Server/cargardescargartarjeta.cpp \
 		../Server/crearArchivoBin.cpp \
 		../Server/handlerserver.cpp \
 		../Server/imgtarjetas.cpp \
@@ -63,6 +65,8 @@ SOURCES       = ../Server/buildermatriz.cpp \
 		../Server/splitmensaje.cpp \
 		../Server/tarjeta.cpp moc_servidor.cpp
 OBJECTS       = buildermatriz.o \
+		buscadorTarjeta.o \
+		cargardescargartarjeta.o \
 		crearArchivoBin.o \
 		handlerserver.o \
 		imgtarjetas.o \
@@ -315,6 +319,8 @@ DIST          = /home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/spec_pre.prf \
 		/home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/resources_functions.prf \
 		/home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/resources.prf \
 		/home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/moc.prf \
+		/home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/unix/opengl.prf \
+		/home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/uic.prf \
 		/home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/unix/thread.prf \
 		/home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/qmake_use.prf \
 		/home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/file_copies.prf \
@@ -323,6 +329,8 @@ DIST          = /home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/spec_pre.prf \
 		/home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/yacc.prf \
 		/home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/lex.prf \
 		../Server/Server.pro ../Server/buildermatriz.h \
+		../Server/buscadorTarjeta.h \
+		../Server/cargardescargartarjeta.h \
 		../Server/crearArchivoBin.h \
 		../Server/handlerserver.h \
 		../Server/imgtarjetas.h \
@@ -331,6 +339,8 @@ DIST          = /home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/spec_pre.prf \
 		../Server/servidor.h \
 		../Server/splitmensaje.h \
 		../Server/tarjeta.h ../Server/buildermatriz.cpp \
+		../Server/buscadorTarjeta.cpp \
+		../Server/cargardescargartarjeta.cpp \
 		../Server/crearArchivoBin.cpp \
 		../Server/handlerserver.cpp \
 		../Server/imgtarjetas.cpp \
@@ -593,6 +603,8 @@ Makefile: ../Server/Server.pro /home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/linux-g++/q
 		/home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/resources_functions.prf \
 		/home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/resources.prf \
 		/home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/moc.prf \
+		/home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/unix/opengl.prf \
+		/home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/uic.prf \
 		/home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/unix/thread.prf \
 		/home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/qmake_use.prf \
 		/home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/file_copies.prf \
@@ -602,6 +614,8 @@ Makefile: ../Server/Server.pro /home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/linux-g++/q
 		/home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/lex.prf \
 		../Server/Server.pro \
 		/home/ludwinr/Qt/6.2.4/gcc_64/lib/libQt6Network.prl \
+		/home/ludwinr/Qt/6.2.4/gcc_64/lib/libQt6Widgets.prl \
+		/home/ludwinr/Qt/6.2.4/gcc_64/lib/libQt6Gui.prl \
 		/home/ludwinr/Qt/6.2.4/gcc_64/lib/libQt6Core.prl
 	$(QMAKE) -o Makefile ../Server/Server.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug
 /home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/spec_pre.prf:
@@ -846,6 +860,8 @@ Makefile: ../Server/Server.pro /home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/linux-g++/q
 /home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/resources_functions.prf:
 /home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/resources.prf:
 /home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/moc.prf:
+/home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/unix/opengl.prf:
+/home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/uic.prf:
 /home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/unix/thread.prf:
 /home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/qmake_use.prf:
 /home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/file_copies.prf:
@@ -855,6 +871,8 @@ Makefile: ../Server/Server.pro /home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/linux-g++/q
 /home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/lex.prf:
 ../Server/Server.pro:
 /home/ludwinr/Qt/6.2.4/gcc_64/lib/libQt6Network.prl:
+/home/ludwinr/Qt/6.2.4/gcc_64/lib/libQt6Widgets.prl:
+/home/ludwinr/Qt/6.2.4/gcc_64/lib/libQt6Gui.prl:
 /home/ludwinr/Qt/6.2.4/gcc_64/lib/libQt6Core.prl:
 qmake: FORCE
 	@$(QMAKE) -o Makefile ../Server/Server.pro -spec linux-g++ CONFIG+=debug CONFIG+=qml_debug
@@ -871,8 +889,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../Server/buildermatriz.h ../Server/crearArchivoBin.h ../Server/handlerserver.h ../Server/imgtarjetas.h ../Server/informacioncliente.h ../Server/matrizpaginada.h ../Server/servidor.h ../Server/splitmensaje.h ../Server/tarjeta.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../Server/buildermatriz.cpp ../Server/crearArchivoBin.cpp ../Server/handlerserver.cpp ../Server/imgtarjetas.cpp ../Server/informacioncliente.cpp ../Server/main.cpp ../Server/matrizpaginada.cpp ../Server/servidor.cpp ../Server/splitmensaje.cpp ../Server/tarjeta.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../Server/buildermatriz.h ../Server/buscadorTarjeta.h ../Server/cargardescargartarjeta.h ../Server/crearArchivoBin.h ../Server/handlerserver.h ../Server/imgtarjetas.h ../Server/informacioncliente.h ../Server/matrizpaginada.h ../Server/servidor.h ../Server/splitmensaje.h ../Server/tarjeta.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../Server/buildermatriz.cpp ../Server/buscadorTarjeta.cpp ../Server/cargardescargartarjeta.cpp ../Server/crearArchivoBin.cpp ../Server/handlerserver.cpp ../Server/imgtarjetas.cpp ../Server/informacioncliente.cpp ../Server/main.cpp ../Server/matrizpaginada.cpp ../Server/servidor.cpp ../Server/splitmensaje.cpp ../Server/tarjeta.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -910,10 +928,9 @@ compiler_moc_header_clean:
 moc_servidor.cpp: ../Server/servidor.h \
 		../Server/matrizpaginada.h \
 		../Server/tarjeta.h \
-		../Server/informacioncliente.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QString \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstring.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qchar.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/QImage \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qimage.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtguiglobal.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qglobal.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qconfig-bootstrapped.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qconfig.h \
@@ -934,16 +951,24 @@ moc_servidor.cpp: ../Server/servidor.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qglobalstatic.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qnumeric.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qversiontagging.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtgui-config.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qcolor.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qrgb.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qnamespace.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtmetamacros.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringlist.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qlist.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qarraydatapointer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qarraydataops.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qarraydata.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qpair.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcontainertools_impl.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qhashfunctions.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstring.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qchar.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringview.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbytearray.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qrefcount.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qnamespace.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtmetamacros.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qarraydata.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qpair.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qarraydatapointer.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qarraydataops.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcontainertools_impl.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbytearrayalgorithms.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbytearrayview.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringliteral.h \
@@ -952,33 +977,47 @@ moc_servidor.cpp: ../Server/servidor.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qutf8stringview.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringtokenizer.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringbuilder.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qiterator.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbytearraylist.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qalgorithms.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringmatcher.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qrgba64.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qpaintdevice.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qwindowdefs.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qobjectdefs.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qwindowdefs_win.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qrect.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmargins.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qsize.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qpoint.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qpixelformat.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtransform.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qpolygon.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qregion.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qdatastream.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qscopedpointer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qiodevicebase.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qline.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QHash \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qhash.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmath.h \
+		../Server/informacioncliente.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QString \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/QTcpServer \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/qtcpserver.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/qtnetworkglobal.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/qtnetwork-config.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qobject.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qobjectdefs.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qobjectdefs_impl.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qlist.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qhashfunctions.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qiterator.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbytearraylist.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringlist.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qalgorithms.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringmatcher.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcoreevent.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qscopedpointer.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmetatype.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcompare.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qvarlengtharray.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qscopeguard.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qdatastream.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qiodevicebase.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qiterable.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmetacontainer.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcontainerinfo.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtaggedpointer.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmath.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qobject_impl.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbindingstorage.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/qabstractsocket.h \
@@ -986,7 +1025,6 @@ moc_servidor.cpp: ../Server/servidor.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qshareddata.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qiodevice.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qdebug.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qhash.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmap.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qshareddata_impl.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtextstream.h \
@@ -1002,12 +1040,14 @@ moc_servidor.cpp: ../Server/servidor.h \
 		../Server/handlerserver.h \
 		moc_predefs.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/libexec/moc
-	/home/ludwinr/Qt/6.2.4/gcc_64/libexec/moc $(DEFINES) --include '/home/ludwinr/Escritorio/Proyectos/Proyecto 1/Juego-de-Memoria/build-Server-Desktop_Qt_6_2_4_GCC_64bit-Debug/moc_predefs.h' -I/home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/linux-g++ -I'/home/ludwinr/Escritorio/Proyectos/Proyecto 1/Juego-de-Memoria/Server' -I/home/ludwinr/Qt/6.2.4/gcc_64/include -I/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork -I/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../Server/servidor.h -o moc_servidor.cpp
+	/home/ludwinr/Qt/6.2.4/gcc_64/libexec/moc $(DEFINES) --include '/home/ludwinr/Escritorio/Proyectos/Proyecto 1/Juego-de-Memoria/build-Server-Desktop_Qt_6_2_4_GCC_64bit-Debug/moc_predefs.h' -I/home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/linux-g++ -I'/home/ludwinr/Escritorio/Proyectos/Proyecto 1/Juego-de-Memoria/Server' -I/home/ludwinr/Qt/6.2.4/gcc_64/include -I/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork -I/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets -I/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui -I/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../Server/servidor.h -o moc_servidor.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
+compiler_uic_make_all:
+compiler_uic_clean:
 compiler_yacc_decl_make_all:
 compiler_yacc_decl_clean:
 compiler_yacc_impl_make_all:
@@ -1020,10 +1060,9 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean
 
 buildermatriz.o: ../Server/buildermatriz.cpp ../Server/buildermatriz.h \
 		../Server/tarjeta.h \
-		../Server/crearArchivoBin.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QString \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstring.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qchar.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/QImage \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qimage.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtguiglobal.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qglobal.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qconfig-bootstrapped.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qconfig.h \
@@ -1044,16 +1083,24 @@ buildermatriz.o: ../Server/buildermatriz.cpp ../Server/buildermatriz.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qglobalstatic.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qnumeric.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qversiontagging.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtgui-config.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qcolor.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qrgb.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qnamespace.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtmetamacros.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringlist.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qlist.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qarraydatapointer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qarraydataops.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qarraydata.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qpair.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcontainertools_impl.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qhashfunctions.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstring.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qchar.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringview.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbytearray.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qrefcount.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qnamespace.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtmetamacros.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qarraydata.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qpair.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qarraydatapointer.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qarraydataops.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcontainertools_impl.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbytearrayalgorithms.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbytearrayview.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringliteral.h \
@@ -1062,37 +1109,51 @@ buildermatriz.o: ../Server/buildermatriz.cpp ../Server/buildermatriz.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qutf8stringview.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringtokenizer.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringbuilder.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qiterator.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbytearraylist.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qalgorithms.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringmatcher.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qrgba64.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qpaintdevice.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qwindowdefs.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qobjectdefs.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qwindowdefs_win.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qrect.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmargins.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qsize.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qpoint.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qpixelformat.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtransform.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qpolygon.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qregion.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qdatastream.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qscopedpointer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qiodevicebase.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qline.h \
+		../Server/matrizpaginada.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QHash \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qhash.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmath.h \
+		../Server/crearArchivoBin.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QString \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QDebug \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qdebug.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qalgorithms.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qhash.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qhashfunctions.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qiterator.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qlist.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbytearraylist.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringlist.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringmatcher.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmath.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmap.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qshareddata.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qshareddata_impl.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtextstream.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qiodevicebase.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qscopedpointer.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringconverter.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qset.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcontiguouscache.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qsharedpointer.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qsharedpointer_impl.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qobject.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qobjectdefs.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qobjectdefs_impl.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcoreevent.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmetatype.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcompare.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qvarlengtharray.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qscopeguard.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qdatastream.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qiterable.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmetacontainer.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcontainerinfo.h \
@@ -1100,6 +1161,165 @@ buildermatriz.o: ../Server/buildermatriz.cpp ../Server/buildermatriz.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qobject_impl.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbindingstorage.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o buildermatriz.o ../Server/buildermatriz.cpp
+
+buscadorTarjeta.o: ../Server/buscadorTarjeta.cpp ../Server/buscadorTarjeta.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/QImage \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qimage.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtguiglobal.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qglobal.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qconfig.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtcore-config.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qsystemdetection.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qprocessordetection.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcompilerdetection.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtypeinfo.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcontainerfwd.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qsysinfo.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qlogging.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qflags.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qatomic.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbasicatomic.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qgenericatomic.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qglobalstatic.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qnumeric.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qversiontagging.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtgui-config.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qcolor.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qrgb.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qnamespace.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtmetamacros.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringlist.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qlist.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qarraydatapointer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qarraydataops.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qarraydata.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qpair.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcontainertools_impl.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qhashfunctions.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstring.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qchar.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringview.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbytearray.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qrefcount.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbytearrayalgorithms.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbytearrayview.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringliteral.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringalgorithms.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qanystringview.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qutf8stringview.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringtokenizer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringbuilder.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qiterator.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbytearraylist.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qalgorithms.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringmatcher.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qrgba64.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qpaintdevice.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qwindowdefs.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qobjectdefs.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qwindowdefs_win.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qrect.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmargins.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qsize.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qpoint.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qpixelformat.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtransform.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qpolygon.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qregion.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qdatastream.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qscopedpointer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qiodevicebase.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qline.h \
+		../Server/matrizpaginada.h \
+		../Server/tarjeta.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QHash \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qhash.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmath.h \
+		../Server/cargardescargartarjeta.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o buscadorTarjeta.o ../Server/buscadorTarjeta.cpp
+
+cargardescargartarjeta.o: ../Server/cargardescargartarjeta.cpp ../Server/cargardescargartarjeta.h \
+		../Server/matrizpaginada.h \
+		../Server/tarjeta.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/QImage \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qimage.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtguiglobal.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qglobal.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qconfig.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtcore-config.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qsystemdetection.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qprocessordetection.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcompilerdetection.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtypeinfo.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcontainerfwd.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qsysinfo.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qlogging.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qflags.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qatomic.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbasicatomic.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qgenericatomic.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qglobalstatic.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qnumeric.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qversiontagging.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtgui-config.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qcolor.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qrgb.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qnamespace.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtmetamacros.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringlist.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qlist.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qarraydatapointer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qarraydataops.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qarraydata.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qpair.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcontainertools_impl.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qhashfunctions.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstring.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qchar.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringview.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbytearray.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qrefcount.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbytearrayalgorithms.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbytearrayview.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringliteral.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringalgorithms.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qanystringview.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qutf8stringview.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringtokenizer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringbuilder.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qiterator.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbytearraylist.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qalgorithms.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringmatcher.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qrgba64.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qpaintdevice.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qwindowdefs.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qobjectdefs.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qwindowdefs_win.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qrect.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmargins.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qsize.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qpoint.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qpixelformat.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtransform.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qpolygon.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qregion.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qdatastream.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qscopedpointer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qiodevicebase.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qline.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QHash \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qhash.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmath.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o cargardescargartarjeta.o ../Server/cargardescargartarjeta.cpp
 
 crearArchivoBin.o: ../Server/crearArchivoBin.cpp ../Server/crearArchivoBin.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QString \
@@ -1144,37 +1364,56 @@ crearArchivoBin.o: ../Server/crearArchivoBin.cpp ../Server/crearArchivoBin.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringtokenizer.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringbuilder.h \
 		../Server/tarjeta.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QDebug \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qdebug.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qalgorithms.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qhash.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/QImage \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qimage.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtguiglobal.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtgui-config.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qcolor.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qrgb.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringlist.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qlist.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qhashfunctions.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qiterator.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qlist.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbytearraylist.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringlist.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qalgorithms.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringmatcher.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qrgba64.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qpaintdevice.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qwindowdefs.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qobjectdefs.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qwindowdefs_win.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qrect.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmargins.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qsize.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qpoint.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qpixelformat.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtransform.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qpolygon.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qregion.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qdatastream.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qscopedpointer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qiodevicebase.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qline.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QDebug \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qdebug.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qhash.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmath.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmap.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qshareddata.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qshareddata_impl.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtextstream.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qiodevicebase.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qscopedpointer.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringconverter.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qset.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcontiguouscache.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qsharedpointer.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qsharedpointer_impl.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qobject.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qobjectdefs.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qobjectdefs_impl.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcoreevent.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmetatype.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcompare.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qvarlengtharray.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qscopeguard.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qdatastream.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qiterable.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmetacontainer.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcontainerinfo.h \
@@ -1186,10 +1425,9 @@ crearArchivoBin.o: ../Server/crearArchivoBin.cpp ../Server/crearArchivoBin.h \
 handlerserver.o: ../Server/handlerserver.cpp ../Server/handlerserver.h \
 		../Server/matrizpaginada.h \
 		../Server/tarjeta.h \
-		../Server/informacioncliente.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QString \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstring.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qchar.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/QImage \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qimage.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtguiglobal.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qglobal.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qconfig-bootstrapped.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qconfig.h \
@@ -1210,16 +1448,24 @@ handlerserver.o: ../Server/handlerserver.cpp ../Server/handlerserver.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qglobalstatic.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qnumeric.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qversiontagging.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtgui-config.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qcolor.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qrgb.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qnamespace.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtmetamacros.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringlist.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qlist.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qarraydatapointer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qarraydataops.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qarraydata.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qpair.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcontainertools_impl.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qhashfunctions.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstring.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qchar.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringview.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbytearray.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qrefcount.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qnamespace.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtmetamacros.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qarraydata.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qpair.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qarraydatapointer.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qarraydataops.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcontainertools_impl.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbytearrayalgorithms.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbytearrayview.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringliteral.h \
@@ -1228,8 +1474,51 @@ handlerserver.o: ../Server/handlerserver.cpp ../Server/handlerserver.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qutf8stringview.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringtokenizer.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringbuilder.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qiterator.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbytearraylist.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qalgorithms.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringmatcher.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qrgba64.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qpaintdevice.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qwindowdefs.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qobjectdefs.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qwindowdefs_win.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qrect.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmargins.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qsize.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qpoint.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qpixelformat.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtransform.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qpolygon.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qregion.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qdatastream.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qscopedpointer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qiodevicebase.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qline.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QHash \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qhash.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmath.h \
+		../Server/informacioncliente.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QString \
 		../Server/splitmensaje.h \
-		../Server/buildermatriz.h
+		../Server/buildermatriz.h \
+		../Server/buscadorTarjeta.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QBuffer \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbuffer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qiodevice.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qobject.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcoreevent.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmetatype.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcompare.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qvarlengtharray.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qscopeguard.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qiterable.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmetacontainer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcontainerinfo.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtaggedpointer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qobject_impl.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbindingstorage.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o handlerserver.o ../Server/handlerserver.cpp
 
 imgtarjetas.o: ../Server/imgtarjetas.cpp ../Server/imgtarjetas.h \
@@ -1418,6 +1707,26 @@ main.o: ../Server/main.cpp /home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QCoreApp
 		../Server/servidor.h \
 		../Server/matrizpaginada.h \
 		../Server/tarjeta.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/QImage \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qimage.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtguiglobal.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtgui-config.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qcolor.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qrgb.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qrgba64.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qpaintdevice.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qwindowdefs.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qwindowdefs_win.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qrect.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmargins.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qsize.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qpoint.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qpixelformat.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtransform.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qpolygon.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qregion.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qline.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QHash \
 		../Server/informacioncliente.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QString \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/QTcpServer \
@@ -1434,16 +1743,10 @@ main.o: ../Server/main.cpp /home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QCoreApp
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../Server/main.cpp
 
 matrizpaginada.o: ../Server/matrizpaginada.cpp ../Server/matrizpaginada.h \
-		../Server/tarjeta.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o matrizpaginada.o ../Server/matrizpaginada.cpp
-
-servidor.o: ../Server/servidor.cpp ../Server/servidor.h \
-		../Server/matrizpaginada.h \
 		../Server/tarjeta.h \
-		../Server/informacioncliente.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QString \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstring.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qchar.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/QImage \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qimage.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtguiglobal.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qglobal.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qconfig-bootstrapped.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qconfig.h \
@@ -1464,16 +1767,24 @@ servidor.o: ../Server/servidor.cpp ../Server/servidor.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qglobalstatic.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qnumeric.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qversiontagging.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtgui-config.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qcolor.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qrgb.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qnamespace.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtmetamacros.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringlist.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qlist.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qarraydatapointer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qarraydataops.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qarraydata.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qpair.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcontainertools_impl.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qhashfunctions.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstring.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qchar.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringview.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbytearray.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qrefcount.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qnamespace.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtmetamacros.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qarraydata.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qpair.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qarraydatapointer.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qarraydataops.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcontainertools_impl.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbytearrayalgorithms.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbytearrayview.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringliteral.h \
@@ -1482,33 +1793,126 @@ servidor.o: ../Server/servidor.cpp ../Server/servidor.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qutf8stringview.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringtokenizer.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringbuilder.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qiterator.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbytearraylist.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qalgorithms.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringmatcher.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qrgba64.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qpaintdevice.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qwindowdefs.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qobjectdefs.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qwindowdefs_win.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qrect.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmargins.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qsize.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qpoint.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qpixelformat.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtransform.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qpolygon.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qregion.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qdatastream.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qscopedpointer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qiodevicebase.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qline.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QHash \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qhash.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmath.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o matrizpaginada.o ../Server/matrizpaginada.cpp
+
+servidor.o: ../Server/servidor.cpp ../Server/servidor.h \
+		../Server/matrizpaginada.h \
+		../Server/tarjeta.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/QImage \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qimage.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtguiglobal.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qglobal.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qconfig.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtcore-config.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qsystemdetection.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qprocessordetection.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcompilerdetection.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtypeinfo.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcontainerfwd.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qsysinfo.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qlogging.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qflags.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qatomic.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbasicatomic.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qgenericatomic.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qglobalstatic.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qnumeric.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qversiontagging.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtgui-config.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qcolor.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qrgb.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qnamespace.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtmetamacros.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringlist.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qlist.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qarraydatapointer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qarraydataops.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qarraydata.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qpair.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcontainertools_impl.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qhashfunctions.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstring.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qchar.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringview.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbytearray.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qrefcount.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbytearrayalgorithms.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbytearrayview.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringliteral.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringalgorithms.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qanystringview.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qutf8stringview.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringtokenizer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringbuilder.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qiterator.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbytearraylist.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qalgorithms.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringmatcher.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qrgba64.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qpaintdevice.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qwindowdefs.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qobjectdefs.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qwindowdefs_win.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qrect.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmargins.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qsize.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qpoint.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qpixelformat.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtransform.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qpolygon.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qregion.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qdatastream.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qscopedpointer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qiodevicebase.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qline.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QHash \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qhash.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmath.h \
+		../Server/informacioncliente.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QString \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/QTcpServer \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/qtcpserver.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/qtnetworkglobal.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/qtnetwork-config.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qobject.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qobjectdefs.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qobjectdefs_impl.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qlist.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qhashfunctions.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qiterator.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbytearraylist.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringlist.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qalgorithms.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringmatcher.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcoreevent.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qscopedpointer.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmetatype.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcompare.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qvarlengtharray.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qscopeguard.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qdatastream.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qiodevicebase.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qiterable.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmetacontainer.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcontainerinfo.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtaggedpointer.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmath.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qobject_impl.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbindingstorage.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/qabstractsocket.h \
@@ -1516,7 +1920,6 @@ servidor.o: ../Server/servidor.cpp ../Server/servidor.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qshareddata.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qiodevice.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qdebug.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qhash.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmap.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qshareddata_impl.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtextstream.h \
@@ -1579,7 +1982,80 @@ splitmensaje.o: ../Server/splitmensaje.cpp ../Server/splitmensaje.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringbuilder.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o splitmensaje.o ../Server/splitmensaje.cpp
 
-tarjeta.o: ../Server/tarjeta.cpp ../Server/tarjeta.h
+tarjeta.o: ../Server/tarjeta.cpp ../Server/tarjeta.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/QImage \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qimage.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtguiglobal.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qglobal.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qconfig.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtcore-config.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qsystemdetection.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qprocessordetection.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcompilerdetection.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtypeinfo.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcontainerfwd.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qsysinfo.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qlogging.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qflags.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qatomic.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbasicatomic.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qgenericatomic.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qglobalstatic.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qnumeric.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qversiontagging.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtgui-config.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qcolor.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qrgb.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qnamespace.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtmetamacros.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringlist.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qlist.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qarraydatapointer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qarraydataops.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qarraydata.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qpair.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcontainertools_impl.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qhashfunctions.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstring.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qchar.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringview.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbytearray.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qrefcount.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbytearrayalgorithms.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbytearrayview.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringliteral.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringalgorithms.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qanystringview.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qutf8stringview.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringtokenizer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringbuilder.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qiterator.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbytearraylist.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qalgorithms.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringmatcher.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qrgba64.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qpaintdevice.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qwindowdefs.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qobjectdefs.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qwindowdefs_win.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qrect.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmargins.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qsize.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qpoint.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qpixelformat.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtransform.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qpolygon.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qregion.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qdatastream.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qscopedpointer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qiodevicebase.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qline.h \
+		../Server/imgtarjetas.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QString
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o tarjeta.o ../Server/tarjeta.cpp
 
 moc_servidor.o: moc_servidor.cpp 

@@ -8,7 +8,8 @@ class buscadorTarjeta {
 
 public:
     buscadorTarjeta();
-    QImage buscarTarjeta(int,matrizpaginada*,int);
+    QImage buscarImgTarjeta(int,matrizpaginada*,int);
+    void buscarTarjeta();
 
 };
 
