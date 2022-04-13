@@ -7,7 +7,7 @@
 class handlerCliente {
 public:
     handlerCliente();
-    void logicCliente(QString,QPushButton*);
+    void pintarImgTarjeta(QString,QPushButton*);
     void seleccionTurno(QString, QLabel*);
     QImage decodeBase64Img(QString);
 };

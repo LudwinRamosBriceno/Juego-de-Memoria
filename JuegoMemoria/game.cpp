@@ -57,7 +57,7 @@ void Game::leer_mensaje(){
         manejadorMensajes->seleccionTurno(QString(bufferMensaje),ui->AvisosPjuego);
 
     }else{
-        manejadorMensajes->logicCliente(QString(bufferMensaje),TarjetaRevelada);
+        manejadorMensajes->pintarImgTarjeta(QString(bufferMensaje),TarjetaRevelada);
     }
 }
 void Game::descubrirTarjeta(){

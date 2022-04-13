@@ -27,7 +27,6 @@ void Servidor::conexion_nueva(){
 }
 
 void Servidor::leer_mensaje(){
-
     splitMensaje interpreteMensaje;
     QByteArray bufferMensaje;
     bufferMensaje.resize(socket->bytesAvailable()); // indica el tamaño de la información enviada.

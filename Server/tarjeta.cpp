@@ -35,6 +35,9 @@ void tarjeta::setImgTarjeta() {
     imgtarjetas img;
     QString rutaImagen = img.getImgTarjeta(tipoTarjeta);
     imagenTarjeta.load(rutaImagen);
+    if(imagenTarjeta.isNull()){
+        qDebug()<<"Es nulo";
+    }
 }
 
 QImage tarjeta::getImgTarjeta() {

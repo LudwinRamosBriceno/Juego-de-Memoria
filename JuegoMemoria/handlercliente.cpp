@@ -4,9 +4,10 @@ handlerCliente::handlerCliente() {
 
 }
 
-void handlerCliente::logicCliente(QString mensajeServer, QPushButton* tarjetaPresionada) {
+void handlerCliente::pintarImgTarjeta(QString mensajeServer, QPushButton* tarjetaPresionada) {
    //if (mensajeServer.contains("imgTarjeta")){
    //}
+   tarjetaPresionada->setStyleSheet("#"+tarjetaPresionada->objectName()+"{}");
    QImage imgTarjeta = decodeBase64Img(mensajeServer);
    QPixmap pixmap = QPixmap::fromImage(imgTarjeta);
    QIcon iconTarjeta(pixmap);
@@ -25,7 +26,7 @@ void handlerCliente::seleccionTurno(QString mensaje, QLabel *textAviso) {
 }
 
 QImage handlerCliente::decodeBase64Img(QString imgBase64) {
-    QByteArray bytesImg = QByteArray::fromBase64(imgBase64.toUtf8().constData());
+    QByteArray bytesImg = QByteArray::fromBase64(imgBase64.toUtf8());
     QImage image = QImage::fromData(bytesImg,"png");
     return image;
 }
