@@ -328,8 +328,7 @@ DIST          = /home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/spec_pre.prf \
 		/home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/exceptions.prf \
 		/home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/yacc.prf \
 		/home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/lex.prf \
-		../Server/Server.pro ../Server/buildermatriz.h \
-		../Server/buscadorTarjeta.h \
+		../Server/Server.pro ../Server/buscadorTarjeta.h \
 		../Server/cargardescargartarjeta.h \
 		../Server/crearArchivoBin.h \
 		../Server/handlerserver.h \
@@ -889,7 +888,7 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../Server/buildermatriz.h ../Server/buscadorTarjeta.h ../Server/cargardescargartarjeta.h ../Server/crearArchivoBin.h ../Server/handlerserver.h ../Server/imgtarjetas.h ../Server/informacioncliente.h ../Server/matrizpaginada.h ../Server/servidor.h ../Server/splitmensaje.h ../Server/tarjeta.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../Server/buscadorTarjeta.h ../Server/cargardescargartarjeta.h ../Server/crearArchivoBin.h ../Server/handlerserver.h ../Server/imgtarjetas.h ../Server/informacioncliente.h ../Server/matrizpaginada.h ../Server/servidor.h ../Server/splitmensaje.h ../Server/tarjeta.h $(DISTDIR)/
 	$(COPY_FILE) --parents ../Server/buildermatriz.cpp ../Server/buscadorTarjeta.cpp ../Server/cargardescargartarjeta.cpp ../Server/crearArchivoBin.cpp ../Server/handlerserver.cpp ../Server/imgtarjetas.cpp ../Server/informacioncliente.cpp ../Server/main.cpp ../Server/matrizpaginada.cpp ../Server/servidor.cpp ../Server/splitmensaje.cpp ../Server/tarjeta.cpp $(DISTDIR)/
 
 
@@ -2055,7 +2054,32 @@ tarjeta.o: ../Server/tarjeta.cpp ../Server/tarjeta.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qiodevicebase.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qline.h \
 		../Server/imgtarjetas.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QString
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QString \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QDebug \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qdebug.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qhash.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmath.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmap.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qshareddata.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qshareddata_impl.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtextstream.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringconverter.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qset.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcontiguouscache.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qsharedpointer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qobject.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcoreevent.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmetatype.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcompare.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qvarlengtharray.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qscopeguard.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qiterable.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmetacontainer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcontainerinfo.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtaggedpointer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qobject_impl.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbindingstorage.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o tarjeta.o ../Server/tarjeta.cpp
 
 moc_servidor.o: moc_servidor.cpp 

@@ -29,7 +29,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    buildermatriz.h \
     buscadorTarjeta.h \
     cargardescargartarjeta.h \
     crearArchivoBin.h \
@@ -40,3 +39,5 @@ HEADERS += \
     servidor.h \
     splitmensaje.h \
     tarjeta.h
+
+RESOURCES +=

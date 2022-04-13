@@ -49,6 +49,7 @@ void Game::leer_mensaje(){
     if (QString(bufferMensaje).contains("ganador")){
         ui->AvisosPjuego->move(380,50);
         ui->AvisosPjuego->setText("El Ganador es: "+interpreteMensaje.interpretarMensaje(2,QString(bufferMensaje)));
+        ui->AvisosPjuego->adjustSize();
         QString mensaje = "finalizar";
         socket->write(mensaje.toUtf8().constData(),mensaje.size());
 

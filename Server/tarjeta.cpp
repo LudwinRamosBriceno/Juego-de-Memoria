@@ -34,9 +34,7 @@ bool tarjeta::getRevelada(){
 void tarjeta::setImgTarjeta() {
     imgtarjetas img;
     QString rutaImagen = img.getImgTarjeta(tipoTarjeta);
-    qDebug()<<"Es";
     imagenTarjeta.load(rutaImagen);
-    qDebug()<<"Aqui";
 }
 
 QImage tarjeta::getImgTarjeta() {

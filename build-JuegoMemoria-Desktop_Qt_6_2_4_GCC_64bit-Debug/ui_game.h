@@ -515,7 +515,13 @@ public:
 "border-radius: 7px;"));
         AvisosPjuego = new QLabel(pantalla_2);
         AvisosPjuego->setObjectName(QString::fromUtf8("AvisosPjuego"));
-        AvisosPjuego->setGeometry(QRect(380, 50, 67, 17));
+        AvisosPjuego->setGeometry(QRect(380, 50, 21, 17));
+        QSizePolicy sizePolicy1(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy1.setHorizontalStretch(0);
+        sizePolicy1.setVerticalStretch(0);
+        sizePolicy1.setHeightForWidth(AvisosPjuego->sizePolicy().hasHeightForWidth());
+        AvisosPjuego->setSizePolicy(sizePolicy1);
+        AvisosPjuego->setAlignment(Qt::AlignCenter);
         pantallas->addWidget(pantalla_2);
         Game->setCentralWidget(centralwidget);
 

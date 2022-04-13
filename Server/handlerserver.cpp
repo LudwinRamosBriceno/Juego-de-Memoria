@@ -27,8 +27,10 @@ QString handlerServer::iniciarJuego(QString nombreJugador1, QString nombreJugado
     switch (numRandom) {
         case 0:
             mensaje = "turnoJugador1";
+            break;
         case 1:
             mensaje = "turnoJugador2";
+            break;
     }
     return mensaje;
     //qDebug()<<cliente->getNombreJugador1();

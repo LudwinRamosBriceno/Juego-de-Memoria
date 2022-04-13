@@ -18,10 +18,10 @@ void handlerCliente::seleccionTurno(QString mensaje, QLabel *textAviso) {
     if (mensaje.contains("turnoJugador1")){
         textAviso->move(90,50);
     }
-    else if(mensaje.contains("turnoJugador1")){
+    else if(mensaje.contains("turnoJugador2")){
         textAviso->move(650,50);
     }
-
+    textAviso->adjustSize();
 }
 
 QImage handlerCliente::decodeBase64Img(QString imgBase64) {

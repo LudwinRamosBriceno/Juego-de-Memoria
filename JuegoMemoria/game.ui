@@ -884,15 +884,21 @@ border-radius: 7px;</string>
        <rect>
         <x>380</x>
         <y>50</y>
-        <width>67</width>
+        <width>21</width>
         <height>17</height>
        </rect>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
       </property>
       <property name="text">
        <string/>
       </property>
-      <property name="scaledContents">
-       <bool>false</bool>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
       </property>
      </widget>
     </widget>
