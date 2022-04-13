@@ -361,7 +361,7 @@ public:
         button1->setStyleSheet(QString::fromUtf8("image: url(:/Img_espalda.png);\n"
 "border: 4px solid gray;\n"
 "border-radius: 8px;"));
-        button1->setIconSize(QSize(115, 50));
+        button1->setIconSize(QSize(100, 50));
         button1->setCheckable(false);
         button1->setAutoRepeat(false);
 
@@ -568,6 +568,8 @@ public:
         sizePolicy2.setVerticalStretch(0);
         sizePolicy2.setHeightForWidth(AvisosPjuego->sizePolicy().hasHeightForWidth());
         AvisosPjuego->setSizePolicy(sizePolicy2);
+        AvisosPjuego->setStyleSheet(QString::fromUtf8("font: 700 italic 12pt \"Ubuntu\";\n"
+"color: rgb(211, 215, 207);"));
         AvisosPjuego->setAlignment(Qt::AlignCenter);
         pantallas->addWidget(pantalla_2);
         Game->setCentralWidget(centralwidget);

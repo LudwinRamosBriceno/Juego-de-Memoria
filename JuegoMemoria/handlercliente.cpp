@@ -12,12 +12,13 @@ void handlerCliente::pintarImgTarjeta(QString mensajeServer, QPushButton* tarjet
    QPixmap pixmap = QPixmap::fromImage(imgTarjeta);
    QIcon iconTarjeta(pixmap);
    tarjetaPresionada->setIcon(iconTarjeta);
+   tarjetaPresionada->setIconSize(QSize(100,50));
 }
 
 void handlerCliente::seleccionTurno(QString mensaje, QLabel *textAviso) {
     textAviso->setText("¡Tu turno!");
     if (mensaje.contains("turnoJugador1")){
-        textAviso->move(90,50);
+        textAviso->move(95,50);
     }
     else if(mensaje.contains("turnoJugador2")){
         textAviso->move(650,50);

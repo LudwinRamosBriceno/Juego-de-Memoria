@@ -2,6 +2,7 @@
 #include <fstream>
 #include <iostream>
 #include <tarjeta.h>
+#include <QDebug>
 using namespace std;
 
 CargarDescargarTarjeta::CargarDescargarTarjeta(){
@@ -10,7 +11,6 @@ CargarDescargarTarjeta::CargarDescargarTarjeta(){
 
 void CargarDescargarTarjeta::cargarTarjeta(int IDtarjetaAcargar,matrizpaginada* matriz, int numTarjetaAdescargar){
     descargarTarjeta(matriz,numTarjetaAdescargar); //se actualiza la tarjeta que sera removida de la matrizPaginada
-
     tarjeta tarjetaAcargar; // tarjeta que será añadida a la matriz paginada
     tarjetaDisco tarjetaAmatriz; // se crea la estructura que se leerá del archivo binario que tiene los datos de la tarjeta
     ifstream file;
@@ -29,22 +29,25 @@ void CargarDescargarTarjeta::cargarTarjeta(int IDtarjetaAcargar,matrizpaginada* 
     tarjetaAcargar.setRevelada(tarjetaAmatriz.revelada);
     tarjetaAcargar.setImgTarjeta();
     matriz->setTarjetaCargada(tarjetaAcargar.getIdentificador(),tarjetaAcargar);
+
 }
 // se actualiza la tarjeta a disco que será removida de la matriz paginada
 void CargarDescargarTarjeta::descargarTarjeta(matrizpaginada* matriz, int numTarjetaAdescargar){
     ofstream file;
     tarjeta tarjetaAdescargar;
-    QHash matrizPaginada = matriz->getTarjetasCargadas();
-    QHash<int,tarjeta>::Iterator iterador;
+    QHash <int,tarjeta> matrizPaginada = matriz->getTarjetasCargadas();
+    QHash<int,tarjeta>::Iterator iterador = matrizPaginada.begin();
     int index = 0;
+    bool end = false;
 
-    for (iterador = matrizPaginada.begin();iterador!=matrizPaginada.end();iterador++ ){
+    while(!end){
         if (index == numTarjetaAdescargar){
-
             tarjetaAdescargar = iterador.value();
-            iterador = matrizPaginada.end();
+            end = true;
+        }else{
+            index++;
+            iterador++;
         }
-        index++;
     }
     // se crea una estructura para guardar una tarjeta en disco
     tarjetaDisco tarjeta = {tarjetaAdescargar.getIdentificador(),tarjetaAdescargar.getTipoTarjeta(),tarjetaAdescargar.getRevelada()};
