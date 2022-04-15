@@ -35,8 +35,8 @@ void CargarDescargarTarjeta::cargarTarjeta(int IDtarjetaAcargar,matrizpaginada* 
 void CargarDescargarTarjeta::descargarTarjeta(matrizpaginada* matriz, int numTarjetaAdescargar){
     ofstream file;
     tarjeta tarjetaAdescargar;
-    QHash <int,tarjeta> matrizPaginada = matriz->getTarjetasCargadas();
-    QHash<int,tarjeta>::Iterator iterador = matrizPaginada.begin();
+    QHash <int,tarjeta> *matrizPaginada = matriz->getTarjetasCargadas();
+    QHash<int,tarjeta>::iterator iterador = matrizPaginada->begin();
     int index = 0;
     bool end = false;
 
@@ -59,5 +59,5 @@ void CargarDescargarTarjeta::descargarTarjeta(matrizpaginada* matriz, int numTar
         file.write((char *)&tarjeta, sizeof(tarjetaDisco));
         file.close();
     }
-    matriz->getTarjetasCargadas().erase(matrizPaginada.find(tarjetaAdescargar.getIdentificador()));
+    matriz->getTarjetasCargadas()->erase(matrizPaginada->find(tarjetaAdescargar.getIdentificador()));
 }

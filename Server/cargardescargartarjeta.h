@@ -14,8 +14,8 @@ class CargarDescargarTarjeta {
 public:
     CargarDescargarTarjeta();
     void cargarTarjeta(int,matrizpaginada*,int);
-private:
     void descargarTarjeta(matrizpaginada*,int);
+
 };
 
 #endif // CARGARDESCARGARTARJETA_H

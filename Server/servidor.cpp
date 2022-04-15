@@ -50,6 +50,10 @@ void Servidor::leer_mensaje(){
     } else{
         QString mensajeAenviar = manejadorMensajes->logicHandler(QString(bufferMensaje));
         socket->write(mensajeAenviar.toUtf8().constData(),mensajeAenviar.size());
+        if (QString(bufferMensaje).contains("segundaTarjeta")){
+            mensajeAenviar = "";
+            socket->write(mensajeAenviar.toUtf8().constData(),mensajeAenviar.size());
+        }
     }
 }
 void Servidor::enviar(QString mensaje){

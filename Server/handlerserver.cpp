@@ -4,6 +4,7 @@
 #include <splitmensaje.h>
 #include <buscadorTarjeta.h>
 #include <QBuffer>
+#include <QDebug>
 
 
 handlerServer::handlerServer() {
@@ -27,13 +28,14 @@ QString handlerServer::iniciarJuego(QString nombreJugador1, QString nombreJugado
     switch (numRandom) {
         case 0:
             mensaje = "turnoJugador1";
+            turnoJugador = 1;
             break;
         case 1:
             mensaje = "turnoJugador2";
+            turnoJugador = 2;
             break;
     }
     return mensaje;
-    //qDebug()<<cliente->getNombreJugador1();
 }
 void handlerServer::finalizarJuego(){
     matrizPaginada->liberarMatrizPaginada();
@@ -54,7 +56,16 @@ QString handlerServer::logicHandler(QString mensajeCliente){
         tarjeta1Presionada = interpreteMensaje.interpretarMensaje(2,mensajeCliente).toInt(); // key de la primera tarjeta
         QImage imgTarjetaBuscada= buscador.buscarImgTarjeta(tarjeta1Presionada,matrizPaginada,numTarjetaAdescargar);
         QString imgTarjetaBase64 = convetirBase64(imgTarjetaBuscada);
-        mensaje = /*"imgTarjeta," +*/ imgTarjetaBase64;
+        mensaje = imgTarjetaBase64;
+    }else if(mensajeCliente.contains("segundaTarjeta")){
+        numTarjetaAdescargar = 1; /* indice de la tarjeta que será removida en caso de que la tarjeta buscada no
+                                   esté en la matriz paginada */
+        buscadorTarjeta buscador;
+        tarjeta1Presionada = interpreteMensaje.interpretarMensaje(2,mensajeCliente).toInt(); // key de la primera tarjeta
+        QImage imgTarjetaBuscada= buscador.buscarImgTarjeta(tarjeta1Presionada,matrizPaginada,numTarjetaAdescargar);
+        QString imgTarjetaBase64 = convetirBase64(imgTarjetaBuscada);
+        mensaje = imgTarjetaBase64;
+
     }
 
     return mensaje;

@@ -9,12 +9,11 @@ class matrizpaginada{
 public:
     matrizpaginada();
     void setTarjetaCargada(int,tarjeta);
-    QHash<int,tarjeta> getTarjetasCargadas();
+    QHash<int,tarjeta>* getTarjetasCargadas();
     void liberarMatrizPaginada();
 
 private:
-    //tarjeta *tarjetasCargadas;
-    QHash <int,tarjeta>tarjetasCargadas;
+    QHash <int,tarjeta> *tarjetasCargadas;
 
 };
 

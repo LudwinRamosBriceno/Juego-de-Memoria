@@ -68,6 +68,10 @@ void Game::descubrirTarjeta(){
         QString mensajeEnviar ="primeraTarjeta,"+QString::number(identificadorTarjetaRevelada);
         inicioTurno = true;
         socket->write(mensajeEnviar.toUtf8().constData(),mensajeEnviar.size());
+    }else{
+        QString mensajeEnviar ="segundaTarjeta,"+QString::number(identificadorTarjetaRevelada);
+        inicioTurno = false;
+        socket->write(mensajeEnviar.toUtf8().constData(),mensajeEnviar.size());
     }
     //se castea el boton
 

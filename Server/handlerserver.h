@@ -2,12 +2,13 @@
 #define HANDLERSERVER_H
 #include <matrizpaginada.h>
 #include <informacioncliente.h>
+#include <QTcpSocket>
 
 class handlerServer {
 public:
     handlerServer();
-    QString iniciarJuego(QString nombreJugador1, QString nombreJugador2);
-    QString logicHandler(QString mensajeCliente);
+    QString iniciarJuego(QString , QString );
+    QString logicHandler(QString);
 
 private:
     void finalizarJuego();
@@ -19,6 +20,7 @@ private:
     int numTarjetaAdescargar;
     int tarjeta1Presionada;
     int tarjeta2Presionada;
+    int turnoJugador;
 };
 
 #endif // HANDLERSERVER_H

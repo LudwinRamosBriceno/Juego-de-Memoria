@@ -10,6 +10,7 @@ public:
     void pintarImgTarjeta(QString,QPushButton*);
     void seleccionTurno(QString, QLabel*);
     QImage decodeBase64Img(QString);
+
 };
 
 #endif // HANDLERCLIENTE_H
