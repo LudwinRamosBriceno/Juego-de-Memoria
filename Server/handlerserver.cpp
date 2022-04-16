@@ -63,7 +63,7 @@ QString handlerServer::logicHandler(QString mensajeCliente){
         ActualizarDatosJugadores actualizadorInfoCliente;
         buscadorTarjeta buscador;
         tarjeta2Presionada = interpreteMensaje.interpretarMensaje(2,mensajeCliente).toInt(); // key de la primera tarjeta
-        QImage imgTarjetaBuscada= buscador.buscarImgTarjeta(tarjeta1Presionada,matrizPaginada,numTarjetaAdescargar);
+        QImage imgTarjetaBuscada= buscador.buscarImgTarjeta(tarjeta2Presionada,matrizPaginada,numTarjetaAdescargar);
         QString imgTarjetaBase64 = convetirBase64(imgTarjetaBuscada);
         mensaje = imgTarjetaBase64;
         actualizadorInfoCliente.actualizarDatos(turnoJugador,matrizPaginada,cliente,tarjeta1Presionada,tarjeta2Presionada);
@@ -73,6 +73,8 @@ QString handlerServer::logicHandler(QString mensajeCliente){
     return mensaje;
 }
 QString handlerServer::getParametrosActualizados() {
+    char tipoTarjeta1Presionada = matrizPaginada->getTarjetasCargadas()->value(tarjeta1Presionada).getTipoTarjeta();
+    char tipoTarjeta2Presionada = matrizPaginada->getTarjetasCargadas()->value(tarjeta2Presionada).getTipoTarjeta();
     QString mensaje;
     if (turnoJugador == 1){
         mensaje = "turnoJugador2,"+QString::number(cliente->getPuntajeJugador1());
@@ -80,9 +82,11 @@ QString handlerServer::getParametrosActualizados() {
     }else{
         mensaje = "turnoJugador1,"+QString::number(cliente->getPuntajeJugador2());
         turnoJugador = 1;
-    }
+    } if (tipoTarjeta1Presionada==tipoTarjeta2Presionada){mensaje +=",coincide";}
+
     return mensaje;
 }
+
 QString handlerServer::convetirBase64(QImage imgTarjetaBuscada) {
     QByteArray bytesImg;
     QBuffer buffer(&bytesImg);
@@ -91,6 +95,4 @@ QString handlerServer::convetirBase64(QImage imgTarjetaBuscada) {
 
     return imgTarjetaBuscada64;
 }
-
-
 

@@ -17,6 +17,7 @@ public:
 private slots:
     void leer_mensaje();
     void conexion_nueva();
+    void enviarCambioTurno();
 
 private:
     QTcpSocket *socket;

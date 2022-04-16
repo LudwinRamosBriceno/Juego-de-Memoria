@@ -3,6 +3,7 @@
 #include <splitmensaje.h>
 #include <iostream>
 #include <QVector>
+#include <QTimer>
 
 Game::Game(QWidget *parent) : QMainWindow(parent), ui(new Ui::Game){
     ui->setupUi(this);
@@ -34,6 +35,9 @@ void Game::on_buttonComenzar_clicked() {
         // se envia al servidor la instruccion de iniciar el juego junto con los nombres de los jugadores;
         socket->write(nombresJugadores.toUtf8().constData(),nombresJugadores.size());
         ui->pantallas->setCurrentIndex(1);
+
+        ui->namePJugador1->setText(jugador1);
+        ui->namePJugador2->setText(jugador2);
     }
     else{
         ui->AvisoCaracteres->setVisible(true);
@@ -60,22 +64,24 @@ void Game::leer_mensaje(){
         manejadorMensajes->pintarImgTarjeta(QString(bufferMensaje),TarjetaReveladaActual);
     }
 }
+
 void Game::descubrirTarjeta(){
+    QString mensajeEnviar;
     TarjetaReveladaActual = qobject_cast<QPushButton*>(sender()); // se castea el boton que dispara el evento
     int identificadorTarjetaRevelada = identificadorTarjetaSeleccionada.encontrarIdentificador(TarjetaReveladaActual->objectName());
 
     if (!inicioTurno){
         TarjetaRevelada1 = TarjetaReveladaActual;
-        TarjetaRevelada1->setEnabled(false);
-        QString mensajeEnviar ="primeraTarjeta,"+QString::number(identificadorTarjetaRevelada);
+        //TarjetaRevelada1->setEnabled(false);
+        mensajeEnviar ="primeraTarjeta,"+QString::number(identificadorTarjetaRevelada);
         inicioTurno = true;
-        socket->write(mensajeEnviar.toUtf8().constData(),mensajeEnviar.size());
+
     }else{
         TarjetaRevelada2 = TarjetaReveladaActual;
-        QString mensajeEnviar ="segundaTarjeta,"+QString::number(identificadorTarjetaRevelada);
+        mensajeEnviar ="segundaTarjeta,"+QString::number(identificadorTarjetaRevelada);
         inicioTurno = false;
-        socket->write(mensajeEnviar.toUtf8().constData(),mensajeEnviar.size());
     }
+    socket->write(mensajeEnviar.toUtf8().constData(),mensajeEnviar.size());
     //se castea el boton
 
 }

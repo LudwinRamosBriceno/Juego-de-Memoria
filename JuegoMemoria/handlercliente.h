@@ -11,7 +11,6 @@ public:
     void seleccionTurno(QString, QLabel*,QPushButton*,QPushButton*,QLabel*,QLabel*);
     QImage decodeBase64Img(QString);
     void actualizarPuntajePantalla();
-
 };
 
 #endif // HANDLERCLIENTE_H

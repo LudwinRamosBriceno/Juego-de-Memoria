@@ -6,6 +6,7 @@
 #include <iostream>
 #include <splitmensaje.h>
 #include <crearArchivoBin.h>
+#include <QTimer>
 
 Servidor::Servidor(QObject *parent): QObject(parent){
 
@@ -51,13 +52,12 @@ void Servidor::leer_mensaje(){
         QString mensajeAenviar = manejadorMensajes->logicHandler(QString(bufferMensaje));
         socket->write(mensajeAenviar.toUtf8().constData(),mensajeAenviar.size());
         if (QString(bufferMensaje).contains("segundaTarjeta")){
-            mensajeAenviar = manejadorMensajes->getParametrosActualizados();
-            socket->write(mensajeAenviar.toUtf8().constData(),mensajeAenviar.size());
+            QTimer::singleShot(1000,this,SLOT(enviarCambioTurno()));
         }
     }
 }
-void Servidor::enviar(QString mensaje){
-    socket->write(mensaje.toUtf8().constData(),mensaje.size());
-
+void Servidor::enviarCambioTurno(){
+    QString mensajeAenviar = manejadorMensajes->getParametrosActualizados();
+    socket->write(mensajeAenviar.toUtf8().constData(),mensajeAenviar.size());
 }
 

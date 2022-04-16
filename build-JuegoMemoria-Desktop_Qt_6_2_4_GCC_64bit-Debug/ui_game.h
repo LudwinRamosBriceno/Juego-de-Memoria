@@ -98,96 +98,8 @@ public:
         pantalla_1->setStyleSheet(QString::fromUtf8("background-color: rgb(46, 52, 54);"));
         buttonComenzar = new QPushButton(pantalla_1);
         buttonComenzar->setObjectName(QString::fromUtf8("buttonComenzar"));
-        buttonComenzar->setEnabled(true);
         buttonComenzar->setGeometry(QRect(330, 320, 171, 51));
-        QPalette palette;
-        QBrush brush(QColor(0, 0, 0, 255));
-        brush.setStyle(Qt::SolidPattern);
-        palette.setBrush(QPalette::Active, QPalette::WindowText, brush);
-        QBrush brush1(QColor(245, 121, 0, 255));
-        brush1.setStyle(Qt::SolidPattern);
-        palette.setBrush(QPalette::Active, QPalette::Button, brush1);
-        QBrush brush2(QColor(255, 183, 112, 255));
-        brush2.setStyle(Qt::SolidPattern);
-        palette.setBrush(QPalette::Active, QPalette::Light, brush2);
-        QBrush brush3(QColor(250, 152, 56, 255));
-        brush3.setStyle(Qt::SolidPattern);
-        palette.setBrush(QPalette::Active, QPalette::Midlight, brush3);
-        QBrush brush4(QColor(122, 60, 0, 255));
-        brush4.setStyle(Qt::SolidPattern);
-        palette.setBrush(QPalette::Active, QPalette::Dark, brush4);
-        QBrush brush5(QColor(163, 81, 0, 255));
-        brush5.setStyle(Qt::SolidPattern);
-        palette.setBrush(QPalette::Active, QPalette::Mid, brush5);
-        palette.setBrush(QPalette::Active, QPalette::Text, brush);
-        QBrush brush6(QColor(255, 255, 255, 255));
-        brush6.setStyle(Qt::SolidPattern);
-        palette.setBrush(QPalette::Active, QPalette::BrightText, brush6);
-        palette.setBrush(QPalette::Active, QPalette::ButtonText, brush);
-        palette.setBrush(QPalette::Active, QPalette::Base, brush6);
-        palette.setBrush(QPalette::Active, QPalette::Window, brush1);
-        palette.setBrush(QPalette::Active, QPalette::Shadow, brush);
-        QBrush brush7(QColor(250, 188, 127, 255));
-        brush7.setStyle(Qt::SolidPattern);
-        palette.setBrush(QPalette::Active, QPalette::AlternateBase, brush7);
-        QBrush brush8(QColor(255, 255, 220, 255));
-        brush8.setStyle(Qt::SolidPattern);
-        palette.setBrush(QPalette::Active, QPalette::ToolTipBase, brush8);
-        palette.setBrush(QPalette::Active, QPalette::ToolTipText, brush);
-        QBrush brush9(QColor(231, 231, 231, 255));
-        brush9.setStyle(Qt::SolidPattern);
-        palette.setBrush(QPalette::Inactive, QPalette::WindowText, brush9);
-        QBrush brush10(QColor(35, 35, 35, 255));
-        brush10.setStyle(Qt::SolidPattern);
-        palette.setBrush(QPalette::Inactive, QPalette::Button, brush10);
-        palette.setBrush(QPalette::Inactive, QPalette::Light, brush6);
-        QBrush brush11(QColor(202, 202, 202, 255));
-        brush11.setStyle(Qt::SolidPattern);
-        palette.setBrush(QPalette::Inactive, QPalette::Midlight, brush11);
-        palette.setBrush(QPalette::Inactive, QPalette::Dark, brush10);
-        QBrush brush12(QColor(160, 160, 160, 255));
-        brush12.setStyle(Qt::SolidPattern);
-        palette.setBrush(QPalette::Inactive, QPalette::Mid, brush12);
-        palette.setBrush(QPalette::Inactive, QPalette::Text, brush9);
-        QBrush brush13(QColor(255, 0, 0, 255));
-        brush13.setStyle(Qt::SolidPattern);
-        palette.setBrush(QPalette::Inactive, QPalette::BrightText, brush13);
-        palette.setBrush(QPalette::Inactive, QPalette::ButtonText, brush9);
-        QBrush brush14(QColor(51, 51, 51, 255));
-        brush14.setStyle(Qt::SolidPattern);
-        palette.setBrush(QPalette::Inactive, QPalette::Base, brush14);
-        palette.setBrush(QPalette::Inactive, QPalette::Window, brush14);
-        QBrush brush15(QColor(118, 118, 118, 255));
-        brush15.setStyle(Qt::SolidPattern);
-        palette.setBrush(QPalette::Inactive, QPalette::Shadow, brush15);
-        QBrush brush16(QColor(81, 81, 81, 255));
-        brush16.setStyle(Qt::SolidPattern);
-        palette.setBrush(QPalette::Inactive, QPalette::AlternateBase, brush16);
-        QBrush brush17(QColor(0, 0, 0, 102));
-        brush17.setStyle(Qt::SolidPattern);
-        palette.setBrush(QPalette::Inactive, QPalette::ToolTipBase, brush17);
-        palette.setBrush(QPalette::Inactive, QPalette::ToolTipText, brush9);
-        palette.setBrush(QPalette::Disabled, QPalette::WindowText, brush4);
-        QBrush brush18(QColor(143, 89, 2, 255));
-        brush18.setStyle(Qt::SolidPattern);
-        palette.setBrush(QPalette::Disabled, QPalette::Button, brush18);
-        palette.setBrush(QPalette::Disabled, QPalette::Light, brush2);
-        palette.setBrush(QPalette::Disabled, QPalette::Midlight, brush3);
-        palette.setBrush(QPalette::Disabled, QPalette::Dark, brush4);
-        palette.setBrush(QPalette::Disabled, QPalette::Mid, brush5);
-        palette.setBrush(QPalette::Disabled, QPalette::Text, brush4);
-        palette.setBrush(QPalette::Disabled, QPalette::BrightText, brush6);
-        palette.setBrush(QPalette::Disabled, QPalette::ButtonText, brush4);
-        palette.setBrush(QPalette::Disabled, QPalette::Base, brush1);
-        palette.setBrush(QPalette::Disabled, QPalette::Window, brush1);
-        QBrush brush19(QColor(177, 177, 177, 255));
-        brush19.setStyle(Qt::SolidPattern);
-        palette.setBrush(QPalette::Disabled, QPalette::Shadow, brush19);
-        palette.setBrush(QPalette::Disabled, QPalette::AlternateBase, brush16);
-        palette.setBrush(QPalette::Disabled, QPalette::ToolTipBase, brush17);
-        palette.setBrush(QPalette::Disabled, QPalette::ToolTipText, brush9);
-        buttonComenzar->setPalette(palette);
-        buttonComenzar->setStyleSheet(QString::fromUtf8("/*background-color: rgb(193, 125, 17);"));
+        buttonComenzar->setStyleSheet(QString::fromUtf8("background-color: rgb(193, 125, 17);"));
         tituloInicial = new QLabel(pantalla_1);
         tituloInicial->setObjectName(QString::fromUtf8("tituloInicial"));
         tituloInicial->setGeometry(QRect(300, 70, 231, 31));
@@ -446,9 +358,11 @@ public:
         sizePolicy.setHeightForWidth(button1->sizePolicy().hasHeightForWidth());
         button1->setSizePolicy(sizePolicy);
         button1->setMaximumSize(QSize(100, 61));
+        button1->setAutoFillBackground(false);
         button1->setStyleSheet(QString::fromUtf8("image: url(:/Img_espalda.png);\n"
 "border: 4px solid gray;\n"
-"border-radius: 8px;"));
+"border-radius: 8px;\n"
+""));
         button1->setIconSize(QSize(100, 50));
         button1->setCheckable(false);
         button1->setAutoRepeat(false);
@@ -622,7 +536,7 @@ public:
         button2->setStyleSheet(QString::fromUtf8("image: url(:/Img_espalda.png);\n"
 "border: 4px solid gray;\n"
 "border-radius: 8px;"));
-        button2->setIconSize(QSize(115, 50));
+        button2->setIconSize(QSize(100, 50));
 #if QT_CONFIG(shortcut)
         button2->setShortcut(QString::fromUtf8(""));
 #endif // QT_CONFIG(shortcut)
@@ -638,10 +552,13 @@ public:
         namePJugador1 = new QLabel(pantalla_2);
         namePJugador1->setObjectName(QString::fromUtf8("namePJugador1"));
         namePJugador1->setGeometry(QRect(190, 20, 101, 17));
-        namePJugador1->setStyleSheet(QString::fromUtf8("font: 700 italic 12pt \"Ubuntu\";"));
+        namePJugador1->setStyleSheet(QString::fromUtf8("font: 700 italic 12pt \"Ubuntu\";\n"
+"color: rgb(211, 215, 207);"));
         namePJugador2 = new QLabel(pantalla_2);
         namePJugador2->setObjectName(QString::fromUtf8("namePJugador2"));
         namePJugador2->setGeometry(QRect(540, 20, 91, 17));
+        namePJugador2->setStyleSheet(QString::fromUtf8("color: rgb(231, 231, 231);\n"
+"font: 700 italic 12pt \"Ubuntu\";"));
         puntajePJugador2 = new QLabel(pantalla_2);
         puntajePJugador2->setObjectName(QString::fromUtf8("puntajePJugador2"));
         puntajePJugador2->setGeometry(QRect(540, 50, 91, 31));
@@ -650,6 +567,7 @@ public:
 "border-radius: 7px;"));
         AvisosPjuego = new QLabel(pantalla_2);
         AvisosPjuego->setObjectName(QString::fromUtf8("AvisosPjuego"));
+        AvisosPjuego->setEnabled(true);
         AvisosPjuego->setGeometry(QRect(380, 50, 21, 17));
         QSizePolicy sizePolicy2(QSizePolicy::Expanding, QSizePolicy::Expanding);
         sizePolicy2.setHorizontalStretch(0);
