@@ -8,8 +8,9 @@ class handlerCliente {
 public:
     handlerCliente();
     void pintarImgTarjeta(QString,QPushButton*);
-    void seleccionTurno(QString, QLabel*);
+    void seleccionTurno(QString, QLabel*,QPushButton*,QPushButton*,QLabel*,QLabel*);
     QImage decodeBase64Img(QString);
+    void actualizarPuntajePantalla();
 
 };
 

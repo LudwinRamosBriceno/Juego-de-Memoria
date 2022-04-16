@@ -26,7 +26,9 @@ private slots:
 private:
     Ui::Game *ui;
     QTcpSocket *socket;
-    QPushButton *TarjetaRevelada;
+    QPushButton *TarjetaReveladaActual;
+    QPushButton *TarjetaRevelada1;
+    QPushButton *TarjetaRevelada2;
     bool inicioTurno;
     identificadorTarjetas identificadorTarjetaSeleccionada;
     handlerCliente *manejadorMensajes;

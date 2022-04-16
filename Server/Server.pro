@@ -10,6 +10,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+        actualizardatosjugadores.cpp \
         buildermatriz.cpp \
         buscadorTarjeta.cpp \
         cargardescargartarjeta.cpp \
@@ -21,6 +22,7 @@ SOURCES += \
         matrizpaginada.cpp \
         servidor.cpp \
         splitmensaje.cpp \
+        sumadorPuntos.cpp \
         tarjeta.cpp
 
 # Default rules for deployment.
@@ -29,6 +31,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
+    actualizardatosjugadores.h \
     buscadorTarjeta.h \
     cargardescargartarjeta.h \
     crearArchivoBin.h \
@@ -38,6 +41,7 @@ HEADERS += \
     matrizpaginada.h \
     servidor.h \
     splitmensaje.h \
+    sumadorPuntos.h \
     tarjeta.h
 
 RESOURCES +=

@@ -54,21 +54,24 @@ void Game::leer_mensaje(){
         socket->write(mensaje.toUtf8().constData(),mensaje.size());
 
     }else if(QString(bufferMensaje).contains("turnoJugador")){
-        manejadorMensajes->seleccionTurno(QString(bufferMensaje),ui->AvisosPjuego);
+        manejadorMensajes->seleccionTurno(QString(bufferMensaje),ui->AvisosPjuego,TarjetaRevelada1,TarjetaRevelada2,ui->puntajePJugador1,ui->puntajePJugador2);
 
     }else{
-        manejadorMensajes->pintarImgTarjeta(QString(bufferMensaje),TarjetaRevelada);
+        manejadorMensajes->pintarImgTarjeta(QString(bufferMensaje),TarjetaReveladaActual);
     }
 }
 void Game::descubrirTarjeta(){
-    TarjetaRevelada = qobject_cast<QPushButton*>(sender()); // se castea el boton que dispara el evento
-    int identificadorTarjetaRevelada = identificadorTarjetaSeleccionada.encontrarIdentificador(TarjetaRevelada->objectName());
+    TarjetaReveladaActual = qobject_cast<QPushButton*>(sender()); // se castea el boton que dispara el evento
+    int identificadorTarjetaRevelada = identificadorTarjetaSeleccionada.encontrarIdentificador(TarjetaReveladaActual->objectName());
 
     if (!inicioTurno){
+        TarjetaRevelada1 = TarjetaReveladaActual;
+        TarjetaRevelada1->setEnabled(false);
         QString mensajeEnviar ="primeraTarjeta,"+QString::number(identificadorTarjetaRevelada);
         inicioTurno = true;
         socket->write(mensajeEnviar.toUtf8().constData(),mensajeEnviar.size());
     }else{
+        TarjetaRevelada2 = TarjetaReveladaActual;
         QString mensajeEnviar ="segundaTarjeta,"+QString::number(identificadorTarjetaRevelada);
         inicioTurno = false;
         socket->write(mensajeEnviar.toUtf8().constData(),mensajeEnviar.size());

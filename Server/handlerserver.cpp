@@ -5,7 +5,7 @@
 #include <buscadorTarjeta.h>
 #include <QBuffer>
 #include <QDebug>
-
+#include <actualizardatosjugadores.h>
 
 handlerServer::handlerServer() {
     matrizPaginada = new matrizpaginada();
@@ -27,11 +27,11 @@ QString handlerServer::iniciarJuego(QString nombreJugador1, QString nombreJugado
     int numRandom = rand()%2;
     switch (numRandom) {
         case 0:
-            mensaje = "turnoJugador1";
+            mensaje = "turnoJugador1,0";
             turnoJugador = 1;
             break;
         case 1:
-            mensaje = "turnoJugador2";
+            mensaje = "turnoJugador2,0";
             turnoJugador = 2;
             break;
     }
@@ -60,14 +60,27 @@ QString handlerServer::logicHandler(QString mensajeCliente){
     }else if(mensajeCliente.contains("segundaTarjeta")){
         numTarjetaAdescargar = 1; /* indice de la tarjeta que será removida en caso de que la tarjeta buscada no
                                    esté en la matriz paginada */
+        ActualizarDatosJugadores actualizadorInfoCliente;
         buscadorTarjeta buscador;
-        tarjeta1Presionada = interpreteMensaje.interpretarMensaje(2,mensajeCliente).toInt(); // key de la primera tarjeta
+        tarjeta2Presionada = interpreteMensaje.interpretarMensaje(2,mensajeCliente).toInt(); // key de la primera tarjeta
         QImage imgTarjetaBuscada= buscador.buscarImgTarjeta(tarjeta1Presionada,matrizPaginada,numTarjetaAdescargar);
         QString imgTarjetaBase64 = convetirBase64(imgTarjetaBuscada);
         mensaje = imgTarjetaBase64;
+        actualizadorInfoCliente.actualizarDatos(turnoJugador,matrizPaginada,cliente,tarjeta1Presionada,tarjeta2Presionada);
+    }else{
 
     }
-
+    return mensaje;
+}
+QString handlerServer::getParametrosActualizados() {
+    QString mensaje;
+    if (turnoJugador == 1){
+        mensaje = "turnoJugador2,"+QString::number(cliente->getPuntajeJugador1());
+        turnoJugador = 2;
+    }else{
+        mensaje = "turnoJugador1,"+QString::number(cliente->getPuntajeJugador2());
+        turnoJugador = 1;
+    }
     return mensaje;
 }
 QString handlerServer::convetirBase64(QImage imgTarjetaBuscada) {

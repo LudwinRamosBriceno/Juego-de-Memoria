@@ -9,6 +9,7 @@ public:
     handlerServer();
     QString iniciarJuego(QString , QString );
     QString logicHandler(QString);
+    QString getParametrosActualizados();
 
 private:
     void finalizarJuego();
