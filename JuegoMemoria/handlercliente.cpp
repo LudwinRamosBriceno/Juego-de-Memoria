@@ -1,8 +1,8 @@
 #include "handlercliente.h"
 #include <splitmensaje.h>
 
-handlerCliente::handlerCliente() {
-
+handlerCliente::handlerCliente(QString estiloTarjetaOriginal) {
+    estiloPredeterminadoTarjeta = estiloTarjetaOriginal;
 }
 
 void handlerCliente::pintarImgTarjeta(QString mensajeServer, QPushButton* tarjetaPresionada) {
@@ -13,12 +13,10 @@ void handlerCliente::pintarImgTarjeta(QString mensajeServer, QPushButton* tarjet
    QIcon iconTarjeta(pixmap);
    tarjetaPresionada->setIcon(iconTarjeta);
    tarjetaPresionada->setIconSize(QSize(100,50));
-
 }
 
 void handlerCliente::seleccionTurno(QString mensaje,QLabel *textAviso,QPushButton*tarjeta1,QPushButton*tarjeta2,QLabel*puntajeJ1,QLabel*puntajeJ2) {
     splitMensaje interpreteMensaje;
-    bool coinciden = false;
     textAviso->setText("¡Tu turno!");
     if (mensaje.contains("turnoJugador1")){
         puntajeJ2->setText("Puntaje: "+interpreteMensaje.interpretarMensaje(2,mensaje));
@@ -30,13 +28,14 @@ void handlerCliente::seleccionTurno(QString mensaje,QLabel *textAviso,QPushButto
     }
     if (mensaje.contains("coincide")){
         tarjeta1->setEnabled(false);
-        tarjeta1->setStyleSheet("");
+        //tarjeta1->setStyleSheet("");
         tarjeta2->setEnabled(false);
-        tarjeta2->setStyleSheet("");
-        coinciden = true;
-    }else{
-        tarjeta1->setStyleSheet("");
-        tarjeta2->setStyleSheet("");
+        //tarjeta2->setStyleSheet("");
+    }else if(mensaje.contains("NoCoincide")){
+        tarjeta1->setIcon(QIcon());
+        tarjeta2->setIcon(QIcon());
+        tarjeta1->setStyleSheet("#"+tarjeta1->objectName()+"{image: url(:/Img_espalda.png);border: 4px solid gray;border-radius: 8px;}");
+        tarjeta2->setStyleSheet("#"+tarjeta2->objectName()+"{image: url(:/Img_espalda.png);border: 4px solid gray;border-radius: 8px;}");
     }
     textAviso->adjustSize();
 }
@@ -45,7 +44,4 @@ QImage handlerCliente::decodeBase64Img(QString imgBase64) {
     QByteArray bytesImg = QByteArray::fromBase64(imgBase64.toUtf8());
     QImage image = QImage::fromData(bytesImg,"png");
     return image;
-}
-void handlerCliente::reiniciarTarjetas(QPushButton*,QPushButton*){
-
 }

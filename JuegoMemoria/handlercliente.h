@@ -6,11 +6,13 @@
 
 class handlerCliente {
 public:
-    handlerCliente();
+    handlerCliente(QString);
     void pintarImgTarjeta(QString,QPushButton*);
     void seleccionTurno(QString, QLabel*,QPushButton*,QPushButton*,QLabel*,QLabel*);
     QImage decodeBase64Img(QString);
     void actualizarPuntajePantalla();
+private:
+    QString estiloPredeterminadoTarjeta;
 };
 
 #endif // HANDLERCLIENTE_H

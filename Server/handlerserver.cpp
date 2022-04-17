@@ -57,6 +57,7 @@ QString handlerServer::logicHandler(QString mensajeCliente){
         QImage imgTarjetaBuscada= buscador.buscarImgTarjeta(tarjeta1Presionada,matrizPaginada,numTarjetaAdescargar);
         QString imgTarjetaBase64 = convetirBase64(imgTarjetaBuscada);
         mensaje = imgTarjetaBase64;
+        //qDebug()<<"primer Tipo: " + QString(matrizPaginada->getTarjetasCargadas()->find(tarjeta1Presionada).value().getTipoTarjeta());
     }else if(mensajeCliente.contains("segundaTarjeta")){
         numTarjetaAdescargar = 1; /* indice de la tarjeta que será removida en caso de que la tarjeta buscada no
                                    esté en la matriz paginada */
@@ -66,7 +67,9 @@ QString handlerServer::logicHandler(QString mensajeCliente){
         QImage imgTarjetaBuscada= buscador.buscarImgTarjeta(tarjeta2Presionada,matrizPaginada,numTarjetaAdescargar);
         QString imgTarjetaBase64 = convetirBase64(imgTarjetaBuscada);
         mensaje = imgTarjetaBase64;
+        // ojo aqui
         actualizadorInfoCliente.actualizarDatos(turnoJugador,matrizPaginada,cliente,tarjeta1Presionada,tarjeta2Presionada);
+        //qDebug()<<"segundo Tipo: " + QString(matrizPaginada->getTarjetasCargadas()->find(tarjeta2Presionada).value().getTipoTarjeta());
     }else{
 
     }
@@ -75,6 +78,8 @@ QString handlerServer::logicHandler(QString mensajeCliente){
 QString handlerServer::getParametrosActualizados() {
     char tipoTarjeta1Presionada = matrizPaginada->getTarjetasCargadas()->value(tarjeta1Presionada).getTipoTarjeta();
     char tipoTarjeta2Presionada = matrizPaginada->getTarjetasCargadas()->value(tarjeta2Presionada).getTipoTarjeta();
+    qDebug()<<"primer Tipo: " + QString(tipoTarjeta1Presionada);
+    qDebug()<<"segunda Tipo: " + QString(tipoTarjeta2Presionada);
     QString mensaje;
     if (turnoJugador == 1){
         mensaje = "turnoJugador2,"+QString::number(cliente->getPuntajeJugador1());
@@ -82,7 +87,7 @@ QString handlerServer::getParametrosActualizados() {
     }else{
         mensaje = "turnoJugador1,"+QString::number(cliente->getPuntajeJugador2());
         turnoJugador = 1;
-    } if (tipoTarjeta1Presionada==tipoTarjeta2Presionada){mensaje +=",coincide";}
+    } if (tipoTarjeta1Presionada==tipoTarjeta2Presionada){mensaje +=",coincide";}else{mensaje+=",NoCoincide";}
 
     return mensaje;
 }

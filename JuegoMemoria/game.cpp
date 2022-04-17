@@ -8,7 +8,7 @@
 Game::Game(QWidget *parent) : QMainWindow(parent), ui(new Ui::Game){
     ui->setupUi(this);
 
-    manejadorMensajes = new handlerCliente;
+    manejadorMensajes = new handlerCliente(ui->button1->styleSheet());
     ui->AvisoCaracteres->setVisible(false);
     socket = new QTcpSocket(this);
     socket->connectToHost("localhost",2080);
@@ -35,9 +35,9 @@ void Game::on_buttonComenzar_clicked() {
         // se envia al servidor la instruccion de iniciar el juego junto con los nombres de los jugadores;
         socket->write(nombresJugadores.toUtf8().constData(),nombresJugadores.size());
         ui->pantallas->setCurrentIndex(1);
-
         ui->namePJugador1->setText(jugador1);
         ui->namePJugador2->setText(jugador2);
+        qDebug()<<ui->button1->styleSheet();
     }
     else{
         ui->AvisoCaracteres->setVisible(true);
