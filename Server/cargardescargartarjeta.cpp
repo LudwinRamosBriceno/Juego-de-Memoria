@@ -9,8 +9,10 @@ CargarDescargarTarjeta::CargarDescargarTarjeta(){
 
 }
 
-void CargarDescargarTarjeta::cargarTarjeta(int IDtarjetaAcargar,matrizpaginada* matriz, int numTarjetaAdescargar){
-    descargarTarjeta(matriz,numTarjetaAdescargar); //se actualiza la tarjeta que sera removida de la matrizPaginada
+void CargarDescargarTarjeta::cargarTarjeta(int IDtarjetaAcargar,matrizpaginada* matriz){
+    QHash<int,tarjeta>::Iterator tarjetaEliminar = descargarTarjeta(matriz); //se actualiza la tarjeta que sera removida de la matrizPaginada
+    matriz->getTarjetasCargadas()->erase(tarjetaEliminar); // se elimina la tarjeta ya actualizada en disco
+
     tarjeta tarjetaAcargar; // tarjeta que será añadida a la matriz paginada
     tarjetaDisco tarjetaAmatriz; // se crea la estructura que se leerá del archivo binario que tiene los datos de la tarjeta
     ifstream file;
@@ -29,20 +31,23 @@ void CargarDescargarTarjeta::cargarTarjeta(int IDtarjetaAcargar,matrizpaginada* 
     tarjetaAcargar.setRevelada(tarjetaAmatriz.revelada);
     tarjetaAcargar.setImgTarjeta();
     matriz->setTarjetaCargada(tarjetaAcargar.getIdentificador(),tarjetaAcargar);
-
 }
+
 // se actualiza la tarjeta a disco que será removida de la matriz paginada
-void CargarDescargarTarjeta::descargarTarjeta(matrizpaginada* matriz, int numTarjetaAdescargar){
+QHash<int,tarjeta>::iterator CargarDescargarTarjeta::descargarTarjeta(matrizpaginada* matriz){
     ofstream file;
     tarjeta tarjetaAdescargar;
-    QHash <int,tarjeta> *matrizPaginada = matriz->getTarjetasCargadas();
-    QHash<int,tarjeta>::iterator iterador = matrizPaginada->begin();
+    QHash<int,tarjeta>::iterator elementoEliminar;
+    //QHash <int,tarjeta> *matrizPaginada = matriz->getTarjetasCargadas();
+    QHash<int,tarjeta>::iterator iterador = matriz->getTarjetasCargadas()->begin();
+    int indexTarjetaAdescargar = rand()%matriz->getTarjetasCargadas()->size();
     int index = 0;
     bool end = false;
 
     while(!end){
-        if (index == numTarjetaAdescargar){
+        if (index == indexTarjetaAdescargar){
             tarjetaAdescargar = iterador.value();
+            elementoEliminar = iterador;
             end = true;
         }else{
             index++;
@@ -59,5 +64,6 @@ void CargarDescargarTarjeta::descargarTarjeta(matrizpaginada* matriz, int numTar
         file.write((char *)&tarjeta, sizeof(tarjetaDisco));
         file.close();
     }
-    matriz->getTarjetasCargadas()->erase(matrizPaginada->find(tarjetaAdescargar.getIdentificador()));
+    //matriz->getTarjetasCargadas()->erase(matrizPaginada->find(tarjetaAdescargar.getIdentificador()));
+    return elementoEliminar;
 }

@@ -3,6 +3,7 @@
 #include <matrizpaginada.h>
 #include <informacioncliente.h>
 #include <QTcpSocket>
+#include <buscadorTarjeta.h>
 
 class handlerServer {
 public:
@@ -22,6 +23,8 @@ private:
     int tarjeta1Presionada;
     int tarjeta2Presionada;
     int turnoJugador;
+    buscadorTarjeta buscadorTarjetaSeleccionada;
+
 };
 
 #endif // HANDLERSERVER_H

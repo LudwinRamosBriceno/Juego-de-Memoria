@@ -52,32 +52,32 @@ QString handlerServer::logicHandler(QString mensajeCliente){
     if(mensajeCliente.contains("primeraTarjeta")){
         numTarjetaAdescargar = 0; /* indice de la tarjeta que será removida en caso de que la tarjeta buscada no
                                    esté en la matriz paginada */
-        buscadorTarjeta buscador;
         tarjeta1Presionada = interpreteMensaje.interpretarMensaje(2,mensajeCliente).toInt(); // key de la primera tarjeta
-        QImage imgTarjetaBuscada= buscador.buscarImgTarjeta(tarjeta1Presionada,matrizPaginada,numTarjetaAdescargar);
+        QImage imgTarjetaBuscada= buscadorTarjetaSeleccionada.buscarImgTarjeta(tarjeta1Presionada,matrizPaginada);
         QString imgTarjetaBase64 = convetirBase64(imgTarjetaBuscada);
         mensaje = imgTarjetaBase64;
-        //qDebug()<<"primer Tipo: " + QString(matrizPaginada->getTarjetasCargadas()->find(tarjeta1Presionada).value().getTipoTarjeta());
+
     }else if(mensajeCliente.contains("segundaTarjeta")){
         numTarjetaAdescargar = 1; /* indice de la tarjeta que será removida en caso de que la tarjeta buscada no
                                    esté en la matriz paginada */
         ActualizarDatosJugadores actualizadorInfoCliente;
-        buscadorTarjeta buscador;
         tarjeta2Presionada = interpreteMensaje.interpretarMensaje(2,mensajeCliente).toInt(); // key de la primera tarjeta
-        QImage imgTarjetaBuscada= buscador.buscarImgTarjeta(tarjeta2Presionada,matrizPaginada,numTarjetaAdescargar);
+        QImage imgTarjetaBuscada= buscadorTarjetaSeleccionada.buscarImgTarjeta(tarjeta2Presionada,matrizPaginada);
         QString imgTarjetaBase64 = convetirBase64(imgTarjetaBuscada);
         mensaje = imgTarjetaBase64;
-        // ojo aqui
         actualizadorInfoCliente.actualizarDatos(turnoJugador,matrizPaginada,cliente,tarjeta1Presionada,tarjeta2Presionada);
-        //qDebug()<<"segundo Tipo: " + QString(matrizPaginada->getTarjetasCargadas()->find(tarjeta2Presionada).value().getTipoTarjeta());
+
     }else{
 
     }
     return mensaje;
 }
 QString handlerServer::getParametrosActualizados() {
-    char tipoTarjeta1Presionada = matrizPaginada->getTarjetasCargadas()->value(tarjeta1Presionada).getTipoTarjeta();
-    char tipoTarjeta2Presionada = matrizPaginada->getTarjetasCargadas()->value(tarjeta2Presionada).getTipoTarjeta();
+    //char tipoTarjeta1Presionada = matrizPaginada->getTarjetasCargadas()->value(tarjeta1Presionada).getTipoTarjeta();
+    //char tipoTarjeta2Presionada = matrizPaginada->getTarjetasCargadas()->value(tarjeta2Presionada).getTipoTarjeta();
+    char tipoTarjeta1Presionada = buscadorTarjetaSeleccionada.buscarTarjeta(tarjeta1Presionada,matrizPaginada).getTipoTarjeta();
+    char tipoTarjeta2Presionada = buscadorTarjetaSeleccionada.buscarTarjeta(tarjeta2Presionada,matrizPaginada).getTipoTarjeta();
+
     qDebug()<<"primer Tipo: " + QString(tipoTarjeta1Presionada);
     qDebug()<<"segunda Tipo: " + QString(tipoTarjeta2Presionada);
     QString mensaje;

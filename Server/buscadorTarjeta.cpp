@@ -6,11 +6,11 @@ buscadorTarjeta::buscadorTarjeta() {
 
 }
 
-QImage buscadorTarjeta::buscarImgTarjeta(int keyTarjeta, matrizpaginada* matriz, int numTarjetaAdescargar){
+QImage buscadorTarjeta::buscarImgTarjeta(int keyTarjetaAcargar, matrizpaginada* matriz){
 
     QHash<int,tarjeta>* matrizCargada = matriz->getTarjetasCargadas();
-    if (matrizCargada->find(keyTarjeta)!=matrizCargada->end()){
-        return matrizCargada->value(keyTarjeta).getImgTarjeta();
+    if (matrizCargada->find(keyTarjetaAcargar)!=matrizCargada->end()){
+        return matrizCargada->value(keyTarjetaAcargar).getImgTarjeta();
     }
     else{
         //se manda a llamar a cargarDescargar y se le envia la llave como entero, tambien se le manda la tarjeta que
@@ -19,7 +19,22 @@ QImage buscadorTarjeta::buscarImgTarjeta(int keyTarjeta, matrizpaginada* matriz,
         CargarDescargarTarjeta cargarTarjetaAmatriz;
         /* Dado a que la tarjeta buscada se encuentra en disco, se debe remover una tarjeta de la matriz paginada
          * para cargar la tarjeta deseada a la matrizPaginada.*/
-        cargarTarjetaAmatriz.cargarTarjeta(keyTarjeta,matriz,numTarjetaAdescargar);
-        return matriz->getTarjetasCargadas()->value(keyTarjeta).getImgTarjeta();
+        cargarTarjetaAmatriz.cargarTarjeta(keyTarjetaAcargar,matriz);
+        return matriz->getTarjetasCargadas()->value(keyTarjetaAcargar).getImgTarjeta();
+    }
+}
+
+tarjeta buscadorTarjeta::buscarTarjeta(int keyTarjeta, matrizpaginada* matriz) {
+    QHash<int,tarjeta>* matrizCargada = matriz->getTarjetasCargadas();
+    if (matrizCargada->find(keyTarjeta)!=matrizCargada->end()){
+        return matrizCargada->value(keyTarjeta);
+    }
+    else{
+        //se manda a llamar a cargarDescargar y se le envia la llave de la tarjeta que debe cargar como entero.
+        CargarDescargarTarjeta cargarTarjetaAmatriz;
+        /* Dado a que la tarjeta buscada se encuentra en disco, se debe remover una tarjeta de la matriz paginada
+         * para cargar la tarjeta deseada a la matrizPaginada.*/
+        cargarTarjetaAmatriz.cargarTarjeta(keyTarjeta,matriz);
+        return matriz->getTarjetasCargadas()->value(keyTarjeta);
     }
 }

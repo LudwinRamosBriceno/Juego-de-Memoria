@@ -13,8 +13,8 @@ class CargarDescargarTarjeta {
 
 public:
     CargarDescargarTarjeta();
-    void cargarTarjeta(int,matrizpaginada*,int);
-    void descargarTarjeta(matrizpaginada*,int);
+    void cargarTarjeta(int,matrizpaginada*);
+    QHash<int,tarjeta>::iterator descargarTarjeta(matrizpaginada*);
 
 };
 
