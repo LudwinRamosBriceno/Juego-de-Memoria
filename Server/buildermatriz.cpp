@@ -3,6 +3,8 @@
 #include <crearArchivoBin.h>
 #include <QString>
 #include <QDebug>
+#include <stdlib.h>
+#include <time.h>
 
 
 builderMatriz::builderMatriz() {
@@ -16,7 +18,7 @@ matrizpaginada* builderMatriz::construirMatriz(){
     remove("matrizPaginada.matriz"); // se elimina el archivo para no acumular los datos que se guardan en ese archivo
     matrizpaginada* matrizPaginada = new matrizpaginada();
     char tiposTarjetas[3] ={'A','B','C'};
-
+    srand(time(NULL));
     crearArchivoBin BIN;
 
     // Cada tarjeta estara enumerada del 0 al 35, es decir las tarjetas en juego son 36
@@ -46,6 +48,7 @@ matrizpaginada* builderMatriz::construirMatriz(){
 }
 
 char builderMatriz::verificarCantidadTipos(char tipoTarjeta){
+    //srand(time(NULL));
     char tipoTarjetaResultado =tipoTarjeta;
     int numRandom = rand()%2;
 

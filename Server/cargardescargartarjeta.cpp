@@ -3,6 +3,8 @@
 #include <iostream>
 #include <tarjeta.h>
 #include <QDebug>
+#include <stdlib.h>
+#include <time.h>
 using namespace std;
 
 CargarDescargarTarjeta::CargarDescargarTarjeta(){
@@ -35,10 +37,11 @@ void CargarDescargarTarjeta::cargarTarjeta(int IDtarjetaAcargar,matrizpaginada* 
 
 // se actualiza la tarjeta a disco que será removida de la matriz paginada
 QHash<int,tarjeta>::iterator CargarDescargarTarjeta::descargarTarjeta(matrizpaginada* matriz){
+    srand(time(NULL));
     ofstream file;
+    qDebug()<<"crashea";
     tarjeta tarjetaAdescargar;
     QHash<int,tarjeta>::iterator elementoEliminar;
-    //QHash <int,tarjeta> *matrizPaginada = matriz->getTarjetasCargadas();
     QHash<int,tarjeta>::iterator iterador = matriz->getTarjetasCargadas()->begin();
     int indexTarjetaAdescargar = rand()%matriz->getTarjetasCargadas()->size();
     int index = 0;
@@ -54,6 +57,7 @@ QHash<int,tarjeta>::iterator CargarDescargarTarjeta::descargarTarjeta(matrizpagi
             iterador++;
         }
     }
+    qDebug()<<"despues de crashea";
     // se crea una estructura para guardar una tarjeta en disco
     tarjetaDisco tarjeta = {tarjetaAdescargar.getIdentificador(),tarjetaAdescargar.getTipoTarjeta(),tarjetaAdescargar.getRevelada()};
     file.open("matrizPaginada.matriz",ios::in|ios::out|ios::binary);
@@ -64,6 +68,5 @@ QHash<int,tarjeta>::iterator CargarDescargarTarjeta::descargarTarjeta(matrizpagi
         file.write((char *)&tarjeta, sizeof(tarjetaDisco));
         file.close();
     }
-    //matriz->getTarjetasCargadas()->erase(matrizPaginada->find(tarjetaAdescargar.getIdentificador()));
     return elementoEliminar;
 }

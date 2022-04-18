@@ -32,6 +32,7 @@ private:
     bool inicioTurno;
     identificadorTarjetas identificadorTarjetaSeleccionada;
     handlerCliente *manejadorMensajes;
+    bool botonesEnabled;
 
 };
 #endif // GAME_H

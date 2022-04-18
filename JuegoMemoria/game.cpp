@@ -59,6 +59,7 @@ void Game::leer_mensaje(){
 
     }else if(QString(bufferMensaje).contains("turnoJugador")){
         manejadorMensajes->seleccionTurno(QString(bufferMensaje),ui->AvisosPjuego,TarjetaRevelada1,TarjetaRevelada2,ui->puntajePJugador1,ui->puntajePJugador2);
+        botonesEnabled = true;
 
     }else{
         manejadorMensajes->pintarImgTarjeta(QString(bufferMensaje),TarjetaReveladaActual);
@@ -70,22 +71,20 @@ void Game::descubrirTarjeta(){
     TarjetaReveladaActual = qobject_cast<QPushButton*>(sender()); // se castea el boton que dispara el evento
     int identificadorTarjetaRevelada = identificadorTarjetaSeleccionada.encontrarIdentificador(TarjetaReveladaActual->objectName());
 
-    if (!inicioTurno){
+    if (!inicioTurno && botonesEnabled){
         TarjetaRevelada1 = TarjetaReveladaActual;
         //TarjetaRevelada1->setEnabled(false);
         mensajeEnviar ="primeraTarjeta,"+QString::number(identificadorTarjetaRevelada);
         inicioTurno = true;
-
-    }else{
+        socket->write(mensajeEnviar.toUtf8().constData(),mensajeEnviar.size());
+    }else if(botonesEnabled){
         TarjetaRevelada2 = TarjetaReveladaActual;
         mensajeEnviar ="segundaTarjeta,"+QString::number(identificadorTarjetaRevelada);
         inicioTurno = false;
+        botonesEnabled = false;
+        socket->write(mensajeEnviar.toUtf8().constData(),mensajeEnviar.size());
     }
-    socket->write(mensajeEnviar.toUtf8().constData(),mensajeEnviar.size());
-    //se castea el boton
-
 }
-Game::~Game()
-{
+Game::~Game(){
     delete ui;
 }

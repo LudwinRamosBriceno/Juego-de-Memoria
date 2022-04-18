@@ -66,7 +66,6 @@ QString handlerServer::logicHandler(QString mensajeCliente){
         QString imgTarjetaBase64 = convetirBase64(imgTarjetaBuscada);
         mensaje = imgTarjetaBase64;
         actualizadorInfoCliente.actualizarDatos(turnoJugador,matrizPaginada,cliente,tarjeta1Presionada,tarjeta2Presionada);
-
     }else{
 
     }
