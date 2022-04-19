@@ -3,14 +3,16 @@
 #include <QString>
 #include <QPushButton>
 #include <QLabel>
+#include <QTcpSocket>
 
 class handlerCliente {
 public:
-    handlerCliente(QString);
+    handlerCliente();
     void pintarImgTarjeta(QString,QPushButton*);
     void seleccionTurno(QString, QLabel*,QPushButton*,QPushButton*,QLabel*,QLabel*);
     QImage decodeBase64Img(QString);
     void actualizarPuntajePantalla();
+    bool finalizarJuego(QString,QLabel*,QLabel*,QLabel*,QTcpSocket*);
 private:
     QString estiloPredeterminadoTarjeta;
 };

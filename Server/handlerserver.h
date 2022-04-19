@@ -5,16 +5,17 @@
 #include <QTcpSocket>
 #include <buscadorTarjeta.h>
 #include <operadormatrizpaginada.h>
+#include <resultadojuego.h>
 
 class handlerServer {
 public:
     handlerServer();
     QString iniciarJuego(QString , QString );
     QString logicHandler(QString);
-    QString getParametrosActualizados();
+    QString getResultadoJuego();
+    QString finalizarJuego();
 
 private:
-    void finalizarJuego();
     QString convetirBase64(QImage);
 
 private:
@@ -26,6 +27,7 @@ private:
     int turnoJugador;
     buscadorTarjeta buscadorTarjetaSeleccionada;
     operadorMatrizPaginada operadorMatriz;
+    resultadoJuego verificadorEstadoJuego;
 
 
 };

@@ -15,8 +15,6 @@ class crearArchivoBin {
 public:
     crearArchivoBin();
     void almacenarTarjetas(tarjeta nuevaTarjeta);
-    void leerBin();
-
 };
 
 #endif // CREARARCHIVOBIN_H

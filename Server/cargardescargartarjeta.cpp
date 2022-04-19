@@ -33,20 +33,19 @@ void CargarDescargarTarjeta::cargarTarjeta(int IDtarjetaAcargar,matrizpaginada* 
     tarjetaAcargar.setRevelada(tarjetaAmatriz.revelada);
     tarjetaAcargar.setImgTarjeta();
     matriz->setTarjetaCargada(tarjetaAcargar.getIdentificador(),tarjetaAcargar);
+    qDebug()<<matriz->getTarjetasCargadas()->size();
 }
 
 // se actualiza la tarjeta a disco que será removida de la matriz paginada
 QHash<int,tarjeta>::iterator CargarDescargarTarjeta::descargarTarjeta(matrizpaginada* matriz){
     srand(time(NULL));
     ofstream file;
-    qDebug()<<"crashea";
     tarjeta tarjetaAdescargar;
     QHash<int,tarjeta>::iterator elementoEliminar;
     QHash<int,tarjeta>::iterator iterador = matriz->getTarjetasCargadas()->begin();
     int indexTarjetaAdescargar = rand()%matriz->getTarjetasCargadas()->size();
     int index = 0;
     bool end = false;
-    qDebug()<<"despues de crashea";
     while(!end){
         if (index == indexTarjetaAdescargar){
             tarjetaAdescargar = iterador.value();

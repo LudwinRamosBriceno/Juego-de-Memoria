@@ -23,7 +23,7 @@ QString handlerServer::iniciarJuego(QString nombreJugador1, QString nombreJugado
     cliente->setparTarjetasReveladasJugador1(0);
     numTarjetaAdescargar = 0;
 
-    QString mensaje ="";
+    QString mensaje;
     int numRandom = rand()%2;
     switch (numRandom) {
         case 0:
@@ -37,14 +37,17 @@ QString handlerServer::iniciarJuego(QString nombreJugador1, QString nombreJugado
     }
     return mensaje;
 }
-void handlerServer::finalizarJuego(){
+QString handlerServer::finalizarJuego(){
+    QString mensaje= verificadorEstadoJuego.definirResultadoFinalJuego(cliente);
     matrizPaginada->liberarMatrizPaginada();
     free(matrizPaginada);
     free(cliente);
     matrizPaginada = nullptr;
     cliente = nullptr;
 
+    return mensaje;
 }
+
 QString handlerServer::logicHandler(QString mensajeCliente){
     splitMensaje interpreteMensaje;
     QString mensaje;
@@ -72,19 +75,16 @@ QString handlerServer::logicHandler(QString mensajeCliente){
     }
     return mensaje;
 }
-QString handlerServer::getParametrosActualizados() {
+QString handlerServer::getResultadoJuego() {
     char tipoTarjeta1Presionada = buscadorTarjetaSeleccionada.buscarTarjeta(tarjeta1Presionada,matrizPaginada).getTipoTarjeta();
     char tipoTarjeta2Presionada = buscadorTarjetaSeleccionada.buscarTarjeta(tarjeta2Presionada,matrizPaginada).getTipoTarjeta();
 
-    QString mensaje;
+    QString mensaje = verificadorEstadoJuego.definirResultadoJuego(turnoJugador,cliente,tipoTarjeta1Presionada,tipoTarjeta2Presionada);
     if (turnoJugador == 1){
-        mensaje = "turnoJugador2,"+QString::number(cliente->getPuntajeJugador1());
         turnoJugador = 2;
     }else{
-        mensaje = "turnoJugador1,"+QString::number(cliente->getPuntajeJugador2());
         turnoJugador = 1;
-    } if (tipoTarjeta1Presionada==tipoTarjeta2Presionada){mensaje +=",coincide";}else{mensaje+=",NoCoincide";}
-
+    }
     return mensaje;
 }
 

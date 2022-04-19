@@ -1,8 +1,8 @@
 #include "handlercliente.h"
 #include <splitmensaje.h>
 
-handlerCliente::handlerCliente(QString estiloTarjetaOriginal) {
-    estiloPredeterminadoTarjeta = estiloTarjetaOriginal;
+handlerCliente::handlerCliente() {
+
 }
 
 void handlerCliente::pintarImgTarjeta(QString mensajeServer, QPushButton* tarjetaPresionada) {
@@ -28,9 +28,8 @@ void handlerCliente::seleccionTurno(QString mensaje,QLabel *textAviso,QPushButto
     }
     if (mensaje.contains("coincide")){
         tarjeta1->setEnabled(false);
-        //tarjeta1->setStyleSheet("");
         tarjeta2->setEnabled(false);
-        //tarjeta2->setStyleSheet("");
+
     }else if(mensaje.contains("NoCoincide")){
         tarjeta1->setIcon(QIcon());
         tarjeta2->setIcon(QIcon());
@@ -38,6 +37,26 @@ void handlerCliente::seleccionTurno(QString mensaje,QLabel *textAviso,QPushButto
         tarjeta2->setStyleSheet("#"+tarjeta2->objectName()+"{image: url(:/Img_espalda.png);border: 4px solid gray;border-radius: 8px;}");
     }
     textAviso->adjustSize();
+}
+bool handlerCliente::finalizarJuego(QString mensajeServer,QLabel *textAviso,QLabel*puntajeJ1,QLabel*puntajeJ2,QTcpSocket* socket){
+    splitMensaje interpreteMensaje;
+    QString mensajeAenviar = "finalizar";
+
+    if (mensajeServer.contains("turnoJugador2")){
+        puntajeJ1->setText("Puntaje: "+interpreteMensaje.interpretarMensaje(2,mensajeServer));
+    }
+    else if(mensajeServer.contains("turnoJugador1")){
+        puntajeJ2->setText("Puntaje: "+interpreteMensaje.interpretarMensaje(2,mensajeServer));
+    }else{
+        mensajeAenviar = "close,finalizar";
+        textAviso->setText(interpreteMensaje.interpretarMensaje(1,mensajeServer));
+        textAviso->move(380,50); textAviso->adjustSize();
+        socket->write(mensajeAenviar.toUtf8().constData(),mensajeServer.size());
+        socket->close();
+        return true;
+    }
+    socket->write(mensajeAenviar.toUtf8().constData(),mensajeServer.size());
+    return false;
 }
 
 QImage handlerCliente::decodeBase64Img(QString imgBase64) {

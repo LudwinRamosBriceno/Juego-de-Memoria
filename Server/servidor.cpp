@@ -14,15 +14,12 @@ Servidor::Servidor(QObject *parent): QObject(parent){
     server = new QTcpServer(this);
     server->listen(QHostAddress::Any,2080);
     socket = new QTcpSocket(this);
-
-    //connect(socket,SIGNAL(newConnection()),this,SLOT(conexion_nueva()));
 }
+
 void Servidor::conectar(){
     connect(server,SIGNAL(newConnection()),this,SLOT(conexion_nueva()));
 }
 void Servidor::conexion_nueva(){
-
-    //bool cerrarConexion = false;
     socket = server->nextPendingConnection();
     connect(socket,SIGNAL(readyRead()),this,SLOT(leer_mensaje()));
 }
@@ -43,10 +40,12 @@ void Servidor::leer_mensaje(){
         socket->write(mensaje.toUtf8().constData(),mensaje.size());
     }
     else if (QString(bufferMensaje).contains("finalizar")){
-        //manejadorMensajes->finalizarJuego();
+        if (QString(bufferMensaje).contains("close")){server->close();free(socket);free(server);socket=nullptr;server=nullptr;qDebug()<<"se cierra el server";return;}
+
+        QString mensaje = manejadorMensajes->finalizarJuego();
+        socket->write(mensaje.toUtf8().constData(),mensaje.size());
         free(manejadorMensajes);
         manejadorMensajes = nullptr;
-        server->close();
 
     } else{
         QString mensajeAenviar = manejadorMensajes->logicHandler(QString(bufferMensaje));
@@ -57,7 +56,7 @@ void Servidor::leer_mensaje(){
     }
 }
 void Servidor::enviarCambioTurno(){
-    QString mensajeAenviar = manejadorMensajes->getParametrosActualizados();
+    QString mensajeAenviar = manejadorMensajes->getResultadoJuego();
     socket->write(mensajeAenviar.toUtf8().constData(),mensajeAenviar.size());
 }
 

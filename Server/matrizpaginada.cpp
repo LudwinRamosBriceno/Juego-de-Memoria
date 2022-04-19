@@ -13,4 +13,5 @@ QHash<int,tarjeta> *matrizpaginada::getTarjetasCargadas(){
 }
 void matrizpaginada::liberarMatrizPaginada(){
     free(tarjetasCargadas);
+    tarjetasCargadas = nullptr;
 }

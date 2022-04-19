@@ -10,8 +10,6 @@ public:
     void setIdentificador(int identificador);
     void setRevelada(bool revelada);
     void setTipoTarjeta(char tipoImg);
-    //void setFila(int fila);
-    //void setColumna(int columna);
     int getIdentificador();
     char getTipoTarjeta();
     bool getRevelada();
@@ -23,8 +21,7 @@ private:
     char tipoTarjeta;
     bool tarjetaRevelada;
     QImage imagenTarjeta;
-    //int fila;
-    //int columna;
+
 };
 
 #endif // TARJETA_H

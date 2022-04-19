@@ -15,5 +15,6 @@ void operadorMatrizPaginada::reducirMatriz(informacioncliente*infoCliente,matriz
         CargarDescargarTarjeta actualizadorTarjetaDisco;
         QHash<int,tarjeta>::Iterator tarjetaEliminar = actualizadorTarjetaDisco.descargarTarjeta(matrizPaginada);
         matrizPaginada->getTarjetasCargadas()->erase(tarjetaEliminar);
+        qDebug()<<matrizPaginada->getTarjetasCargadas()->size();
     }
 }

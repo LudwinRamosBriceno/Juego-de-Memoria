@@ -6,7 +6,6 @@ imgtarjetas::imgtarjetas() {
     imgtarjetaA="recursos/Img_verduras.png";
     imgtarjetaB="recursos/Img_comida-rapida.png";
     imgtarjetaC="recursos/Img_bola-masa.png";
-    imgtarjetaDesabilitada = "";
 }
 
 QString imgtarjetas::getImgTarjeta(char tipoTarjeta){
@@ -20,9 +19,6 @@ QString imgtarjetas::getImgTarjeta(char tipoTarjeta){
             break;
         case 'C':
             imgTarjeta = imgtarjetaC;
-            break;
-        case 'D':
-            imgTarjeta = imgtarjetaDesabilitada;
             break;
     }
     return imgTarjeta;

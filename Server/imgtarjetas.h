@@ -7,16 +7,12 @@ class imgtarjetas {
 
 public:
     imgtarjetas();
-    //QString gettarjetaTipoA();
-    //QString gettarjetaTipoB();
-    //QString gettarjetaTipoC();
     QString getImgTarjeta(char tipoTarjeta);
 
 private:
     QString imgtarjetaA;
     QString imgtarjetaB;
     QString imgtarjetaC;
-    QString imgtarjetaDesabilitada;
 };
 
 #endif // IMGTARJETAS_H

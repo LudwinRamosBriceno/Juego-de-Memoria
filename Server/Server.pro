@@ -21,6 +21,7 @@ SOURCES += \
         main.cpp \
         matrizpaginada.cpp \
         operadormatrizpaginada.cpp \
+        resultadojuego.cpp \
         servidor.cpp \
         splitmensaje.cpp \
         sumadorPuntos.cpp \
@@ -41,6 +42,7 @@ HEADERS += \
     informacioncliente.h \
     matrizpaginada.h \
     operadormatrizpaginada.h \
+    resultadojuego.h \
     servidor.h \
     splitmensaje.h \
     sumadorPuntos.h \

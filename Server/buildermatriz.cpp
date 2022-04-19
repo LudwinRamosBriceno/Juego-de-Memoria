@@ -14,7 +14,6 @@ builderMatriz::builderMatriz() {
 matrizpaginada* builderMatriz::construirMatriz(){
     int totalTarjetas =36;
     int contadorTarjetasCargadas =0; // se lleva un contador de cuantas tarjetas ya estan cargadas
-    //tarjeta *tarjetasCargadas = new tarjeta[totalTarjetas/3];
     remove("matrizPaginada.matriz"); // se elimina el archivo para no acumular los datos que se guardan en ese archivo
     matrizpaginada* matrizPaginada = new matrizpaginada();
     char tiposTarjetas[3] ={'A','B','C'};
@@ -48,7 +47,6 @@ matrizpaginada* builderMatriz::construirMatriz(){
 }
 
 char builderMatriz::verificarCantidadTipos(char tipoTarjeta){
-    //srand(time(NULL));
     char tipoTarjetaResultado =tipoTarjeta;
     int numRandom = rand()%2;
 
@@ -57,10 +55,10 @@ char builderMatriz::verificarCantidadTipos(char tipoTarjeta){
 
         if (tiposTarjetasRestantes[numRandom]=='B' && cantidadTarjetasTipoB >=12){
             tipoTarjetaResultado ='C';
-            //cantidadTarjetasTipoB++;
+
         }else if(tiposTarjetasRestantes[numRandom]=='C'&& cantidadTarjetasTipoC >=12){
             tipoTarjetaResultado ='B';
-            //cantidadTarjetasTipoC++;
+
         }else{tipoTarjetaResultado = tiposTarjetasRestantes[numRandom];}
     }
     if (cantidadTarjetasTipoB>=12 && tipoTarjeta=='B'){
@@ -68,10 +66,10 @@ char builderMatriz::verificarCantidadTipos(char tipoTarjeta){
 
         if (tiposTarjetasRestantes[numRandom]=='A' && cantidadTarjetasTipoA >=12){
             tipoTarjetaResultado ='C';
-            //cantidadTarjetasTipoA++;
+
         }else if(tiposTarjetasRestantes[numRandom]=='C'&& cantidadTarjetasTipoC>=12){
             tipoTarjetaResultado ='A';
-            //cantidadTarjetasTipoC++;
+
         } else{tipoTarjetaResultado = tiposTarjetasRestantes[numRandom];}
     }
     if (cantidadTarjetasTipoC>=12 && tipoTarjeta=='C'){
@@ -79,10 +77,10 @@ char builderMatriz::verificarCantidadTipos(char tipoTarjeta){
 
         if (tiposTarjetasRestantes[numRandom]=='A' && cantidadTarjetasTipoA>=12){
             tipoTarjetaResultado ='B';
-            //cantidadTarjetasTipoA++;
+
         }else if(tiposTarjetasRestantes[numRandom]=='B'&& cantidadTarjetasTipoB>=12){
             tipoTarjetaResultado ='A';
-            //cantidadTarjetasTipoB++;
+
         }else{tipoTarjetaResultado = tiposTarjetasRestantes[numRandom];}
     }
     switch (tipoTarjetaResultado) {

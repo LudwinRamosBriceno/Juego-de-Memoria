@@ -11,7 +11,6 @@ public:
     int encontrarIdentificador(QString nombreTarjetaSeleccionada);
 
 private:
-    //QString listNombresTarjetas[36];
     QHash <QString, int> listTarjetas;
     int sizeListaTarjetas;
 };

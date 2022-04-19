@@ -8,7 +8,7 @@
 Game::Game(QWidget *parent) : QMainWindow(parent), ui(new Ui::Game){
     ui->setupUi(this);
 
-    manejadorMensajes = new handlerCliente(ui->button1->styleSheet());
+    manejadorMensajes = new handlerCliente;
     ui->AvisoCaracteres->setVisible(false);
     socket = new QTcpSocket(this);
     socket->connectToHost("localhost",2080);
@@ -37,7 +37,6 @@ void Game::on_buttonComenzar_clicked() {
         ui->pantallas->setCurrentIndex(1);
         ui->namePJugador1->setText(jugador1);
         ui->namePJugador2->setText(jugador2);
-        qDebug()<<ui->button1->styleSheet();
     }
     else{
         ui->AvisoCaracteres->setVisible(true);
@@ -50,12 +49,9 @@ void Game::leer_mensaje(){
     bufferMensaje.resize(socket->bytesAvailable());
     socket->read(bufferMensaje.data(),bufferMensaje.size());
 
-    if (QString(bufferMensaje).contains("ganador")){
-        ui->AvisosPjuego->move(380,50);
-        ui->AvisosPjuego->setText("El Ganador es: "+interpreteMensaje.interpretarMensaje(2,QString(bufferMensaje)));
-        ui->AvisosPjuego->adjustSize();
-        QString mensaje = "finalizar";
-        socket->write(mensaje.toUtf8().constData(),mensaje.size());
+    if (QString(bufferMensaje).contains("finalizar")){
+        bool cerrarJuego= manejadorMensajes->finalizarJuego(QString(bufferMensaje),ui->AvisosPjuego,ui->puntajePJugador1,ui->puntajePJugador2,socket);
+        if(cerrarJuego){free(socket);socket = nullptr;free(manejadorMensajes); manejadorMensajes = nullptr;}
 
     }else if(QString(bufferMensaje).contains("turnoJugador")){
         manejadorMensajes->seleccionTurno(QString(bufferMensaje),ui->AvisosPjuego,TarjetaRevelada1,TarjetaRevelada2,ui->puntajePJugador1,ui->puntajePJugador2);
@@ -73,11 +69,10 @@ void Game::descubrirTarjeta(){
 
     if (!inicioTurno && botonesEnabled){
         TarjetaRevelada1 = TarjetaReveladaActual;
-        //TarjetaRevelada1->setEnabled(false);
         mensajeEnviar ="primeraTarjeta,"+QString::number(identificadorTarjetaRevelada);
         inicioTurno = true;
         socket->write(mensajeEnviar.toUtf8().constData(),mensajeEnviar.size());
-    }else if(botonesEnabled){
+    }else if(botonesEnabled && TarjetaReveladaActual!=TarjetaRevelada1){
         TarjetaRevelada2 = TarjetaReveladaActual;
         mensajeEnviar ="segundaTarjeta,"+QString::number(identificadorTarjetaRevelada);
         inicioTurno = false;
