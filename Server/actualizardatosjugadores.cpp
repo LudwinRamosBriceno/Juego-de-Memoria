@@ -22,9 +22,4 @@ void ActualizarDatosJugadores::actualizarDatos(int jugador, matrizpaginada *matr
         infoCliente->setPuntajeJugador2(PuntajeJugador2Actualizado);
         infoCliente->setparTarjetasReveladasJugador2(ParTarjetasReveladasJugador2Actualizada);
     }
-    if((infoCliente->getparTarjetasReveladasJugador1()+infoCliente->getparTarjetasReveladasJugador2())%2==0){
-        CargarDescargarTarjeta reducirMatriz;
-        QHash<int,tarjeta>::Iterator tarjetaEliminar = reducirMatriz.descargarTarjeta(matriz);
-        matriz->getTarjetasCargadas()->erase(tarjetaEliminar);
-    }
 }

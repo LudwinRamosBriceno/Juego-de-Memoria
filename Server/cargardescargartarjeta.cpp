@@ -46,7 +46,7 @@ QHash<int,tarjeta>::iterator CargarDescargarTarjeta::descargarTarjeta(matrizpagi
     int indexTarjetaAdescargar = rand()%matriz->getTarjetasCargadas()->size();
     int index = 0;
     bool end = false;
-
+    qDebug()<<"despues de crashea";
     while(!end){
         if (index == indexTarjetaAdescargar){
             tarjetaAdescargar = iterador.value();
@@ -57,7 +57,7 @@ QHash<int,tarjeta>::iterator CargarDescargarTarjeta::descargarTarjeta(matrizpagi
             iterador++;
         }
     }
-    qDebug()<<"despues de crashea";
+
     // se crea una estructura para guardar una tarjeta en disco
     tarjetaDisco tarjeta = {tarjetaAdescargar.getIdentificador(),tarjetaAdescargar.getTipoTarjeta(),tarjetaAdescargar.getRevelada()};
     file.open("matrizPaginada.matriz",ios::in|ios::out|ios::binary);

@@ -4,6 +4,7 @@
 #include <informacioncliente.h>
 #include <QTcpSocket>
 #include <buscadorTarjeta.h>
+#include <operadormatrizpaginada.h>
 
 class handlerServer {
 public:
@@ -24,6 +25,8 @@ private:
     int tarjeta2Presionada;
     int turnoJugador;
     buscadorTarjeta buscadorTarjetaSeleccionada;
+    operadorMatrizPaginada operadorMatriz;
+
 
 };
 

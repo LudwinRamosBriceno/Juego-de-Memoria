@@ -62,6 +62,7 @@ SOURCES       = ../Server/actualizardatosjugadores.cpp \
 		../Server/informacioncliente.cpp \
 		../Server/main.cpp \
 		../Server/matrizpaginada.cpp \
+		../Server/operadormatrizpaginada.cpp \
 		../Server/servidor.cpp \
 		../Server/splitmensaje.cpp \
 		../Server/sumadorPuntos.cpp \
@@ -76,6 +77,7 @@ OBJECTS       = actualizardatosjugadores.o \
 		informacioncliente.o \
 		main.o \
 		matrizpaginada.o \
+		operadormatrizpaginada.o \
 		servidor.o \
 		splitmensaje.o \
 		sumadorPuntos.o \
@@ -340,6 +342,7 @@ DIST          = /home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/spec_pre.prf \
 		../Server/imgtarjetas.h \
 		../Server/informacioncliente.h \
 		../Server/matrizpaginada.h \
+		../Server/operadormatrizpaginada.h \
 		../Server/servidor.h \
 		../Server/splitmensaje.h \
 		../Server/sumadorPuntos.h \
@@ -353,6 +356,7 @@ DIST          = /home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/spec_pre.prf \
 		../Server/informacioncliente.cpp \
 		../Server/main.cpp \
 		../Server/matrizpaginada.cpp \
+		../Server/operadormatrizpaginada.cpp \
 		../Server/servidor.cpp \
 		../Server/splitmensaje.cpp \
 		../Server/sumadorPuntos.cpp \
@@ -896,8 +900,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../Server/actualizardatosjugadores.h ../Server/buscadorTarjeta.h ../Server/cargardescargartarjeta.h ../Server/crearArchivoBin.h ../Server/handlerserver.h ../Server/imgtarjetas.h ../Server/informacioncliente.h ../Server/matrizpaginada.h ../Server/servidor.h ../Server/splitmensaje.h ../Server/sumadorPuntos.h ../Server/tarjeta.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../Server/actualizardatosjugadores.cpp ../Server/buildermatriz.cpp ../Server/buscadorTarjeta.cpp ../Server/cargardescargartarjeta.cpp ../Server/crearArchivoBin.cpp ../Server/handlerserver.cpp ../Server/imgtarjetas.cpp ../Server/informacioncliente.cpp ../Server/main.cpp ../Server/matrizpaginada.cpp ../Server/servidor.cpp ../Server/splitmensaje.cpp ../Server/sumadorPuntos.cpp ../Server/tarjeta.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../Server/actualizardatosjugadores.h ../Server/buscadorTarjeta.h ../Server/cargardescargartarjeta.h ../Server/crearArchivoBin.h ../Server/handlerserver.h ../Server/imgtarjetas.h ../Server/informacioncliente.h ../Server/matrizpaginada.h ../Server/operadormatrizpaginada.h ../Server/servidor.h ../Server/splitmensaje.h ../Server/sumadorPuntos.h ../Server/tarjeta.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../Server/actualizardatosjugadores.cpp ../Server/buildermatriz.cpp ../Server/buscadorTarjeta.cpp ../Server/cargardescargartarjeta.cpp ../Server/crearArchivoBin.cpp ../Server/handlerserver.cpp ../Server/imgtarjetas.cpp ../Server/informacioncliente.cpp ../Server/main.cpp ../Server/matrizpaginada.cpp ../Server/operadormatrizpaginada.cpp ../Server/servidor.cpp ../Server/splitmensaje.cpp ../Server/sumadorPuntos.cpp ../Server/tarjeta.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -1045,6 +1049,8 @@ moc_servidor.cpp: ../Server/servidor.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qvariant.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QObject \
 		../Server/handlerserver.h \
+		../Server/buscadorTarjeta.h \
+		../Server/operadormatrizpaginada.h \
 		moc_predefs.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/libexec/moc
 	/home/ludwinr/Qt/6.2.4/gcc_64/libexec/moc $(DEFINES) --include '/home/ludwinr/Escritorio/Proyectos/Proyecto 1/Juego-de-Memoria/build-Server-Desktop_Qt_6_2_4_GCC_64bit-Debug/moc_predefs.h' -I/home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/linux-g++ -I'/home/ludwinr/Escritorio/Proyectos/Proyecto 1/Juego-de-Memoria/Server' -I/home/ludwinr/Qt/6.2.4/gcc_64/include -I/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork -I/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets -I/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui -I/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../Server/servidor.h -o moc_servidor.cpp
@@ -1144,7 +1150,32 @@ actualizardatosjugadores.o: ../Server/actualizardatosjugadores.cpp ../Server/act
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmath.h \
 		../Server/informacioncliente.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QString \
-		../Server/sumadorPuntos.h
+		../Server/sumadorPuntos.h \
+		../Server/buscadorTarjeta.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QDebug \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qdebug.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmap.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qshareddata.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qshareddata_impl.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtextstream.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringconverter.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qset.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcontiguouscache.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qsharedpointer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qobject.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcoreevent.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmetatype.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcompare.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qvarlengtharray.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qscopeguard.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qiterable.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmetacontainer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcontainerinfo.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtaggedpointer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qobject_impl.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbindingstorage.h \
+		../Server/cargardescargartarjeta.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o actualizardatosjugadores.o ../Server/actualizardatosjugadores.cpp
 
 buildermatriz.o: ../Server/buildermatriz.cpp ../Server/buildermatriz.h \
@@ -1666,9 +1697,10 @@ handlerserver.o: ../Server/handlerserver.cpp ../Server/handlerserver.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qsharedpointer.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qsharedpointer_impl.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qvariant.h \
+		../Server/buscadorTarjeta.h \
+		../Server/operadormatrizpaginada.h \
 		../Server/splitmensaje.h \
 		../Server/buildermatriz.h \
-		../Server/buscadorTarjeta.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QBuffer \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbuffer.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QDebug \
@@ -1893,7 +1925,9 @@ main.o: ../Server/main.cpp /home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QCoreApp
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/QTcpSocket \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/qtcpsocket.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QObject \
-		../Server/handlerserver.h
+		../Server/handlerserver.h \
+		../Server/buscadorTarjeta.h \
+		../Server/operadormatrizpaginada.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../Server/main.cpp
 
 matrizpaginada.o: ../Server/matrizpaginada.cpp ../Server/matrizpaginada.h \
@@ -1973,6 +2007,112 @@ matrizpaginada.o: ../Server/matrizpaginada.cpp ../Server/matrizpaginada.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qhash.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmath.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o matrizpaginada.o ../Server/matrizpaginada.cpp
+
+operadormatrizpaginada.o: ../Server/operadormatrizpaginada.cpp ../Server/operadormatrizpaginada.h \
+		../Server/matrizpaginada.h \
+		../Server/tarjeta.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/QImage \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qimage.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtguiglobal.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qglobal.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qconfig.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtcore-config.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qsystemdetection.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qprocessordetection.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcompilerdetection.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtypeinfo.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcontainerfwd.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qsysinfo.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qlogging.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qflags.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qatomic.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbasicatomic.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qgenericatomic.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qglobalstatic.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qnumeric.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qversiontagging.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtgui-config.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qcolor.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qrgb.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qnamespace.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtmetamacros.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringlist.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qlist.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qarraydatapointer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qarraydataops.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qarraydata.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qpair.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcontainertools_impl.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qhashfunctions.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstring.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qchar.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringview.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbytearray.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qrefcount.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbytearrayalgorithms.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbytearrayview.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringliteral.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringalgorithms.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qanystringview.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qutf8stringview.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringtokenizer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringbuilder.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qiterator.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbytearraylist.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qalgorithms.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringmatcher.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qrgba64.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qpaintdevice.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qwindowdefs.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qobjectdefs.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qwindowdefs_win.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qrect.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmargins.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qsize.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qpoint.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qpixelformat.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtransform.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qpolygon.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qregion.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qdatastream.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qscopedpointer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qiodevicebase.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qline.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QHash \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qhash.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmath.h \
+		../Server/informacioncliente.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QString \
+		../Server/buscadorTarjeta.h \
+		../Server/cargardescargartarjeta.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QDebug \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qdebug.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmap.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qshareddata.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qshareddata_impl.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtextstream.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringconverter.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qset.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcontiguouscache.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qsharedpointer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qobject.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcoreevent.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmetatype.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcompare.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qvarlengtharray.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qscopeguard.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qiterable.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmetacontainer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcontainerinfo.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtaggedpointer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qobject_impl.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbindingstorage.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o operadormatrizpaginada.o ../Server/operadormatrizpaginada.cpp
 
 servidor.o: ../Server/servidor.cpp ../Server/servidor.h \
 		../Server/matrizpaginada.h \
@@ -2087,9 +2227,14 @@ servidor.o: ../Server/servidor.cpp ../Server/servidor.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qvariant.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QObject \
 		../Server/handlerserver.h \
+		../Server/buscadorTarjeta.h \
+		../Server/operadormatrizpaginada.h \
 		../Server/buildermatriz.h \
 		../Server/splitmensaje.h \
-		../Server/crearArchivoBin.h
+		../Server/crearArchivoBin.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QTimer \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtimer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbasictimer.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o servidor.o ../Server/servidor.cpp
 
 splitmensaje.o: ../Server/splitmensaje.cpp ../Server/splitmensaje.h \
@@ -2214,7 +2359,31 @@ sumadorPuntos.o: ../Server/sumadorPuntos.cpp ../Server/sumadorPuntos.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qline.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QHash \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qhash.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmath.h
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmath.h \
+		../Server/buscadorTarjeta.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QDebug \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qdebug.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmap.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qshareddata.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qshareddata_impl.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtextstream.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringconverter.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qset.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcontiguouscache.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qsharedpointer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qobject.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcoreevent.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmetatype.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcompare.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qvarlengtharray.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qscopeguard.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qiterable.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmetacontainer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcontainerinfo.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtaggedpointer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qobject_impl.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbindingstorage.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o sumadorPuntos.o ../Server/sumadorPuntos.cpp
 
 tarjeta.o: ../Server/tarjeta.cpp ../Server/tarjeta.h \

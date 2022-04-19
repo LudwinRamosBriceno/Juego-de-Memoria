@@ -20,6 +20,7 @@ SOURCES += \
         informacioncliente.cpp \
         main.cpp \
         matrizpaginada.cpp \
+        operadormatrizpaginada.cpp \
         servidor.cpp \
         splitmensaje.cpp \
         sumadorPuntos.cpp \
@@ -39,6 +40,7 @@ HEADERS += \
     imgtarjetas.h \
     informacioncliente.h \
     matrizpaginada.h \
+    operadormatrizpaginada.h \
     servidor.h \
     splitmensaje.h \
     sumadorPuntos.h \
