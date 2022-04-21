@@ -6,6 +6,7 @@
 #include <buscadorTarjeta.h>
 #include <operadormatrizpaginada.h>
 #include <resultadojuego.h>
+#include <registroserver.h>
 
 class handlerServer {
 public:
@@ -28,8 +29,7 @@ private:
     buscadorTarjeta buscadorTarjetaSeleccionada;
     operadorMatrizPaginada operadorMatriz;
     resultadoJuego verificadorEstadoJuego;
-
-
+    registroServer* tablaParametros;
 };
 
 #endif // HANDLERSERVER_H

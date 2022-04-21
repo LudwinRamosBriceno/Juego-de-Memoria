@@ -51,7 +51,9 @@ void Game::leer_mensaje(){
 
     if (QString(bufferMensaje).contains("finalizar")){
         bool cerrarJuego= manejadorMensajes->finalizarJuego(QString(bufferMensaje),ui->AvisosPjuego,ui->puntajePJugador1,ui->puntajePJugador2,socket);
-        if(cerrarJuego){free(socket);socket = nullptr;free(manejadorMensajes); manejadorMensajes = nullptr;}
+        if(cerrarJuego){free(manejadorMensajes); manejadorMensajes = nullptr;}
+        TarjetaRevelada1->setEnabled(false);
+        TarjetaRevelada2->setEnabled(false);
 
     }else if(QString(bufferMensaje).contains("turnoJugador")){
         manejadorMensajes->seleccionTurno(QString(bufferMensaje),ui->AvisosPjuego,TarjetaRevelada1,TarjetaRevelada2,ui->puntajePJugador1,ui->puntajePJugador2);

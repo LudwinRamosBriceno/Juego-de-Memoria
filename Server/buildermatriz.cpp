@@ -2,7 +2,6 @@
 #include <tarjeta.h>
 #include <crearArchivoBin.h>
 #include <QString>
-#include <QDebug>
 #include <stdlib.h>
 #include <time.h>
 
@@ -88,6 +87,5 @@ char builderMatriz::verificarCantidadTipos(char tipoTarjeta){
         case 'B': cantidadTarjetasTipoB++;break;
         case 'C': cantidadTarjetasTipoC++;break;
     }
-    qDebug()<< tipoTarjetaResultado;
     return tipoTarjetaResultado;
 }

@@ -2,7 +2,6 @@
 #include <fstream>
 #include <iostream>
 #include <string>
-#include <QDebug>
 
 using namespace std;
 

@@ -50,7 +50,7 @@ bool handlerCliente::finalizarJuego(QString mensajeServer,QLabel *textAviso,QLab
     }else{
         mensajeAenviar = "close,finalizar";
         textAviso->setText(interpreteMensaje.interpretarMensaje(1,mensajeServer));
-        textAviso->move(380,50); textAviso->adjustSize();
+        textAviso->move(330,50); textAviso->adjustSize();
         socket->write(mensajeAenviar.toUtf8().constData(),mensajeServer.size());
         socket->close();
         return true;

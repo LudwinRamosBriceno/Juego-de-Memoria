@@ -1,6 +1,5 @@
 #include "actualizardatosjugadores.h"
 #include <sumadorPuntos.h>
-#include <QDebug>
 #include <cargardescargartarjeta.h>
 
 ActualizarDatosJugadores::ActualizarDatosJugadores() {

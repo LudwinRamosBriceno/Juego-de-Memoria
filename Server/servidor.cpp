@@ -7,6 +7,7 @@
 #include <splitmensaje.h>
 #include <crearArchivoBin.h>
 #include <QTimer>
+#include <QCoreApplication>
 
 Servidor::Servidor(QObject *parent): QObject(parent){
 
@@ -40,7 +41,7 @@ void Servidor::leer_mensaje(){
         socket->write(mensaje.toUtf8().constData(),mensaje.size());
     }
     else if (QString(bufferMensaje).contains("finalizar")){
-        if (QString(bufferMensaje).contains("close")){server->close();free(socket);free(server);socket=nullptr;server=nullptr;qDebug()<<"se cierra el server";return;}
+        if (QString(bufferMensaje).contains("close")){server->close();free(socket);server=nullptr;QCoreApplication::quit();return;}
 
         QString mensaje = manejadorMensajes->finalizarJuego();
         socket->write(mensaje.toUtf8().constData(),mensaje.size());

@@ -4,12 +4,12 @@
 #include <splitmensaje.h>
 #include <buscadorTarjeta.h>
 #include <QBuffer>
-#include <QDebug>
 #include <actualizardatosjugadores.h>
 
 handlerServer::handlerServer() {
     matrizPaginada = new matrizpaginada();
     cliente = new informacioncliente();
+    tablaParametros = new registroServer();
 }
 
 QString handlerServer::iniciarJuego(QString nombreJugador1, QString nombreJugador2){
@@ -44,7 +44,7 @@ QString handlerServer::finalizarJuego(){
     free(cliente);
     matrizPaginada = nullptr;
     cliente = nullptr;
-
+    tablaParametros->estadoFinal();
     return mensaje;
 }
 
@@ -73,7 +73,9 @@ QString handlerServer::logicHandler(QString mensajeCliente){
     }else{
 
     }
+    tablaParametros->actualizarTabla(matrizPaginada,cliente);
     return mensaje;
+
 }
 QString handlerServer::getResultadoJuego() {
     char tipoTarjeta1Presionada = buscadorTarjetaSeleccionada.buscarTarjeta(tarjeta1Presionada,matrizPaginada).getTipoTarjeta();
@@ -85,6 +87,7 @@ QString handlerServer::getResultadoJuego() {
     }else{
         turnoJugador = 1;
     }
+    tablaParametros->actualizarTabla(matrizPaginada,cliente);
     return mensaje;
 }
 

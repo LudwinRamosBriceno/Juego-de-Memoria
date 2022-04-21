@@ -1,6 +1,5 @@
 #include "buscadorTarjeta.h"
 #include <cargardescargartarjeta.h>
-#include <QDebug>
 
 buscadorTarjeta::buscadorTarjeta() {
 

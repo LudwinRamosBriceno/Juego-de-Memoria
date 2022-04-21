@@ -2,6 +2,8 @@ QT -= gui
 QT+= network
 CONFIG += c++11 console
 CONFIG -= app_bundle
+INCLUDEPATH += /path/to/ncurses/headers/
+LIBS += -L/path/to/ncurses/library/ -lncurses
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -21,6 +23,7 @@ SOURCES += \
         main.cpp \
         matrizpaginada.cpp \
         operadormatrizpaginada.cpp \
+        registroserver.cpp \
         resultadojuego.cpp \
         servidor.cpp \
         splitmensaje.cpp \
@@ -42,6 +45,7 @@ HEADERS += \
     informacioncliente.h \
     matrizpaginada.h \
     operadormatrizpaginada.h \
+    registroserver.h \
     resultadojuego.h \
     servidor.h \
     splitmensaje.h \

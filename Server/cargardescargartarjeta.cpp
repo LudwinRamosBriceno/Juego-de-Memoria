@@ -2,7 +2,6 @@
 #include <fstream>
 #include <iostream>
 #include <tarjeta.h>
-#include <QDebug>
 #include <stdlib.h>
 #include <time.h>
 using namespace std;
@@ -33,7 +32,6 @@ void CargarDescargarTarjeta::cargarTarjeta(int IDtarjetaAcargar,matrizpaginada* 
     tarjetaAcargar.setRevelada(tarjetaAmatriz.revelada);
     tarjetaAcargar.setImgTarjeta();
     matriz->setTarjetaCargada(tarjetaAcargar.getIdentificador(),tarjetaAcargar);
-    qDebug()<<matriz->getTarjetasCargadas()->size();
 }
 
 // se actualiza la tarjeta a disco que será removida de la matriz paginada
