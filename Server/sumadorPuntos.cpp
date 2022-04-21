@@ -5,7 +5,7 @@ sumadorPuntos::sumadorPuntos() {
 
 }
 
-int sumadorPuntos::sumarPuntos(int puntajeActualJugador, matrizpaginada *matriz, int tarjeta1, int tarjeta2) {
+int sumadorPuntos::sumarPuntos(int puntajeActualJugador, matrizpaginada *matriz, int tarjeta1, int tarjeta2,int tarjetasEnMemoria) {
     char tipoTarjeta1 = buscadorTarjetaSeleccionada.buscarTarjeta(tarjeta1,matriz).getTipoTarjeta();
     char tipoTarjeta2 = buscadorTarjetaSeleccionada.buscarTarjeta(tarjeta2,matriz).getTipoTarjeta();
 
@@ -17,6 +17,11 @@ int sumadorPuntos::sumarPuntos(int puntajeActualJugador, matrizpaginada *matriz,
 
         buscadorTarjetaSeleccionada.buscarTarjeta(tarjeta2,matriz); //se carga la tarjeta 2 a la matriz que se desea buscar
         matriz->getTarjetasCargadas()->value(tarjeta2).setRevelada(true);
+        operadorMatriz.shuffleMatriz(matriz);
+        if(tarjetasEnMemoria==2){
+            puntajeActualJugador++;
+
+        }
     }
     return puntajeActualJugador;
 }

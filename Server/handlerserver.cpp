@@ -5,6 +5,7 @@
 #include <buscadorTarjeta.h>
 #include <QBuffer>
 #include <actualizardatosjugadores.h>
+#include <QTimer>
 
 handlerServer::handlerServer() {
     matrizPaginada = new matrizpaginada();
@@ -35,6 +36,7 @@ QString handlerServer::iniciarJuego(QString nombreJugador1, QString nombreJugado
             turnoJugador = 2;
             break;
     }
+    tablaParametros->actualizarTabla(matrizPaginada,cliente);
     return mensaje;
 }
 QString handlerServer::finalizarJuego(){
@@ -68,7 +70,7 @@ QString handlerServer::logicHandler(QString mensajeCliente){
         QImage imgTarjetaBuscada= buscadorTarjetaSeleccionada.buscarImgTarjeta(tarjeta2Presionada,matrizPaginada);
         QString imgTarjetaBase64 = convetirBase64(imgTarjetaBuscada);
         mensaje = imgTarjetaBase64;
-        actualizadorInfoCliente.actualizarDatos(turnoJugador,matrizPaginada,cliente,tarjeta1Presionada,tarjeta2Presionada);
+        actualizadorInfoCliente.actualizarDatos(turnoJugador,buscadorTarjetaSeleccionada.getVerificadorPuntosAdicionales(),matrizPaginada,cliente,tarjeta1Presionada,tarjeta2Presionada);
         operadorMatriz.reducirMatriz(cliente,matrizPaginada,tarjeta1Presionada,tarjeta2Presionada);
     }else{
 

@@ -2,14 +2,15 @@
 #include <cargardescargartarjeta.h>
 
 buscadorTarjeta::buscadorTarjeta() {
-
+    tarjetasEnMemoria = 0;
 }
 
 QImage buscadorTarjeta::buscarImgTarjeta(int keyTarjetaAcargar, matrizpaginada* matriz){
 
     QHash<int,tarjeta>* matrizCargada = matriz->getTarjetasCargadas();
     if (matrizCargada->find(keyTarjetaAcargar)!=matrizCargada->end()){
-        return matrizCargada->value(keyTarjetaAcargar).getImgTarjeta();
+        tarjetasEnMemoria++;
+        return matrizCargada->value(keyTarjetaAcargar).getImgTarjeta(); 
     }
     else{
         //se manda a llamar a cargarDescargar y se le envia la llave como entero, tambien se le manda la tarjeta que
@@ -36,4 +37,10 @@ tarjeta buscadorTarjeta::buscarTarjeta(int keyTarjeta, matrizpaginada* matriz) {
         cargarTarjetaAmatriz.cargarTarjeta(keyTarjeta,matriz);
         return matriz->getTarjetasCargadas()->value(keyTarjeta);
     }
+}
+
+int buscadorTarjeta::getVerificadorPuntosAdicionales(){
+    int temp = tarjetasEnMemoria;
+    tarjetasEnMemoria = 0;
+    return temp;
 }

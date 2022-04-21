@@ -11,7 +11,9 @@ public:
     buscadorTarjeta();
     QImage buscarImgTarjeta(int,matrizpaginada*);
     tarjeta buscarTarjeta(int, matrizpaginada*);
-
+    int getVerificadorPuntosAdicionales();
+private:
+    int tarjetasEnMemoria;
 };
 
 #endif // BUSCADORTARJETA_H

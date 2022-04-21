@@ -1,5 +1,8 @@
 #include "operadormatrizpaginada.h"
 #include <cargardescargartarjeta.h>
+#include <stdlib.h>
+#include <time.h>
+using namespace std;
 
 operadorMatrizPaginada::operadorMatrizPaginada(){
 
@@ -15,4 +18,17 @@ void operadorMatrizPaginada::reducirMatriz(informacioncliente*infoCliente,matriz
         QHash<int,tarjeta>::Iterator tarjetaEliminar = actualizadorTarjetaDisco.descargarTarjeta(matrizPaginada);
         matrizPaginada->getTarjetasCargadas()->erase(tarjetaEliminar);
     }
+}
+
+void operadorMatrizPaginada::shuffleMatriz(matrizpaginada* matriz){
+    srand(time(NULL));
+    CargarDescargarTarjeta actualizadorTarjetaDisco;
+
+    for (int i=0;i<matriz->getTarjetasCargadas()->size();i++){
+        int IDtarjetaRandom = rand()%36;
+        if (matriz->getTarjetasCargadas()->find(IDtarjetaRandom)==matriz->getTarjetasCargadas()->end()){
+            actualizadorTarjetaDisco.cargarTarjeta(IDtarjetaRandom,matriz);
+        }
+    }
+
 }

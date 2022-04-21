@@ -26,34 +26,39 @@ void registroServer::actualizarTabla(matrizpaginada* matriz, informacioncliente*
     int Ymax,Xmax;
     getmaxyx(stdscr,Ymax,Xmax);
 
-    WINDOW * tabla = newwin(Ymax/1.5,Xmax/1.5,Ymax/32,Xmax/32);
+    WINDOW * tabla = newwin(12,40,Ymax/32,Xmax/32);
     box(tabla,0,0);
 
     // Se pintan el numero de tarjetas cargadas
 
     string cantidadTarjetasCargadas = "Tarjetas cargadas"+separador+to_string(matriz->getTarjetasCargadas()->size());
     auto parametro1 = cantidadTarjetasCargadas.c_str();
-    mvwprintw(tabla,2,1,parametro1);
+    mvwprintw(tabla,1,1,parametro1);
 
     // se pinta el consumo de memoria del programa
     double vm, rss;
     getUsoMemoria(vm, rss);
-    string ConsumoMemoria ="Consumo:\n VM"+separador+to_string(vm)+" kB"+ "\n RSS"+separador+ to_string(rss)+" kB";
+    mvwprintw(tabla,3,1,"Consumo:");
+
+    string ConsumoMemoria ="VM"+separador+to_string(vm)+" kb";
     auto parametro2 = ConsumoMemoria.c_str();
     mvwprintw(tabla,4,1,parametro2);
+    ConsumoMemoria ="RSS"+separador+ to_string(rss)+" kb";
+    parametro2 = ConsumoMemoria.c_str();
+    mvwprintw(tabla,5,1,parametro2);
 
     // se pinta el puntaje del jugador 1
     string puntajeJugador1 = "Puntaje de "+cliente->getNombreJugador1().toStdString()+separador+to_string(cliente->getPuntajeJugador1());
     auto parametro3 = puntajeJugador1.c_str();
-    mvwprintw(tabla,8,1,"%s",parametro3);
+    mvwprintw(tabla,7,1,"%s",parametro3);
 
     // se pinta el puntaje del jugador 2
     string puntajeJugador2 = "Puntaje de "+cliente->getNombreJugador2().toStdString()+separador+to_string(cliente->getPuntajeJugador2());
     auto parametro4 = puntajeJugador2.c_str();
-    mvwprintw(tabla,10,1,"%s",parametro4);
+    mvwprintw(tabla,9,1,"%s",parametro4);
     limpiarTabla = true;
     wrefresh(tabla);
-
+    wmove(tabla,Ymax,Xmax);
 }
 
 void registroServer::getUsoMemoria(double& vm_usage, double& resident_set){
@@ -84,6 +89,7 @@ void registroServer::getUsoMemoria(double& vm_usage, double& resident_set){
 void registroServer::estadoFinal(){
     string separador = "---------->";
     curs_set(0);
+    clear();
     if(limpiarTabla){
         endwin();
     }

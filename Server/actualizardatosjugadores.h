@@ -7,7 +7,7 @@ class ActualizarDatosJugadores {
 
 public:
     ActualizarDatosJugadores();
-    void actualizarDatos(int,matrizpaginada*,informacioncliente*,int,int);
+    void actualizarDatos(int,int,matrizpaginada*,informacioncliente*,int,int);
 };
 
 #endif // ACTUALIZARDATOSJUGADORES_H

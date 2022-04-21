@@ -20,7 +20,7 @@ QString resultadoJuego::definirResultadoJuego(int turnoJugador,informacionclient
 }
 
 QString resultadoJuego::definirResultadoFinalJuego(informacioncliente* infoCliente){
-    QString mensaje = "El ganador es :";
+    QString mensaje = "El ganador es ";
 
     if(infoCliente->getPuntajeJugador1()>infoCliente->getPuntajeJugador2()){
         mensaje +=infoCliente->getNombreJugador1()+",finalizar";
