@@ -4,12 +4,14 @@
 #include <iostream>
 #include <QVector>
 #include <QTimer>
+#include <QCoreApplication>
 
 Game::Game(QWidget *parent) : QMainWindow(parent), ui(new Ui::Game){
     ui->setupUi(this);
 
     manejadorMensajes = new handlerCliente;
     ui->AvisoCaracteres->setVisible(false);
+    ui->buttonSalir->setVisible(false);
     socket = new QTcpSocket(this);
     socket->connectToHost("localhost",2080);
     connect(socket,SIGNAL(readyRead()),this,SLOT(leer_mensaje()));
@@ -51,7 +53,7 @@ void Game::leer_mensaje(){
 
     if (QString(bufferMensaje).contains("finalizar")){
         bool cerrarJuego= manejadorMensajes->finalizarJuego(QString(bufferMensaje),ui->AvisosPjuego,ui->puntajePJugador1,ui->puntajePJugador2,socket);
-        if(cerrarJuego){free(manejadorMensajes); manejadorMensajes = nullptr;}
+        if(cerrarJuego){free(manejadorMensajes); manejadorMensajes = nullptr;ui->buttonSalir->setVisible(true);}
         TarjetaRevelada1->setEnabled(false);
         TarjetaRevelada2->setEnabled(false);
 
@@ -81,6 +83,9 @@ void Game::descubrirTarjeta(){
         botonesEnabled = false;
         socket->write(mensajeEnviar.toUtf8().constData(),mensajeEnviar.size());
     }
+}
+void Game::on_buttonSalir_clicked() {
+    QCoreApplication::quit();
 }
 Game::~Game(){
     delete ui;

@@ -22,7 +22,6 @@ void registroServer::actualizarTabla(matrizpaginada* matriz, informacioncliente*
         endwin();
     }
     initscr();
-    clear();
     int Ymax,Xmax;
     getmaxyx(stdscr,Ymax,Xmax);
 
@@ -40,10 +39,10 @@ void registroServer::actualizarTabla(matrizpaginada* matriz, informacioncliente*
     getUsoMemoria(vm, rss);
     mvwprintw(tabla,3,1,"Consumo:");
 
-    string ConsumoMemoria ="VM"+separador+to_string(vm)+" kb";
+    string ConsumoMemoria ="VM"+separador+to_string(vm)+" bytes"; // toda la memoria a la que el programa puede acceder
     auto parametro2 = ConsumoMemoria.c_str();
     mvwprintw(tabla,4,1,parametro2);
-    ConsumoMemoria ="RSS"+separador+ to_string(rss)+" kb";
+    ConsumoMemoria ="RSS"+separador+ to_string(rss)+" bytes"; // memoria que el programa utiliza
     parametro2 = ConsumoMemoria.c_str();
     mvwprintw(tabla,5,1,parametro2);
 
@@ -58,7 +57,6 @@ void registroServer::actualizarTabla(matrizpaginada* matriz, informacioncliente*
     mvwprintw(tabla,9,1,"%s",parametro4);
     limpiarTabla = true;
     wrefresh(tabla);
-    wmove(tabla,Ymax,Xmax);
 }
 
 void registroServer::getUsoMemoria(double& vm_usage, double& resident_set){
@@ -82,14 +80,14 @@ void registroServer::getUsoMemoria(double& vm_usage, double& resident_set){
            >> pid >> pid >> pid >> vsize >> rss;
    stat_stream.close();
 
-   long page_size_kb = sysconf(_SC_PAGE_SIZE) / 1024; // in case x86-64 is configured to use 2MB pages
-   vm_usage     = vsize / 1024.0;
+   long page_size_kb = sysconf(_SC_PAGE_SIZE) ;/// 1024;
+   vm_usage     = vsize ;/// 1024.0;
    resident_set = rss * page_size_kb;
 }
 void registroServer::estadoFinal(){
     string separador = "---------->";
     curs_set(0);
-    clear();
+    clrtobot();
     if(limpiarTabla){
         endwin();
     }
@@ -97,15 +95,23 @@ void registroServer::estadoFinal(){
     int Ymax,Xmax;
     getmaxyx(stdscr,Ymax,Xmax);
 
-    WINDOW * tabla = newwin(Ymax/16,Xmax/1.5,Ymax/32,Xmax/32);
+    WINDOW * tabla = newwin(12,20,Ymax/32,Xmax/32);
     box(tabla,0,0);
+    wrefresh(tabla);
+    clrtobot();
 
     // se pinta el consumo final de memoria del programa
+
     double vm, rss;
     getUsoMemoria(vm, rss);
-    string ConsumoMemoria ="Consumo:\n VM"+separador+to_string(vm)+" kB"+ "\n RSS"+separador+ to_string(rss)+" kB";
+    mvwprintw(tabla,2,1,"Consumo:");
+
+    string ConsumoMemoria ="VM"+separador+to_string(vm)+"bytes";
     auto parametro2 = ConsumoMemoria.c_str();
-    mvwprintw(tabla,2,1,parametro2);
+    mvwprintw(tabla,3,1,parametro2);
+    ConsumoMemoria ="RSS"+separador+ to_string(rss)+"bytes"; // memoria fisica en uso
+    parametro2 = ConsumoMemoria.c_str();
+    mvwprintw(tabla,4,1,parametro2);
 
     wrefresh(tabla);
 }

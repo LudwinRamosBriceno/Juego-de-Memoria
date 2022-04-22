@@ -78,6 +78,7 @@ public:
     QLabel *namePJugador2;
     QLabel *puntajePJugador2;
     QLabel *AvisosPjuego;
+    QPushButton *buttonSalir;
 
     void setupUi(QMainWindow *Game)
     {
@@ -577,6 +578,41 @@ public:
         AvisosPjuego->setStyleSheet(QString::fromUtf8("font: 700 italic 12pt \"Ubuntu\";\n"
 "color: rgb(211, 215, 207);"));
         AvisosPjuego->setAlignment(Qt::AlignCenter);
+        buttonSalir = new QPushButton(pantalla_2);
+        buttonSalir->setObjectName(QString::fromUtf8("buttonSalir"));
+        buttonSalir->setGeometry(QRect(20, 20, 89, 25));
+        QPalette palette;
+        QBrush brush(QColor(255, 218, 185, 255));
+        brush.setStyle(Qt::SolidPattern);
+        palette.setBrush(QPalette::Active, QPalette::Button, brush);
+        QBrush brush1(QColor(0, 0, 0, 255));
+        brush1.setStyle(Qt::SolidPattern);
+        palette.setBrush(QPalette::Active, QPalette::Text, brush1);
+        palette.setBrush(QPalette::Active, QPalette::ButtonText, brush1);
+        palette.setBrush(QPalette::Active, QPalette::Base, brush);
+        palette.setBrush(QPalette::Active, QPalette::Window, brush);
+        QBrush brush2(QColor(35, 35, 35, 255));
+        brush2.setStyle(Qt::SolidPattern);
+        palette.setBrush(QPalette::Inactive, QPalette::Button, brush2);
+        QBrush brush3(QColor(231, 231, 231, 255));
+        brush3.setStyle(Qt::SolidPattern);
+        palette.setBrush(QPalette::Inactive, QPalette::Text, brush3);
+        palette.setBrush(QPalette::Inactive, QPalette::ButtonText, brush3);
+        QBrush brush4(QColor(51, 51, 51, 255));
+        brush4.setStyle(Qt::SolidPattern);
+        palette.setBrush(QPalette::Inactive, QPalette::Base, brush4);
+        palette.setBrush(QPalette::Inactive, QPalette::Window, brush4);
+        palette.setBrush(QPalette::Disabled, QPalette::Button, brush);
+        QBrush brush5(QColor(255, 255, 255, 127));
+        brush5.setStyle(Qt::SolidPattern);
+        palette.setBrush(QPalette::Disabled, QPalette::Text, brush5);
+        palette.setBrush(QPalette::Disabled, QPalette::ButtonText, brush5);
+        palette.setBrush(QPalette::Disabled, QPalette::Base, brush);
+        palette.setBrush(QPalette::Disabled, QPalette::Window, brush);
+        buttonSalir->setPalette(palette);
+        buttonSalir->setStyleSheet(QString::fromUtf8("background: peachPuff;\n"
+"border: 3px solid olive; \n"
+"border-radius: 7px;"));
         pantallas->addWidget(pantalla_2);
         Game->setCentralWidget(centralwidget);
 
@@ -634,6 +670,7 @@ public:
         namePJugador2->setText(QString());
         puntajePJugador2->setText(QCoreApplication::translate("Game", "Puntaje:", nullptr));
         AvisosPjuego->setText(QString());
+        buttonSalir->setText(QCoreApplication::translate("Game", "Salir", nullptr));
     } // retranslateUi
 
 };

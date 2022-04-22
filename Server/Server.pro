@@ -23,6 +23,7 @@ SOURCES += \
         main.cpp \
         matrizpaginada.cpp \
         operadormatrizpaginada.cpp \
+        powerups.cpp \
         registroserver.cpp \
         resultadojuego.cpp \
         servidor.cpp \
@@ -45,6 +46,7 @@ HEADERS += \
     informacioncliente.h \
     matrizpaginada.h \
     operadormatrizpaginada.h \
+    powerups.h \
     registroserver.h \
     resultadojuego.h \
     servidor.h \

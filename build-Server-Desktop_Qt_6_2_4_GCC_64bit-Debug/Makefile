@@ -63,6 +63,7 @@ SOURCES       = ../Server/actualizardatosjugadores.cpp \
 		../Server/main.cpp \
 		../Server/matrizpaginada.cpp \
 		../Server/operadormatrizpaginada.cpp \
+		../Server/powerups.cpp \
 		../Server/registroserver.cpp \
 		../Server/resultadojuego.cpp \
 		../Server/servidor.cpp \
@@ -80,6 +81,7 @@ OBJECTS       = actualizardatosjugadores.o \
 		main.o \
 		matrizpaginada.o \
 		operadormatrizpaginada.o \
+		powerups.o \
 		registroserver.o \
 		resultadojuego.o \
 		servidor.o \
@@ -347,6 +349,7 @@ DIST          = /home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/spec_pre.prf \
 		../Server/informacioncliente.h \
 		../Server/matrizpaginada.h \
 		../Server/operadormatrizpaginada.h \
+		../Server/powerups.h \
 		../Server/registroserver.h \
 		../Server/resultadojuego.h \
 		../Server/servidor.h \
@@ -363,6 +366,7 @@ DIST          = /home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/spec_pre.prf \
 		../Server/main.cpp \
 		../Server/matrizpaginada.cpp \
 		../Server/operadormatrizpaginada.cpp \
+		../Server/powerups.cpp \
 		../Server/registroserver.cpp \
 		../Server/resultadojuego.cpp \
 		../Server/servidor.cpp \
@@ -908,8 +912,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../Server/actualizardatosjugadores.h ../Server/buscadorTarjeta.h ../Server/cargardescargartarjeta.h ../Server/crearArchivoBin.h ../Server/handlerserver.h ../Server/imgtarjetas.h ../Server/informacioncliente.h ../Server/matrizpaginada.h ../Server/operadormatrizpaginada.h ../Server/registroserver.h ../Server/resultadojuego.h ../Server/servidor.h ../Server/splitmensaje.h ../Server/sumadorPuntos.h ../Server/tarjeta.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../Server/actualizardatosjugadores.cpp ../Server/buildermatriz.cpp ../Server/buscadorTarjeta.cpp ../Server/cargardescargartarjeta.cpp ../Server/crearArchivoBin.cpp ../Server/handlerserver.cpp ../Server/imgtarjetas.cpp ../Server/informacioncliente.cpp ../Server/main.cpp ../Server/matrizpaginada.cpp ../Server/operadormatrizpaginada.cpp ../Server/registroserver.cpp ../Server/resultadojuego.cpp ../Server/servidor.cpp ../Server/splitmensaje.cpp ../Server/sumadorPuntos.cpp ../Server/tarjeta.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../Server/actualizardatosjugadores.h ../Server/buscadorTarjeta.h ../Server/cargardescargartarjeta.h ../Server/crearArchivoBin.h ../Server/handlerserver.h ../Server/imgtarjetas.h ../Server/informacioncliente.h ../Server/matrizpaginada.h ../Server/operadormatrizpaginada.h ../Server/powerups.h ../Server/registroserver.h ../Server/resultadojuego.h ../Server/servidor.h ../Server/splitmensaje.h ../Server/sumadorPuntos.h ../Server/tarjeta.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../Server/actualizardatosjugadores.cpp ../Server/buildermatriz.cpp ../Server/buscadorTarjeta.cpp ../Server/cargardescargartarjeta.cpp ../Server/crearArchivoBin.cpp ../Server/handlerserver.cpp ../Server/imgtarjetas.cpp ../Server/informacioncliente.cpp ../Server/main.cpp ../Server/matrizpaginada.cpp ../Server/operadormatrizpaginada.cpp ../Server/powerups.cpp ../Server/registroserver.cpp ../Server/resultadojuego.cpp ../Server/servidor.cpp ../Server/splitmensaje.cpp ../Server/sumadorPuntos.cpp ../Server/tarjeta.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -1061,9 +1065,6 @@ moc_servidor.cpp: ../Server/servidor.h \
 		../Server/operadormatrizpaginada.h \
 		../Server/resultadojuego.h \
 		../Server/registroserver.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QTimer \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtimer.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbasictimer.h \
 		moc_predefs.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/libexec/moc
 	/home/ludwinr/Qt/6.2.4/gcc_64/libexec/moc $(DEFINES) --include '/home/ludwinr/Escritorio/Proyectos/Proyecto 1/Juego-de-Memoria/build-Server-Desktop_Qt_6_2_4_GCC_64bit-Debug/moc_predefs.h' -I/home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/linux-g++ -I'/home/ludwinr/Escritorio/Proyectos/Proyecto 1/Juego-de-Memoria/Server' -I/path/to/ncurses/headers -I/home/ludwinr/Qt/6.2.4/gcc_64/include -I/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork -I/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets -I/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui -I/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../Server/servidor.h -o moc_servidor.cpp
@@ -1165,7 +1166,9 @@ actualizardatosjugadores.o: ../Server/actualizardatosjugadores.cpp ../Server/act
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QString \
 		../Server/sumadorPuntos.h \
 		../Server/buscadorTarjeta.h \
-		../Server/cargardescargartarjeta.h
+		../Server/operadormatrizpaginada.h \
+		../Server/cargardescargartarjeta.h \
+		../Server/powerups.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o actualizardatosjugadores.o ../Server/actualizardatosjugadores.cpp
 
 buildermatriz.o: ../Server/buildermatriz.cpp ../Server/buildermatriz.h \
@@ -1597,14 +1600,12 @@ handlerserver.o: ../Server/handlerserver.cpp ../Server/handlerserver.h \
 		../Server/operadormatrizpaginada.h \
 		../Server/resultadojuego.h \
 		../Server/registroserver.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QTimer \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtimer.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbasictimer.h \
 		../Server/splitmensaje.h \
 		../Server/buildermatriz.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QBuffer \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbuffer.h \
-		../Server/actualizardatosjugadores.h
+		../Server/actualizardatosjugadores.h \
+		../Server/powerups.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o handlerserver.o ../Server/handlerserver.cpp
 
 imgtarjetas.o: ../Server/imgtarjetas.cpp ../Server/imgtarjetas.h \
@@ -1830,9 +1831,6 @@ main.o: ../Server/main.cpp /home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QCoreApp
 		../Server/operadormatrizpaginada.h \
 		../Server/resultadojuego.h \
 		../Server/registroserver.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QTimer \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtimer.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbasictimer.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QDebug
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../Server/main.cpp
 
@@ -1996,6 +1994,51 @@ operadormatrizpaginada.o: ../Server/operadormatrizpaginada.cpp ../Server/operado
 		../Server/buscadorTarjeta.h \
 		../Server/cargardescargartarjeta.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o operadormatrizpaginada.o ../Server/operadormatrizpaginada.cpp
+
+powerups.o: ../Server/powerups.cpp ../Server/powerups.h \
+		../Server/informacioncliente.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QString \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstring.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qchar.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qglobal.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qconfig.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtcore-config.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qsystemdetection.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qprocessordetection.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcompilerdetection.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtypeinfo.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcontainerfwd.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qsysinfo.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qlogging.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qflags.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qatomic.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbasicatomic.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qgenericatomic.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qglobalstatic.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qnumeric.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qversiontagging.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringview.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbytearray.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qrefcount.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qnamespace.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtmetamacros.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qarraydata.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qpair.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qarraydatapointer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qarraydataops.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcontainertools_impl.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbytearrayalgorithms.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbytearrayview.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringliteral.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringalgorithms.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qanystringview.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qutf8stringview.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringtokenizer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringbuilder.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o powerups.o ../Server/powerups.cpp
 
 registroserver.o: ../Server/registroserver.cpp ../Server/registroserver.h \
 		../Server/matrizpaginada.h \
@@ -2240,12 +2283,12 @@ servidor.o: ../Server/servidor.cpp ../Server/servidor.h \
 		../Server/operadormatrizpaginada.h \
 		../Server/resultadojuego.h \
 		../Server/registroserver.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QTimer \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtimer.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbasictimer.h \
 		../Server/buildermatriz.h \
 		../Server/splitmensaje.h \
 		../Server/crearArchivoBin.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QTimer \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtimer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbasictimer.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QCoreApplication \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcoreapplication.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qeventloop.h \
@@ -2390,6 +2433,7 @@ sumadorPuntos.o: ../Server/sumadorPuntos.cpp ../Server/sumadorPuntos.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qhash.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmath.h \
 		../Server/buscadorTarjeta.h \
+		../Server/operadormatrizpaginada.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QDebug \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qdebug.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmap.h \

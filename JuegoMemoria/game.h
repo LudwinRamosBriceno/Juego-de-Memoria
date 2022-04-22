@@ -23,6 +23,8 @@ private slots:
     void leer_mensaje();
     void descubrirTarjeta();
 
+    void on_buttonSalir_clicked();
+
 private:
     Ui::Game *ui;
     QTcpSocket *socket;

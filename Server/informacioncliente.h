@@ -17,6 +17,8 @@ public:
     void setparTarjetasReveladasJugador2(int cantidadParTarjetasReveladas);
     int getparTarjetasReveladasJugador1();
     int getparTarjetasReveladasJugador2();
+    void setPuntosPowerUp(int,bool);
+    int getPuntosPowerUp(int);
 
 private:
     int puntajeJugador1;
@@ -25,6 +27,8 @@ private:
     QString nombreJugador2;
     int parTarjetasReveladasJugador1;
     int parTarjetasReveladasJugador2;
+    int acumuladoJugador1;
+    int acumuladoJugador2;
 };
 
 #endif // INFORMACIONCLIENTE_H

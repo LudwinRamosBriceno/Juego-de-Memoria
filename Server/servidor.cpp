@@ -41,7 +41,7 @@ void Servidor::leer_mensaje(){
         socket->write(mensaje.toUtf8().constData(),mensaje.size());
     }
     else if (QString(bufferMensaje).contains("finalizar")){
-        if (QString(bufferMensaje).contains("close")){server->close();free(socket);server=nullptr;QCoreApplication::quit();return;}
+        if (QString(bufferMensaje).contains("close")){server->close();free(socket);server=nullptr;QCoreApplication::quit();}
 
         QString mensaje = manejadorMensajes->finalizarJuego();
         socket->write(mensaje.toUtf8().constData(),mensaje.size());

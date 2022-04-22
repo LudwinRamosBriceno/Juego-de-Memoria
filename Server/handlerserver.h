@@ -7,6 +7,9 @@
 #include <operadormatrizpaginada.h>
 #include <resultadojuego.h>
 #include <registroserver.h>
+#include <thread>
+#include <iostream>
+using namespace std;
 
 class handlerServer {
 public:
@@ -22,7 +25,6 @@ private:
 private:
     matrizpaginada *matrizPaginada;
     informacioncliente *cliente;
-    int numTarjetaAdescargar;
     int tarjeta1Presionada;
     int tarjeta2Presionada;
     int turnoJugador;

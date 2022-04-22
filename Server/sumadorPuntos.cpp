@@ -20,7 +20,6 @@ int sumadorPuntos::sumarPuntos(int puntajeActualJugador, matrizpaginada *matriz,
         operadorMatriz.shuffleMatriz(matriz);
         if(tarjetasEnMemoria==2){
             puntajeActualJugador++;
-
         }
     }
     return puntajeActualJugador;
