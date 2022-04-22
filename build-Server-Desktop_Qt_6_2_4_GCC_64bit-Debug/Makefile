@@ -341,6 +341,7 @@ DIST          = /home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/spec_pre.prf \
 		/home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/yacc.prf \
 		/home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/lex.prf \
 		../Server/Server.pro ../Server/actualizardatosjugadores.h \
+		../Server/buildermatriz.h \
 		../Server/buscadorTarjeta.h \
 		../Server/cargardescargartarjeta.h \
 		../Server/crearArchivoBin.h \
@@ -912,7 +913,7 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../Server/actualizardatosjugadores.h ../Server/buscadorTarjeta.h ../Server/cargardescargartarjeta.h ../Server/crearArchivoBin.h ../Server/handlerserver.h ../Server/imgtarjetas.h ../Server/informacioncliente.h ../Server/matrizpaginada.h ../Server/operadormatrizpaginada.h ../Server/powerups.h ../Server/registroserver.h ../Server/resultadojuego.h ../Server/servidor.h ../Server/splitmensaje.h ../Server/sumadorPuntos.h ../Server/tarjeta.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../Server/actualizardatosjugadores.h ../Server/buildermatriz.h ../Server/buscadorTarjeta.h ../Server/cargardescargartarjeta.h ../Server/crearArchivoBin.h ../Server/handlerserver.h ../Server/imgtarjetas.h ../Server/informacioncliente.h ../Server/matrizpaginada.h ../Server/operadormatrizpaginada.h ../Server/powerups.h ../Server/registroserver.h ../Server/resultadojuego.h ../Server/servidor.h ../Server/splitmensaje.h ../Server/sumadorPuntos.h ../Server/tarjeta.h $(DISTDIR)/
 	$(COPY_FILE) --parents ../Server/actualizardatosjugadores.cpp ../Server/buildermatriz.cpp ../Server/buscadorTarjeta.cpp ../Server/cargardescargartarjeta.cpp ../Server/crearArchivoBin.cpp ../Server/handlerserver.cpp ../Server/imgtarjetas.cpp ../Server/informacioncliente.cpp ../Server/main.cpp ../Server/matrizpaginada.cpp ../Server/operadormatrizpaginada.cpp ../Server/powerups.cpp ../Server/registroserver.cpp ../Server/resultadojuego.cpp ../Server/servidor.cpp ../Server/splitmensaje.cpp ../Server/sumadorPuntos.cpp ../Server/tarjeta.cpp $(DISTDIR)/
 
 

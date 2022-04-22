@@ -96,7 +96,7 @@ void registroServer::estadoFinal(){
     int Ymax,Xmax;
     getmaxyx(stdscr,Ymax,Xmax);
 
-    WINDOW * tabla = newwin(12,20,Ymax/32,Xmax/32);
+    WINDOW * tabla = newwin(12,40,Ymax/32,Xmax/32);
     box(tabla,0,0);
     wrefresh(tabla);
 
