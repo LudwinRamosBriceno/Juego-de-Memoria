@@ -5,7 +5,6 @@
 #include <buscadorTarjeta.h>
 #include <QBuffer>
 #include <actualizardatosjugadores.h>
-#include <thread>
 #include <iostream>
 #include <powerups.h>
 

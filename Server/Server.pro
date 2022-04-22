@@ -38,6 +38,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     actualizardatosjugadores.h \
+    buildermatriz.h \
     buscadorTarjeta.h \
     cargardescargartarjeta.h \
     crearArchivoBin.h \

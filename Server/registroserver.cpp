@@ -17,10 +17,11 @@ registroServer::registroServer(){
 }
 void registroServer::actualizarTabla(matrizpaginada* matriz, informacioncliente* cliente){
     string separador = "---------->";
-    curs_set(0);
     if(limpiarTabla){
         endwin();
+        system("clear");
     }
+    curs_set(0);
     initscr();
     int Ymax,Xmax;
     getmaxyx(stdscr,Ymax,Xmax);
@@ -86,11 +87,12 @@ void registroServer::getUsoMemoria(double& vm_usage, double& resident_set){
 }
 void registroServer::estadoFinal(){
     string separador = "---------->";
-    curs_set(0);
-    clrtobot();
+
     if(limpiarTabla){
         endwin();
     }
+    system("clear");
+    curs_set(0);
     initscr();
     int Ymax,Xmax;
     getmaxyx(stdscr,Ymax,Xmax);
@@ -98,10 +100,8 @@ void registroServer::estadoFinal(){
     WINDOW * tabla = newwin(12,20,Ymax/32,Xmax/32);
     box(tabla,0,0);
     wrefresh(tabla);
-    clrtobot();
 
     // se pinta el consumo final de memoria del programa
-
     double vm, rss;
     getUsoMemoria(vm, rss);
     mvwprintw(tabla,2,1,"Consumo:");

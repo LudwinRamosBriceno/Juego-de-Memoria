@@ -1,3 +1,11 @@
+/**
+ * @file handlerserver.h
+ * @version 1.0
+ * @date 22/04/2022
+ * @author Ludwin Ramos
+ * @brief Se gestiona la logica relacionada con el servidor
+ */
+
 #ifndef HANDLERSERVER_H
 #define HANDLERSERVER_H
 #include <matrizpaginada.h>
@@ -9,14 +17,42 @@
 #include <registroserver.h>
 #include <thread>
 #include <iostream>
+
 using namespace std;
 
+/**
+ * @brief Gestiona todas las entradas o mensajes que recibe el servidor
+ */
 class handlerServer {
+
 public:
     handlerServer();
-    QString iniciarJuego(QString , QString );
-    QString logicHandler(QString);
+
+    /**
+     * @brief iniciarJuego Inicia todo lo necesario a la ejecución del juego
+     * @param nombreJugador1 Nombre del jugador 1
+     * @param nombreJugador2 Nombre del Jugador 2
+     * @return retorna un mensaje con instrucciones y datos necesarios
+     */
+    QString iniciarJuego(QString nombreJugador1, QString nombreJugador2);
+
+    /**
+     * @brief logicHandler Gestiona las jugadas de los jugadores
+     * @param mensajeCliente Mensaje del cliente que contiene instrucciones
+     * @return Retorna un mensaje con instrucciones a ejecutar por el cliente
+     */
+    QString logicHandler(QString mensajeCliente);
+
+    /**
+     * @brief getResultadoJuego Se obtiene el resultado parcial o final del juego
+     * @return Se retorna un mensaje con instrucciones y datos a enviar.
+     */
     QString getResultadoJuego();
+
+    /**
+     * @brief finalizarJuego Realiza operaciones de liberación de memoria de la que ocupaba el proceso
+     * @return Retorna un mensaje final para terminar el juego
+     */
     QString finalizarJuego();
 
 private:
