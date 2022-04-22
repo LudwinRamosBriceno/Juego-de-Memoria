@@ -42,12 +42,12 @@ void Servidor::leer_mensaje(){
     }
     else if (QString(bufferMensaje).contains("finalizar")){
         if (QString(bufferMensaje).contains("close")){server->close();free(socket);server=nullptr;QCoreApplication::quit();}
-
-        QString mensaje = manejadorMensajes->finalizarJuego();
-        socket->write(mensaje.toUtf8().constData(),mensaje.size());
-        free(manejadorMensajes);
-        manejadorMensajes = nullptr;
-
+        else{
+            QString mensaje = manejadorMensajes->finalizarJuego();
+            socket->write(mensaje.toUtf8().constData(),mensaje.size());
+            free(manejadorMensajes);
+            manejadorMensajes = nullptr;
+        }
     } else{
         QString mensajeAenviar = manejadorMensajes->logicHandler(QString(bufferMensaje));
         socket->write(mensajeAenviar.toUtf8().constData(),mensajeAenviar.size());

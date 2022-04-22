@@ -54,14 +54,16 @@ QString handlerServer::logicHandler(QString mensajeCliente){
         tarjeta1Presionada = interpreteMensaje.interpretarMensaje(2,mensajeCliente).toInt(); // key de la primera tarjeta
         QImage imgTarjetaBuscada= buscadorTarjetaSeleccionada.buscarImgTarjeta(tarjeta1Presionada,matrizPaginada);
         QString imgTarjetaBase64 = convetirBase64(imgTarjetaBuscada);
-        mensaje = imgTarjetaBase64;
+        mensaje = imgTarjetaBase64; //se almacena la imagen de la primer tarjeta en base 64 para ser enviada al cliente
 
     }else if(mensajeCliente.contains("segundaTarjeta")){
         ActualizarDatosJugadores actualizadorInfoCliente;
         tarjeta2Presionada = interpreteMensaje.interpretarMensaje(2,mensajeCliente).toInt(); // key de la primera tarjeta
         QImage imgTarjetaBuscada= buscadorTarjetaSeleccionada.buscarImgTarjeta(tarjeta2Presionada,matrizPaginada);
         QString imgTarjetaBase64 = convetirBase64(imgTarjetaBuscada);
-        mensaje = imgTarjetaBase64;
+        mensaje = imgTarjetaBase64; //se almacena la imagen de la segunda tarjeta en base 64 para ser enviada al cliente
+
+        // se actualizan los datos de los jugadores en caso de que hayan acertado su elección de tarjetas
         actualizadorInfoCliente.actualizarDatos(turnoJugador,buscadorTarjetaSeleccionada.getVerificadorPuntosAdicionales(),matrizPaginada,cliente,tarjeta1Presionada,tarjeta2Presionada);
         operadorMatriz.reducirMatriz(cliente,matrizPaginada,tarjeta1Presionada,tarjeta2Presionada);
     }
@@ -70,9 +72,12 @@ QString handlerServer::logicHandler(QString mensajeCliente){
 }
 
 QString handlerServer::getResultadoJuego() {
+    tablaParametros->actualizarTabla(matrizPaginada,cliente);
     powerUps potenciador;
     char tipoTarjeta1Presionada = buscadorTarjetaSeleccionada.buscarTarjeta(tarjeta1Presionada,matrizPaginada).getTipoTarjeta();
     char tipoTarjeta2Presionada = buscadorTarjetaSeleccionada.buscarTarjeta(tarjeta2Presionada,matrizPaginada).getTipoTarjeta();
+
+    // cambia si el jugador obtuvo el power up 3, el cual se hará pasar por el turno del jugador contrario
     turnoJugador = potenciador.definirPowerUp(turnoJugador,cliente);
 
     QString mensaje = verificadorEstadoJuego.definirResultadoJuego(turnoJugador,cliente,tipoTarjeta1Presionada,tipoTarjeta2Presionada);
@@ -84,7 +89,7 @@ QString handlerServer::getResultadoJuego() {
     tablaParametros->actualizarTabla(matrizPaginada,cliente);
     return mensaje;
 }
-
+// Convierte una imagen a base 64
 QString handlerServer::convetirBase64(QImage imgTarjetaBuscada) {
     QByteArray bytesImg;
     QBuffer buffer(&bytesImg);

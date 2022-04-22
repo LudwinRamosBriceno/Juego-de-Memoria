@@ -34,8 +34,8 @@ public:
     tarjeta buscarTarjeta(int, matrizpaginada*);
 
     /**
-     * @brief getVerificadorPuntosAdicionales Verifica la obtención de puntos adicionales de los powerUps
-     * @return retorna el puntaje extra obtenido por los power ups
+     * @brief getVerificadorPuntosAdicionales Verifica la obtención de puntos adicionales
+     * @return retorna el puntaje extra en caso de que el jugador seleccionado dos tarjetas en la matriz paginada
      */
     int getVerificadorPuntosAdicionales();
 private:

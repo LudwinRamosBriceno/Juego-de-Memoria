@@ -13,18 +13,22 @@ builderMatriz::builderMatriz() {
 matrizpaginada* builderMatriz::construirMatriz(){
     int totalTarjetas =36;
     int contadorTarjetasCargadas =0; // se lleva un contador de cuantas tarjetas ya estan cargadas
-    remove("matrizPaginada.matriz"); // se elimina el archivo para no acumular los datos que se guardan en ese archivo
+
+    // se elimina el archivo binario que contiene la matriz paginada para no acumular los datos que se guardan en ese
+    // archivo cada vez que se ejecuta el programa
+    remove("matrizPaginada.matriz");
+
     matrizpaginada* matrizPaginada = new matrizpaginada();
     char tiposTarjetas[3] ={'A','B','C'};
     srand(time(NULL));
     crearArchivoBin BIN;
 
-    // Cada tarjeta estara enumerada del 0 al 35, es decir las tarjetas en juego son 36
+    // Cada tarjeta estará enumerada del 0 al 35, es decir las tarjetas en juego son 36
     for (int identificadorTarjeta = 0; identificadorTarjeta < totalTarjetas; identificadorTarjeta++){
         int numRandom = rand()%3;
         tarjeta nuevaTarjeta;
 
-        // se almacenan las tarjetas en la matriz paginada
+        // se almacenan las primeras 12 tarjetas en la matriz paginada
         if (contadorTarjetasCargadas<12){
 
             contadorTarjetasCargadas++;
@@ -35,7 +39,7 @@ matrizpaginada* builderMatriz::construirMatriz(){
             matrizPaginada->setTarjetaCargada(identificadorTarjeta,nuevaTarjeta);
             BIN.almacenarTarjetas(nuevaTarjeta);
 
-        }else{
+        }else{ // EL resto de tarjetas se guardan directamente en el archivo binario
             nuevaTarjeta.setIdentificador(identificadorTarjeta);
             nuevaTarjeta.setRevelada(false);
             nuevaTarjeta.setTipoTarjeta(verificarCantidadTipos(tiposTarjetas[numRandom]));

@@ -29,7 +29,7 @@ public:
     handlerServer();
 
     /**
-     * @brief iniciarJuego Inicia todo lo necesario a la ejecución del juego
+     * @brief iniciarJuego Inicializa todo lo necesario para comenzar el juego
      * @param nombreJugador1 Nombre del jugador 1
      * @param nombreJugador2 Nombre del Jugador 2
      * @return retorna un mensaje con instrucciones y datos necesarios
@@ -50,7 +50,7 @@ public:
     QString getResultadoJuego();
 
     /**
-     * @brief finalizarJuego Realiza operaciones de liberación de memoria de la que ocupaba el proceso
+     * @brief finalizarJuego Realiza operaciones de liberación de memoria que ocupaba la lógica del servidor
      * @return Retorna un mensaje final para terminar el juego
      */
     QString finalizarJuego();

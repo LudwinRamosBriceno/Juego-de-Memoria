@@ -64,16 +64,15 @@ void registroServer::getUsoMemoria(double& vm_usage, double& resident_set){
    vm_usage     = 0.0;
    resident_set = 0.0;
 
-   // 'file' stat seems to give the most reliable results
+   // Ruta de directorio con archivos que contiene información de estado de los procesos individuales del sistema
    ifstream stat_stream("/proc/self/stat",ios_base::in);
 
-   // dummy vars for leading entries in stat that we don't care about
+   // Variable ficticia para entradas principales en estadísticas que no nos interesan
    string pid;
 
-   // the two fields we want
-   //
-   unsigned long vsize;
-   long rss;
+   // Variables que interesan
+   unsigned long vsize;  // tamaño total de la memoria a la que el programa puede acceder
+   long rss;   // tamaño de la memoria que el programa utiliza
 
    stat_stream >> pid >> pid >> pid >> pid >> pid >> pid >> pid
            >> pid >> pid >> pid >> pid >> pid >> pid
@@ -106,7 +105,7 @@ void registroServer::estadoFinal(){
     getUsoMemoria(vm, rss);
     mvwprintw(tabla,2,1,"Consumo:");
 
-    string ConsumoMemoria ="VM"+separador+to_string(vm)+"bytes";
+    string ConsumoMemoria ="VM"+separador+to_string(vm)+"bytes"; // toda la memoria a la que el programa puede acceder
     auto parametro2 = ConsumoMemoria.c_str();
     mvwprintw(tabla,3,1,parametro2);
     ConsumoMemoria ="RSS"+separador+ to_string(rss)+"bytes"; // memoria fisica en uso

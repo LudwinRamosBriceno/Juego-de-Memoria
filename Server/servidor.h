@@ -1,3 +1,11 @@
+/**
+ * @file resultadojuego.h
+ * @version 1.0
+ * @date 22/04/2022
+ * @author Ludwin Ramos
+ * @brief Gestiona la principal lógica del servidor
+ */
+
 #ifndef SERVIDOR_H
 #define SERVIDOR_H
 #include <matrizpaginada.h>
@@ -7,11 +15,17 @@
 #include <QObject>
 #include <handlerserver.h>
 
+/**
+ * @brief The Servidor class Gestiona las conexiones con el cliente y la principal lógica del servidor
+ */
 class Servidor : public QObject {
     Q_OBJECT
 public:
     explicit Servidor(QObject *parent = nullptr);
-    void enviar(QString mensaje);
+
+    /**
+     * @brief conectar Conecta un nuevo cliente al servidor
+     */
     void conectar();
 
 private slots:

@@ -30,7 +30,7 @@ public:
     void actualizarDatos(int jugador,int tarjetasEnMemoria, matrizpaginada *matriz, informacioncliente *infoCliente, int tarjeta1, int tarjeta2);
 
     /**
-     * @brief verificarCambioPuntos
+     * @brief verificarCambioPuntos Verifica si el jugador cumple los puntos acumulados para obtener un power up
      * @param jugador Identificador del jugador que posee el turno actual
      * @param puntosActual Puntos que posee el jugador actualmente
      * @param puntosActualizados Puntos que posee el jugador al obtener puntos

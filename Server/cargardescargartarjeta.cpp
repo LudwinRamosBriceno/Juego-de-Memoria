@@ -31,6 +31,8 @@ void CargarDescargarTarjeta::cargarTarjeta(int IDtarjetaAcargar,matrizpaginada* 
     tarjetaAcargar.setTipoTarjeta(tarjetaAmatriz.tipoTarjeta);
     tarjetaAcargar.setRevelada(tarjetaAmatriz.revelada);
     tarjetaAcargar.setImgTarjeta();
+
+     // se inserta o  se carga la tarjeta buscada en la matriz paginada
     matriz->setTarjetaCargada(tarjetaAcargar.getIdentificador(),tarjetaAcargar);
 }
 
