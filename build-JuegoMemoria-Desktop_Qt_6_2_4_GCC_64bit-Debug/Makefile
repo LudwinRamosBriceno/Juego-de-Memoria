@@ -1237,7 +1237,14 @@ handlercliente.o: ../JuegoMemoria/handlercliente.cpp ../JuegoMemoria/handlerclie
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qlabel.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qframe.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qpicture.h \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtextdocument.h
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtextdocument.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/QTcpSocket \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/qtcpsocket.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/qtnetworkglobal.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/qtnetwork-config.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/qabstractsocket.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/qhostaddress.h \
+		../JuegoMemoria/splitmensaje.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o handlercliente.o ../JuegoMemoria/handlercliente.cpp
 
 identificadortarjetas.o: ../JuegoMemoria/identificadortarjetas.cpp ../JuegoMemoria/identificadortarjetas.h \
@@ -1696,9 +1703,49 @@ game.o: ../JuegoMemoria/game.cpp ../JuegoMemoria/game.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qpicture.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtextdocument.h \
 		ui_game.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QVariant \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/QApplication \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qapplication.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcoreapplication.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qeventloop.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcoreapplication_platform.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qfuture.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qfutureinterface.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmutex.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qresultstore.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qfuture_impl.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qthreadpool.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qthread.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qdeadlinetimer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qelapsedtimer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qrunnable.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qexception.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qpromise.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qguiapplication.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qinputmethod.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qlocale.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qguiapplication_platform.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/QGridLayout \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qgridlayout.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qlayout.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qlayoutitem.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qboxlayout.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/QLineEdit \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qlineedit.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtextcursor.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtextformat.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qpen.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui/qtextoption.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/QStackedWidget \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/qstackedwidget.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets/QWidget \
 		../JuegoMemoria/splitmensaje.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QVector \
-		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qvector.h
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qvector.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QTimer \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtimer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbasictimer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QCoreApplication
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o game.o ../JuegoMemoria/game.cpp
 
 splitmensaje.o: ../JuegoMemoria/splitmensaje.cpp ../JuegoMemoria/splitmensaje.h \
