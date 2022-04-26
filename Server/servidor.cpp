@@ -8,53 +8,63 @@
 #include <crearArchivoBin.h>
 #include <QTimer>
 #include <QCoreApplication>
+#include <socketserver.h>
+#include <QDebug>
 
 Servidor::Servidor(QObject *parent): QObject(parent){
 
+}
+
+Servidor::Servidor(socketServer* server){
     manejadorMensajes = new handlerServer();
-    server = new QTcpServer(this);
-    server->listen(QHostAddress::Any,2080);
-    socket = new QTcpSocket(this);
+    socketserver = server;
+    finalizarJuego = false;
+    mensajeCliente = "";
 }
 
-void Servidor::conectar(){
-    connect(server,SIGNAL(newConnection()),this,SLOT(conexion_nueva()));
-}
-void Servidor::conexion_nueva(){
-    socket = server->nextPendingConnection();
-    connect(socket,SIGNAL(readyRead()),this,SLOT(leer_mensaje()));
+void Servidor::abrirConexion(){
+    while(!finalizarJuego){
+        mensajeCliente = socketserver->read();
+        if(mensajeCliente!=""){
+            leer_mensaje();
+            socketserver->limpiarMensaje();
+        }
+    }
 }
 
-void Servidor::leer_mensaje(){
+bool Servidor::leer_mensaje(){
     splitMensaje interpreteMensaje;
-    QByteArray bufferMensaje;
-    bufferMensaje.resize(socket->bytesAvailable()); // indica el tamaño de la información enviada.
-    socket->read(bufferMensaje.data(),bufferMensaje.size()); // se guarda la información en bufferMensaje.
-
-    if (QString(bufferMensaje).contains("iniciar")){
+    mensajeCliente = socketserver->read();
+    if (mensajeCliente.contains("iniciar")){
 
         /* El número 2 indica que el nombre del jugador 1 viene como segundo dato en un mensaje delimitado por
          * comas, donde el interpreteMensaje retornará el dato según la posición que se le indique con un entero*/
-        QString nombreJugador1 = interpreteMensaje.interpretarMensaje(2,QString(bufferMensaje));
-        QString nombreJugador2 = interpreteMensaje.interpretarMensaje(3,QString(bufferMensaje));
-        QString mensaje = manejadorMensajes->iniciarJuego(nombreJugador1,nombreJugador2);
-        socket->write(mensaje.toUtf8().constData(),mensaje.size());
+        QString nombreJugador1 = interpreteMensaje.interpretarMensaje(2,QString(mensajeCliente));
+        QString nombreJugador2 = interpreteMensaje.interpretarMensaje(3,QString(mensajeCliente));
+        //QString mensaje = manejadorMensajes->iniciarJuego(nombreJugador1,nombreJugador2);
+        //socket->write(mensaje.toUtf8().constData(),mensaje.size());
+        return true;
+
     }
-    else if (QString(bufferMensaje).contains("finalizar")){
-        if (QString(bufferMensaje).contains("close")){server->close();free(socket);server=nullptr;QCoreApplication::quit();}
+    else if (mensajeCliente.contains("finalizar")){
+        if (mensajeCliente.contains("close")){/*server->close();server=nullptr;*/free(socket);QCoreApplication::quit();}
         else{
             QString mensaje = manejadorMensajes->finalizarJuego();
             socket->write(mensaje.toUtf8().constData(),mensaje.size());
             free(manejadorMensajes);
             manejadorMensajes = nullptr;
+            return true;
         }
     } else{
-        QString mensajeAenviar = manejadorMensajes->logicHandler(QString(bufferMensaje));
-        socket->write(mensajeAenviar.toUtf8().constData(),mensajeAenviar.size());
-        if (QString(bufferMensaje).contains("segundaTarjeta")){
+        QString mensajeAenviar = manejadorMensajes->logicHandler(mensajeCliente);
+        //socket->write(mensajeAenviar.toUtf8().constData(),mensajeAenviar.size());
+        if (QString(mensajeCliente).contains("segundaTarjeta")){
             QTimer::singleShot(1000,this,SLOT(enviarCambioTurno()));
+            return true;
         }
+        return true;
     }
+    return false;
 }
 void Servidor::enviarCambioTurno(){
     QString mensajeAenviar = manejadorMensajes->getResultadoJuego();

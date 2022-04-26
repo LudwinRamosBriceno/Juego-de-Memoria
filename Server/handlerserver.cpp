@@ -7,6 +7,7 @@
 #include <actualizardatosjugadores.h>
 #include <iostream>
 #include <powerups.h>
+#include <qmetaobject.h>
 
 handlerServer::handlerServer() {
     matrizPaginada = new matrizpaginada();
@@ -30,7 +31,7 @@ QString handlerServer::iniciarJuego(QString nombreJugador1, QString nombreJugado
             mensaje = "turnoJugador2,0"; turnoJugador = 2;
             break;
     }
-    tablaParametros->actualizarTabla(matrizPaginada,cliente);
+    //tablaParametros->actualizarTabla(matrizPaginada,cliente);
     return mensaje;
 }
 QString handlerServer::finalizarJuego(){
@@ -40,7 +41,7 @@ QString handlerServer::finalizarJuego(){
     free(cliente);
     matrizPaginada = nullptr;
     cliente = nullptr;
-    tablaParametros->estadoFinal();
+    //tablaParametros->estadoFinal();
     free(tablaParametros);
     tablaParametros = nullptr;
     return mensaje;
@@ -48,7 +49,7 @@ QString handlerServer::finalizarJuego(){
 
 QString handlerServer::logicHandler(QString mensajeCliente){
     splitMensaje interpreteMensaje;
-    QString mensaje;
+    QString mensaje = "";
 
     if(mensajeCliente.contains("primeraTarjeta")){
         tarjeta1Presionada = interpreteMensaje.interpretarMensaje(2,mensajeCliente).toInt(); // key de la primera tarjeta
@@ -67,12 +68,12 @@ QString handlerServer::logicHandler(QString mensajeCliente){
         actualizadorInfoCliente.actualizarDatos(turnoJugador,buscadorTarjetaSeleccionada.getVerificadorPuntosAdicionales(),matrizPaginada,cliente,tarjeta1Presionada,tarjeta2Presionada);
         operadorMatriz.reducirMatriz(cliente,matrizPaginada,tarjeta1Presionada,tarjeta2Presionada);
     }
-    tablaParametros->actualizarTabla(matrizPaginada,cliente);
+    //tablaParametros->actualizarTabla(matrizPaginada,cliente);
     return mensaje;
 }
 
 QString handlerServer::getResultadoJuego() {
-    tablaParametros->actualizarTabla(matrizPaginada,cliente);
+    //tablaParametros->actualizarTabla(matrizPaginada,cliente);
     powerUps potenciador;
     char tipoTarjeta1Presionada = buscadorTarjetaSeleccionada.buscarTarjeta(tarjeta1Presionada,matrizPaginada).getTipoTarjeta();
     char tipoTarjeta2Presionada = buscadorTarjetaSeleccionada.buscarTarjeta(tarjeta2Presionada,matrizPaginada).getTipoTarjeta();
@@ -86,7 +87,7 @@ QString handlerServer::getResultadoJuego() {
     }else{
         turnoJugador = 1;
     }
-    tablaParametros->actualizarTabla(matrizPaginada,cliente);
+    //tablaParametros->actualizarTabla(matrizPaginada,cliente);
     return mensaje;
 }
 // Convierte una imagen a base 64

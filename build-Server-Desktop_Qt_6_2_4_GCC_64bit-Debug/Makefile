@@ -67,6 +67,7 @@ SOURCES       = ../Server/actualizardatosjugadores.cpp \
 		../Server/registroserver.cpp \
 		../Server/resultadojuego.cpp \
 		../Server/servidor.cpp \
+		../Server/socketserver.cpp \
 		../Server/splitmensaje.cpp \
 		../Server/sumadorPuntos.cpp \
 		../Server/tarjeta.cpp moc_servidor.cpp
@@ -85,6 +86,7 @@ OBJECTS       = actualizardatosjugadores.o \
 		registroserver.o \
 		resultadojuego.o \
 		servidor.o \
+		socketserver.o \
 		splitmensaje.o \
 		sumadorPuntos.o \
 		tarjeta.o \
@@ -354,6 +356,7 @@ DIST          = /home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/spec_pre.prf \
 		../Server/registroserver.h \
 		../Server/resultadojuego.h \
 		../Server/servidor.h \
+		../Server/socketserver.h \
 		../Server/splitmensaje.h \
 		../Server/sumadorPuntos.h \
 		../Server/tarjeta.h ../Server/actualizardatosjugadores.cpp \
@@ -371,6 +374,7 @@ DIST          = /home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/spec_pre.prf \
 		../Server/registroserver.cpp \
 		../Server/resultadojuego.cpp \
 		../Server/servidor.cpp \
+		../Server/socketserver.cpp \
 		../Server/splitmensaje.cpp \
 		../Server/sumadorPuntos.cpp \
 		../Server/tarjeta.cpp
@@ -913,8 +917,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../Server/actualizardatosjugadores.h ../Server/buildermatriz.h ../Server/buscadorTarjeta.h ../Server/cargardescargartarjeta.h ../Server/crearArchivoBin.h ../Server/handlerserver.h ../Server/imgtarjetas.h ../Server/informacioncliente.h ../Server/matrizpaginada.h ../Server/operadormatrizpaginada.h ../Server/powerups.h ../Server/registroserver.h ../Server/resultadojuego.h ../Server/servidor.h ../Server/splitmensaje.h ../Server/sumadorPuntos.h ../Server/tarjeta.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../Server/actualizardatosjugadores.cpp ../Server/buildermatriz.cpp ../Server/buscadorTarjeta.cpp ../Server/cargardescargartarjeta.cpp ../Server/crearArchivoBin.cpp ../Server/handlerserver.cpp ../Server/imgtarjetas.cpp ../Server/informacioncliente.cpp ../Server/main.cpp ../Server/matrizpaginada.cpp ../Server/operadormatrizpaginada.cpp ../Server/powerups.cpp ../Server/registroserver.cpp ../Server/resultadojuego.cpp ../Server/servidor.cpp ../Server/splitmensaje.cpp ../Server/sumadorPuntos.cpp ../Server/tarjeta.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../Server/actualizardatosjugadores.h ../Server/buildermatriz.h ../Server/buscadorTarjeta.h ../Server/cargardescargartarjeta.h ../Server/crearArchivoBin.h ../Server/handlerserver.h ../Server/imgtarjetas.h ../Server/informacioncliente.h ../Server/matrizpaginada.h ../Server/operadormatrizpaginada.h ../Server/powerups.h ../Server/registroserver.h ../Server/resultadojuego.h ../Server/servidor.h ../Server/socketserver.h ../Server/splitmensaje.h ../Server/sumadorPuntos.h ../Server/tarjeta.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../Server/actualizardatosjugadores.cpp ../Server/buildermatriz.cpp ../Server/buscadorTarjeta.cpp ../Server/cargardescargartarjeta.cpp ../Server/crearArchivoBin.cpp ../Server/handlerserver.cpp ../Server/imgtarjetas.cpp ../Server/informacioncliente.cpp ../Server/main.cpp ../Server/matrizpaginada.cpp ../Server/operadormatrizpaginada.cpp ../Server/powerups.cpp ../Server/registroserver.cpp ../Server/resultadojuego.cpp ../Server/servidor.cpp ../Server/socketserver.cpp ../Server/splitmensaje.cpp ../Server/sumadorPuntos.cpp ../Server/tarjeta.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -1066,6 +1070,7 @@ moc_servidor.cpp: ../Server/servidor.h \
 		../Server/operadormatrizpaginada.h \
 		../Server/resultadojuego.h \
 		../Server/registroserver.h \
+		../Server/socketserver.h \
 		moc_predefs.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/libexec/moc
 	/home/ludwinr/Qt/6.2.4/gcc_64/libexec/moc $(DEFINES) --include '/home/ludwinr/Escritorio/Proyectos/Proyecto 1/Juego-de-Memoria/build-Server-Desktop_Qt_6_2_4_GCC_64bit-Debug/moc_predefs.h' -I/home/ludwinr/Qt/6.2.4/gcc_64/mkspecs/linux-g++ -I'/home/ludwinr/Escritorio/Proyectos/Proyecto 1/Juego-de-Memoria/Server' -I/path/to/ncurses/headers -I/home/ludwinr/Qt/6.2.4/gcc_64/include -I/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork -I/home/ludwinr/Qt/6.2.4/gcc_64/include/QtWidgets -I/home/ludwinr/Qt/6.2.4/gcc_64/include/QtGui -I/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../Server/servidor.h -o moc_servidor.cpp
@@ -1606,7 +1611,8 @@ handlerserver.o: ../Server/handlerserver.cpp ../Server/handlerserver.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QBuffer \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbuffer.h \
 		../Server/actualizardatosjugadores.h \
-		../Server/powerups.h
+		../Server/powerups.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmetaobject.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o handlerserver.o ../Server/handlerserver.cpp
 
 imgtarjetas.o: ../Server/imgtarjetas.cpp ../Server/imgtarjetas.h \
@@ -1832,6 +1838,7 @@ main.o: ../Server/main.cpp /home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QCoreApp
 		../Server/operadormatrizpaginada.h \
 		../Server/resultadojuego.h \
 		../Server/registroserver.h \
+		../Server/socketserver.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QDebug
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../Server/main.cpp
 
@@ -2284,6 +2291,7 @@ servidor.o: ../Server/servidor.cpp ../Server/servidor.h \
 		../Server/operadormatrizpaginada.h \
 		../Server/resultadojuego.h \
 		../Server/registroserver.h \
+		../Server/socketserver.h \
 		../Server/buildermatriz.h \
 		../Server/splitmensaje.h \
 		../Server/crearArchivoBin.h \
@@ -2309,6 +2317,95 @@ servidor.o: ../Server/servidor.cpp ../Server/servidor.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qpointer.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qpromise.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o servidor.o ../Server/servidor.cpp
+
+socketserver.o: ../Server/socketserver.cpp ../Server/socketserver.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/QTcpServer \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/qtcpserver.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/qtnetworkglobal.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qglobal.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qconfig-bootstrapped.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qconfig.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtcore-config.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qsystemdetection.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qprocessordetection.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcompilerdetection.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtypeinfo.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcontainerfwd.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qsysinfo.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qlogging.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qflags.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qatomic.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbasicatomic.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qgenericatomic.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qglobalstatic.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qnumeric.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qversiontagging.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/qtnetwork-config.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qobject.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qobjectdefs.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qnamespace.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtmetamacros.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstring.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qchar.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringview.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbytearray.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qrefcount.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qarraydata.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qpair.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qarraydatapointer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qarraydataops.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcontainertools_impl.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbytearrayalgorithms.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbytearrayview.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringliteral.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringalgorithms.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qanystringview.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qutf8stringview.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringtokenizer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringbuilder.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qlist.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qhashfunctions.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qiterator.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbytearraylist.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringlist.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qalgorithms.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringmatcher.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcoreevent.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qscopedpointer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmetatype.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcompare.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qvarlengtharray.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qscopeguard.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qdatastream.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qiodevicebase.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qiterable.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmetacontainer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcontainerinfo.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtaggedpointer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmath.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qobject_impl.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qbindingstorage.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/qabstractsocket.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/qhostaddress.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qshareddata.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qiodevice.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qdebug.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qhash.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qmap.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qshareddata_impl.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qtextstream.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstringconverter.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qset.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qcontiguouscache.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qsharedpointer.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qsharedpointer_impl.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/QTcpSocket \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtNetwork/qtcpsocket.h \
+		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qvariant.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o socketserver.o ../Server/socketserver.cpp
 
 splitmensaje.o: ../Server/splitmensaje.cpp ../Server/splitmensaje.h \
 		/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/QString \

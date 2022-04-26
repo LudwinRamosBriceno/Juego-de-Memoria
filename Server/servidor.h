@@ -14,6 +14,7 @@
 #include <QTcpSocket>
 #include <QObject>
 #include <handlerserver.h>
+#include <socketserver.h>
 
 /**
  * @brief The Servidor class Gestiona las conexiones con el cliente y la principal lógica del servidor
@@ -22,21 +23,19 @@ class Servidor : public QObject {
     Q_OBJECT
 public:
     explicit Servidor(QObject *parent = nullptr);
-
-    /**
-     * @brief conectar Conecta un nuevo cliente al servidor
-     */
-    void conectar();
-
+    Servidor(socketServer* server);
+    bool leer_mensaje();
 private slots:
-    void leer_mensaje();
-    void conexion_nueva();
     void enviarCambioTurno();
+    void abrirConexion();
 
 private:
-    QTcpSocket *socket;
-    QTcpServer *server;
     handlerServer *manejadorMensajes;
+    socketServer *socketserver;
+    QTcpSocket* socket;
+    QTcpServer* server;
+    QString mensajeCliente;
+    bool finalizarJuego;
 
 signals:
 

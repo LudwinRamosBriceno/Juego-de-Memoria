@@ -15,7 +15,6 @@
 #include <operadormatrizpaginada.h>
 #include <resultadojuego.h>
 #include <registroserver.h>
-#include <thread>
 #include <iostream>
 
 using namespace std;
