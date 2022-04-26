@@ -12,7 +12,8 @@
 using namespace std;
 
 interfazServer::interfazServer(QObject *parent): QObject{parent} {
-
+    timer = new QTimer();
+    connect(timer,SIGNAL(timeout()),this,SLOT())
 }
 void interfazServer::actualizarTabla(matrizpaginada* matriz, informacioncliente* cliente){
     string separador = "---------->";

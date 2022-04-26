@@ -56,6 +56,7 @@ QHash<int,tarjeta>::iterator CargarDescargarTarjeta::descargarTarjeta(matrizpagi
             iterador++;
         }
     }
+
     // se crea una estructura para guardar una tarjeta en disco
     tarjetaDisco tarjeta = {tarjetaAdescargar.getIdentificador(),tarjetaAdescargar.getTipoTarjeta(),tarjetaAdescargar.getRevelada()};
     file.open("matrizPaginada.matriz",ios::in|ios::out|ios::binary);

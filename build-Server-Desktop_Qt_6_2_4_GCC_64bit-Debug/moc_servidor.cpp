@@ -23,21 +23,21 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Servidor_t {
     const uint offsetsAndSize[10];
-    char stringdata0[57];
+    char stringdata0[56];
 };
 #define QT_MOC_LITERAL(ofs, len) \
     uint(offsetof(qt_meta_stringdata_Servidor_t, stringdata0) + ofs), len 
 static const qt_meta_stringdata_Servidor_t qt_meta_stringdata_Servidor = {
     {
 QT_MOC_LITERAL(0, 8), // "Servidor"
-QT_MOC_LITERAL(9, 17), // "enviarCambioTurno"
-QT_MOC_LITERAL(27, 0), // ""
-QT_MOC_LITERAL(28, 13), // "crearConexion"
-QT_MOC_LITERAL(42, 14) // "obtenerMensaje"
+QT_MOC_LITERAL(9, 12), // "leer_mensaje"
+QT_MOC_LITERAL(22, 0), // ""
+QT_MOC_LITERAL(23, 14), // "conexion_nueva"
+QT_MOC_LITERAL(38, 17) // "enviarCambioTurno"
 
     },
-    "Servidor\0enviarCambioTurno\0\0crearConexion\0"
-    "obtenerMensaje"
+    "Servidor\0leer_mensaje\0\0conexion_nueva\0"
+    "enviarCambioTurno"
 };
 #undef QT_MOC_LITERAL
 
@@ -73,9 +73,9 @@ void Servidor::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
         auto *_t = static_cast<Servidor *>(_o);
         (void)_t;
         switch (_id) {
-        case 0: _t->enviarCambioTurno(); break;
-        case 1: _t->crearConexion(); break;
-        case 2: _t->obtenerMensaje(); break;
+        case 0: _t->leer_mensaje(); break;
+        case 1: _t->conexion_nueva(); break;
+        case 2: _t->enviarCambioTurno(); break;
         default: ;
         }
     }

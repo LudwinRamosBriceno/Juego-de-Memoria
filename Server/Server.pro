@@ -27,7 +27,6 @@ SOURCES += \
         registroserver.cpp \
         resultadojuego.cpp \
         servidor.cpp \
-        socketserver.cpp \
         splitmensaje.cpp \
         sumadorPuntos.cpp \
         tarjeta.cpp
@@ -52,7 +51,6 @@ HEADERS += \
     registroserver.h \
     resultadojuego.h \
     servidor.h \
-    socketserver.h \
     splitmensaje.h \
     sumadorPuntos.h \
     tarjeta.h
