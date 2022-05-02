@@ -39,12 +39,14 @@ class MockClient: public socketServer{ // simulacion del cliente, con los posibl
 TEST(verificacionMensajes,mensajeInicio){ // primer mensaje
     // Arrange
     MockClient *mockclient = new MockClient(1);
-    mockclient->setCaso(3);
     Servidor server = Servidor(mockclient);
+    //mockclient->setCaso(3);
 
     // Act
     bool resultado = server.leer_mensaje();
     //Assert
+    delete mockclient;
+    mockclient = nullptr;
     EXPECT_EQ(resultado,true);
 }
 TEST(verificacionMensajes,primeraTarjetaEnMemoria){ // Solicitar Imagen primera tarjeta en memoria
