@@ -15,8 +15,16 @@ INCLUDEPATH += "../../"
 CONFIG += c++11 console
 CONFIG -= app_bundle
 
-QMAKE_CXXFLAGS += -fprofile-arcs -ftest-coverage
-LIBS += -lgcov
+QMAKE_CXXFLAGS += --coverage
+QMAKE_LFLAGS += --coverage
+#LDFLAGS += --coverage
+#LIBS += -lgcov
+
+CONFIG+=gcov
+
+#QMAKE_CXXFLAGS += -fprofile-arcs -ftest-coverage
+#QMAKE_LFLAGS += -fprofile-arcs -ftest-coverage
+#LIBS += -lgcov
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.

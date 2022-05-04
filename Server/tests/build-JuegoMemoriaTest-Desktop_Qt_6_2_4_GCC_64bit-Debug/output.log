@@ -1,0 +1,26 @@
+[==========] Running 9 tests from 1 test suite.
+[----------] Global test environment set-up.
+[----------] 9 tests from verificacionMensajes
+[ RUN      ] verificacionMensajes.mensajeInicio
+[       OK ] verificacionMensajes.mensajeInicio (0 ms)
+[ RUN      ] verificacionMensajes.primeraTarjetaEnMemoria
+[       OK ] verificacionMensajes.primeraTarjetaEnMemoria (0 ms)
+[ RUN      ] verificacionMensajes.primeraTarjetaEnDisco
+[       OK ] verificacionMensajes.primeraTarjetaEnDisco (0 ms)
+[ RUN      ] verificacionMensajes.segundaTarjetaEnMemoria
+[       OK ] verificacionMensajes.segundaTarjetaEnMemoria (0 ms)
+[ RUN      ] verificacionMensajes.segundaTarjetaEnDisco
+[       OK ] verificacionMensajes.segundaTarjetaEnDisco (0 ms)
+[ RUN      ] verificacionMensajes.AmbasTarjetasEnMemoria
+[       OK ] verificacionMensajes.AmbasTarjetasEnMemoria (0 ms)
+[ RUN      ] verificacionMensajes.AmbasTarjetasEnDisco
+[       OK ] verificacionMensajes.AmbasTarjetasEnDisco (0 ms)
+[ RUN      ] verificacionMensajes.tarjeta1EnMemoriaTarjeta2EnDisco
+[       OK ] verificacionMensajes.tarjeta1EnMemoriaTarjeta2EnDisco (0 ms)
+[ RUN      ] verificacionMensajes.tarjeta1EnDiscoTarjeta2EnMemoria
+[       OK ] verificacionMensajes.tarjeta1EnDiscoTarjeta2EnMemoria (0 ms)
+[----------] 9 tests from verificacionMensajes (1 ms total)
+
+[----------] Global test environment tear-down
+[==========] 9 tests from 1 test suite ran. (5 ms total)
+[  PASSED  ] 9 tests.

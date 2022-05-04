@@ -1,0 +1,1590 @@
+        -:    0:Source:/home/ludwinr/Qt/6.2.4/gcc_64/include/QtCore/qstring.h
+        -:    0:Graph:main.gcno
+        -:    0:Data:main.gcda
+        -:    0:Runs:1
+        -:    1:/****************************************************************************
+        -:    2:**
+        -:    3:** Copyright (C) 2020 The Qt Company Ltd.
+        -:    4:** Copyright (C) 2019 Intel Corporation.
+        -:    5:** Copyright (C) 2019 Mail.ru Group.
+        -:    6:** Copyright (C) 2020 Klarälvdalens Datakonsult AB, a KDAB Group company, info@kdab.com, author Marc Mutz <marc.mutz@kdab.com>
+        -:    7:** Contact: https://www.qt.io/licensing/
+        -:    8:**
+        -:    9:** This file is part of the QtCore module of the Qt Toolkit.
+        -:   10:**
+        -:   11:** $QT_BEGIN_LICENSE:LGPL$
+        -:   12:** Commercial License Usage
+        -:   13:** Licensees holding valid commercial Qt licenses may use this file in
+        -:   14:** accordance with the commercial license agreement provided with the
+        -:   15:** Software or, alternatively, in accordance with the terms contained in
+        -:   16:** a written agreement between you and The Qt Company. For licensing terms
+        -:   17:** and conditions see https://www.qt.io/terms-conditions. For further
+        -:   18:** information use the contact form at https://www.qt.io/contact-us.
+        -:   19:**
+        -:   20:** GNU Lesser General Public License Usage
+        -:   21:** Alternatively, this file may be used under the terms of the GNU Lesser
+        -:   22:** General Public License version 3 as published by the Free Software
+        -:   23:** Foundation and appearing in the file LICENSE.LGPL3 included in the
+        -:   24:** packaging of this file. Please review the following information to
+        -:   25:** ensure the GNU Lesser General Public License version 3 requirements
+        -:   26:** will be met: https://www.gnu.org/licenses/lgpl-3.0.html.
+        -:   27:**
+        -:   28:** GNU General Public License Usage
+        -:   29:** Alternatively, this file may be used under the terms of the GNU
+        -:   30:** General Public License version 2.0 or (at your option) the GNU General
+        -:   31:** Public license version 3 or any later version approved by the KDE Free
+        -:   32:** Qt Foundation. The licenses are as published by the Free Software
+        -:   33:** Foundation and appearing in the file LICENSE.GPL2 and LICENSE.GPL3
+        -:   34:** included in the packaging of this file. Please review the following
+        -:   35:** information to ensure the GNU General Public License requirements will
+        -:   36:** be met: https://www.gnu.org/licenses/gpl-2.0.html and
+        -:   37:** https://www.gnu.org/licenses/gpl-3.0.html.
+        -:   38:**
+        -:   39:** $QT_END_LICENSE$
+        -:   40:**
+        -:   41:****************************************************************************/
+        -:   42:
+        -:   43:#ifndef QSTRING_H
+        -:   44:#define QSTRING_H
+        -:   45:
+        -:   46:#if defined(QT_NO_CAST_FROM_ASCII) && defined(QT_RESTRICTED_CAST_FROM_ASCII)
+        -:   47:#error QT_NO_CAST_FROM_ASCII and QT_RESTRICTED_CAST_FROM_ASCII must not be defined at the same time
+        -:   48:#endif
+        -:   49:
+        -:   50:#include <QtCore/qchar.h>
+        -:   51:#include <QtCore/qbytearray.h>
+        -:   52:#include <QtCore/qarraydata.h>
+        -:   53:#include <QtCore/qnamespace.h>
+        -:   54:#include <QtCore/qstringliteral.h>
+        -:   55:#include <QtCore/qstringalgorithms.h>
+        -:   56:#include <QtCore/qanystringview.h>
+        -:   57:#include <QtCore/qstringtokenizer.h>
+        -:   58:
+        -:   59:#include <string>
+        -:   60:#include <iterator>
+        -:   61:
+        -:   62:#include <stdarg.h>
+        -:   63:
+        -:   64:#ifdef truncate
+        -:   65:#error qstring.h must be included before any header file that defines truncate
+        -:   66:#endif
+        -:   67:
+        -:   68:#if defined(Q_OS_DARWIN) || defined(Q_QDOC)
+        -:   69:Q_FORWARD_DECLARE_CF_TYPE(CFString);
+        -:   70:Q_FORWARD_DECLARE_OBJC_CLASS(NSString);
+        -:   71:#endif
+        -:   72:
+        -:   73:QT_BEGIN_NAMESPACE
+        -:   74:
+        -:   75:class QRegularExpression;
+        -:   76:class QRegularExpressionMatch;
+        -:   77:class QString;
+        -:   78:
+        -:   79:namespace QtPrivate {
+        -:   80:template <bool...B> class BoolList;
+        -:   81:}
+        -:   82:
+        -:   83:class QLatin1String
+        -:   84:{
+        -:   85:public:
+        -:   86:    constexpr inline QLatin1String() noexcept : m_size(0), m_data(nullptr) {}
+        -:   87:    constexpr inline explicit QLatin1String(const char *s) noexcept : m_size(s ? qsizetype(strlen(s)) : 0), m_data(s) {}
+        -:   88:    constexpr explicit QLatin1String(const char *f, const char *l)
+        -:   89:        : QLatin1String(f, qsizetype(l - f)) {}
+        -:   90:    constexpr inline explicit QLatin1String(const char *s, qsizetype sz) noexcept : m_size(sz), m_data(s) {}
+        -:   91:    explicit QLatin1String(const QByteArray &s) noexcept : m_size(qsizetype(qstrnlen(s.constData(), s.size()))), m_data(s.constData()) {}
+        -:   92:
+        -:   93:    inline QString toString() const;
+        -:   94:
+        -:   95:    constexpr const char *latin1() const noexcept { return m_data; }
+        -:   96:    constexpr qsizetype size() const noexcept { return m_size; }
+        -:   97:    constexpr const char *data() const noexcept { return m_data; }
+        -:   98:
+        -:   99:    constexpr bool isNull() const noexcept { return !data(); }
+        -:  100:    constexpr bool isEmpty() const noexcept { return !size(); }
+        -:  101:
+        -:  102:    template <typename...Args>
+        -:  103:    [[nodiscard]] inline QString arg(Args &&...args) const;
+        -:  104:
+        -:  105:    [[nodiscard]] constexpr QLatin1Char at(qsizetype i) const
+        -:  106:    { return Q_ASSERT(i >= 0), Q_ASSERT(i < size()), QLatin1Char(m_data[i]); }
+        -:  107:    [[nodiscard]] constexpr QLatin1Char operator[](qsizetype i) const { return at(i); }
+        -:  108:
+        -:  109:    [[nodiscard]] constexpr QLatin1Char front() const { return at(0); }
+        -:  110:    [[nodiscard]] constexpr QLatin1Char back() const { return at(size() - 1); }
+        -:  111:
+        -:  112:    [[nodiscard]] int compare(QStringView other, Qt::CaseSensitivity cs = Qt::CaseSensitive) const noexcept
+        -:  113:    { return QtPrivate::compareStrings(*this, other, cs); }
+        -:  114:    [[nodiscard]] int compare(QLatin1String other, Qt::CaseSensitivity cs = Qt::CaseSensitive) const noexcept
+        -:  115:    { return QtPrivate::compareStrings(*this, other, cs); }
+        -:  116:    [[nodiscard]] constexpr int compare(QChar c) const noexcept
+        -:  117:    { return isEmpty() ? -1 : front() == c ? int(size() > 1) : uchar(m_data[0]) - c.unicode(); }
+        -:  118:    [[nodiscard]] int compare(QChar c, Qt::CaseSensitivity cs) const noexcept
+        -:  119:    { return QtPrivate::compareStrings(*this, QStringView(&c, 1), cs); }
+        -:  120:
+        -:  121:    [[nodiscard]] bool startsWith(QStringView s, Qt::CaseSensitivity cs = Qt::CaseSensitive) const noexcept
+        -:  122:    { return QtPrivate::startsWith(*this, s, cs); }
+        -:  123:    [[nodiscard]] bool startsWith(QLatin1String s, Qt::CaseSensitivity cs = Qt::CaseSensitive) const noexcept
+        -:  124:    { return QtPrivate::startsWith(*this, s, cs); }
+        -:  125:    [[nodiscard]] constexpr bool startsWith(QChar c) const noexcept
+        -:  126:    { return !isEmpty() && front() == c; }
+        -:  127:    [[nodiscard]] inline bool startsWith(QChar c, Qt::CaseSensitivity cs) const noexcept
+        -:  128:    { return QtPrivate::startsWith(*this, QStringView(&c, 1), cs); }
+        -:  129:
+        -:  130:    [[nodiscard]] bool endsWith(QStringView s, Qt::CaseSensitivity cs = Qt::CaseSensitive) const noexcept
+        -:  131:    { return QtPrivate::endsWith(*this, s, cs); }
+        -:  132:    [[nodiscard]] bool endsWith(QLatin1String s, Qt::CaseSensitivity cs = Qt::CaseSensitive) const noexcept
+        -:  133:    { return QtPrivate::endsWith(*this, s, cs); }
+        -:  134:    [[nodiscard]] constexpr bool endsWith(QChar c) const noexcept
+        -:  135:    { return !isEmpty() && back() == c; }
+        -:  136:    [[nodiscard]] inline bool endsWith(QChar c, Qt::CaseSensitivity cs) const noexcept
+        -:  137:    { return QtPrivate::endsWith(*this, QStringView(&c, 1), cs); }
+        -:  138:
+        -:  139:    [[nodiscard]] qsizetype indexOf(QStringView s, qsizetype from = 0, Qt::CaseSensitivity cs = Qt::CaseSensitive) const noexcept
+        -:  140:    { return QtPrivate::findString(*this, from, s, cs); }
+        -:  141:    [[nodiscard]] qsizetype indexOf(QLatin1String s, qsizetype from = 0, Qt::CaseSensitivity cs = Qt::CaseSensitive) const noexcept
+        -:  142:    { return QtPrivate::findString(*this, from, s, cs); }
+        -:  143:    [[nodiscard]] qsizetype indexOf(QChar c, qsizetype from = 0, Qt::CaseSensitivity cs = Qt::CaseSensitive) const noexcept
+        -:  144:    { return QtPrivate::findString(*this, from, QStringView(&c, 1), cs); }
+        -:  145:
+        -:  146:    [[nodiscard]] bool contains(QStringView s, Qt::CaseSensitivity cs = Qt::CaseSensitive) const noexcept
+        -:  147:    { return indexOf(s, 0, cs) != -1; }
+        -:  148:    [[nodiscard]] bool contains(QLatin1String s, Qt::CaseSensitivity cs = Qt::CaseSensitive) const noexcept
+        -:  149:    { return indexOf(s, 0, cs) != -1; }
+        -:  150:    [[nodiscard]] inline bool contains(QChar c, Qt::CaseSensitivity cs = Qt::CaseSensitive) const noexcept
+        -:  151:    { return indexOf(QStringView(&c, 1), 0, cs) != -1; }
+        -:  152:
+        -:  153:    [[nodiscard]] qsizetype lastIndexOf(QStringView s, Qt::CaseSensitivity cs = Qt::CaseSensitive) const noexcept
+        -:  154:    { return lastIndexOf(s, size(), cs); }
+        -:  155:    [[nodiscard]] qsizetype lastIndexOf(QStringView s, qsizetype from, Qt::CaseSensitivity cs = Qt::CaseSensitive) const noexcept
+        -:  156:    { return QtPrivate::lastIndexOf(*this, from, s, cs); }
+        -:  157:    [[nodiscard]] qsizetype lastIndexOf(QLatin1String s, Qt::CaseSensitivity cs = Qt::CaseSensitive) const noexcept
+        -:  158:    { return lastIndexOf(s, size(), cs); }
+        -:  159:    [[nodiscard]] qsizetype lastIndexOf(QLatin1String s, qsizetype from, Qt::CaseSensitivity cs = Qt::CaseSensitive) const noexcept
+        -:  160:    { return QtPrivate::lastIndexOf(*this, from, s, cs); }
+        -:  161:    [[nodiscard]] qsizetype lastIndexOf(QChar c, qsizetype from = -1, Qt::CaseSensitivity cs = Qt::CaseSensitive) const noexcept
+        -:  162:    { return QtPrivate::lastIndexOf(*this, from, QStringView(&c, 1), cs); }
+        -:  163:
+        -:  164:    using value_type = const char;
+        -:  165:    using reference = value_type&;
+        -:  166:    using const_reference = reference;
+        -:  167:    using iterator = value_type*;
+        -:  168:    using const_iterator = iterator;
+        -:  169:    using difference_type = qsizetype; // violates Container concept requirements
+        -:  170:    using size_type = qsizetype;       // violates Container concept requirements
+        -:  171:
+        -:  172:    constexpr const_iterator begin() const noexcept { return data(); }
+        -:  173:    constexpr const_iterator cbegin() const noexcept { return data(); }
+        -:  174:    constexpr const_iterator end() const noexcept { return data() + size(); }
+        -:  175:    constexpr const_iterator cend() const noexcept { return data() + size(); }
+        -:  176:
+        -:  177:    using reverse_iterator = std::reverse_iterator<iterator>;
+        -:  178:    using const_reverse_iterator = reverse_iterator;
+        -:  179:
+        -:  180:    const_reverse_iterator rbegin() const noexcept { return const_reverse_iterator(end()); }
+        -:  181:    const_reverse_iterator crbegin() const noexcept { return const_reverse_iterator(end()); }
+        -:  182:    const_reverse_iterator rend() const noexcept { return const_reverse_iterator(begin()); }
+        -:  183:    const_reverse_iterator crend() const noexcept { return const_reverse_iterator(begin()); }
+        -:  184:
+        -:  185:    [[nodiscard]] constexpr QLatin1String mid(qsizetype pos, qsizetype n = -1) const
+        -:  186:    {
+        -:  187:        using namespace QtPrivate;
+        -:  188:        auto result = QContainerImplHelper::mid(size(), &pos, &n);
+        -:  189:        return result == QContainerImplHelper::Null ? QLatin1String() : QLatin1String(m_data + pos, n);
+        -:  190:    }
+        -:  191:    [[nodiscard]] constexpr QLatin1String left(qsizetype n) const
+        -:  192:    {
+        -:  193:        if (size_t(n) >= size_t(size()))
+        -:  194:            n = size();
+        -:  195:        return QLatin1String(m_data, n);
+        -:  196:    }
+        -:  197:    [[nodiscard]] constexpr QLatin1String right(qsizetype n) const
+        -:  198:    {
+        -:  199:        if (size_t(n) >= size_t(size()))
+        -:  200:            n = size();
+        -:  201:        return QLatin1String(m_data + m_size - n, n);
+        -:  202:    }
+        -:  203:
+        -:  204:    [[nodiscard]] constexpr QLatin1String sliced(qsizetype pos) const
+        -:  205:    { verify(pos); return QLatin1String(m_data + pos, m_size - pos); }
+        -:  206:    [[nodiscard]] constexpr QLatin1String sliced(qsizetype pos, qsizetype n) const
+        -:  207:    { verify(pos, n); return QLatin1String(m_data + pos, n); }
+        -:  208:    [[nodiscard]] constexpr QLatin1String first(qsizetype n) const
+        -:  209:    { verify(n); return QLatin1String(m_data, n); }
+        -:  210:    [[nodiscard]] constexpr QLatin1String last(qsizetype n) const
+        -:  211:    { verify(n); return QLatin1String(m_data + size() - n, n); }
+        -:  212:    [[nodiscard]] constexpr QLatin1String chopped(qsizetype n) const
+        -:  213:    { verify(n); return QLatin1String(m_data, size() - n); }
+        -:  214:
+        -:  215:    constexpr void chop(qsizetype n)
+        -:  216:    { verify(n); m_size -= n; }
+        -:  217:    constexpr void truncate(qsizetype n)
+        -:  218:    { verify(n); m_size = n; }
+        -:  219:
+        -:  220:    [[nodiscard]] QLatin1String trimmed() const noexcept { return QtPrivate::trimmed(*this); }
+        -:  221:
+        -:  222:    template <typename Needle, typename...Flags>
+        -:  223:    [[nodiscard]] inline constexpr auto tokenize(Needle &&needle, Flags...flags) const
+        -:  224:        noexcept(noexcept(qTokenize(std::declval<const QLatin1String &>(), std::forward<Needle>(needle), flags...)))
+        -:  225:            -> decltype(qTokenize(*this, std::forward<Needle>(needle), flags...))
+        -:  226:    { return qTokenize(*this, std::forward<Needle>(needle), flags...); }
+        -:  227:
+        -:  228:    friend inline bool operator==(QLatin1String s1, QLatin1String s2) noexcept
+        -:  229:    { return s1.size() == s2.size() && (!s1.size() || !memcmp(s1.latin1(), s2.latin1(), s1.size())); }
+        -:  230:    friend inline bool operator!=(QLatin1String s1, QLatin1String s2) noexcept
+        -:  231:    { return !(s1 == s2); }
+        -:  232:    friend inline bool operator<(QLatin1String s1, QLatin1String s2) noexcept
+        -:  233:    {
+        -:  234:        const qsizetype len = qMin(s1.size(), s2.size());
+        -:  235:        const int r = len ? memcmp(s1.latin1(), s2.latin1(), len) : 0;
+        -:  236:        return r < 0 || (r == 0 && s1.size() < s2.size());
+        -:  237:    }
+        -:  238:    friend inline bool operator>(QLatin1String s1, QLatin1String s2) noexcept
+        -:  239:    { return s2 < s1; }
+        -:  240:    friend inline bool operator<=(QLatin1String s1, QLatin1String s2) noexcept
+        -:  241:    { return !(s1 > s2); }
+        -:  242:    friend inline bool operator>=(QLatin1String s1, QLatin1String s2) noexcept
+        -:  243:    { return !(s1 < s2); }
+        -:  244:
+        -:  245:    // QChar <> QLatin1String
+        -:  246:    friend inline bool operator==(QChar lhs, QLatin1String rhs) noexcept { return rhs.size() == 1 && lhs == rhs.front(); }
+        -:  247:    friend inline bool operator< (QChar lhs, QLatin1String rhs) noexcept { return compare_helper(&lhs, 1, rhs) < 0; }
+        -:  248:    friend inline bool operator> (QChar lhs, QLatin1String rhs) noexcept { return compare_helper(&lhs, 1, rhs) > 0; }
+        -:  249:    friend inline bool operator!=(QChar lhs, QLatin1String rhs) noexcept { return !(lhs == rhs); }
+        -:  250:    friend inline bool operator<=(QChar lhs, QLatin1String rhs) noexcept { return !(lhs >  rhs); }
+        -:  251:    friend inline bool operator>=(QChar lhs, QLatin1String rhs) noexcept { return !(lhs <  rhs); }
+        -:  252:
+        -:  253:    friend inline bool operator==(QLatin1String lhs, QChar rhs) noexcept { return   rhs == lhs; }
+        -:  254:    friend inline bool operator!=(QLatin1String lhs, QChar rhs) noexcept { return !(rhs == lhs); }
+        -:  255:    friend inline bool operator< (QLatin1String lhs, QChar rhs) noexcept { return   rhs >  lhs; }
+        -:  256:    friend inline bool operator> (QLatin1String lhs, QChar rhs) noexcept { return   rhs <  lhs; }
+        -:  257:    friend inline bool operator<=(QLatin1String lhs, QChar rhs) noexcept { return !(rhs <  lhs); }
+        -:  258:    friend inline bool operator>=(QLatin1String lhs, QChar rhs) noexcept { return !(rhs >  lhs); }
+        -:  259:
+        -:  260:    // QStringView <> QLatin1String
+        -:  261:    friend inline bool operator==(QStringView lhs, QLatin1String rhs) noexcept
+        -:  262:    { return lhs.size() == rhs.size() && QtPrivate::equalStrings(lhs, rhs); }
+        -:  263:    friend inline bool operator!=(QStringView lhs, QLatin1String rhs) noexcept { return !(lhs == rhs); }
+        -:  264:    friend inline bool operator< (QStringView lhs, QLatin1String rhs) noexcept { return QtPrivate::compareStrings(lhs, rhs) <  0; }
+        -:  265:    friend inline bool operator<=(QStringView lhs, QLatin1String rhs) noexcept { return QtPrivate::compareStrings(lhs, rhs) <= 0; }
+        -:  266:    friend inline bool operator> (QStringView lhs, QLatin1String rhs) noexcept { return QtPrivate::compareStrings(lhs, rhs) >  0; }
+        -:  267:    friend inline bool operator>=(QStringView lhs, QLatin1String rhs) noexcept { return QtPrivate::compareStrings(lhs, rhs) >= 0; }
+        -:  268:
+        -:  269:    friend inline bool operator==(QLatin1String lhs, QStringView rhs) noexcept
+        -:  270:    { return lhs.size() == rhs.size() && QtPrivate::equalStrings(lhs, rhs); }
+        -:  271:    friend inline bool operator!=(QLatin1String lhs, QStringView rhs) noexcept { return !(lhs == rhs); }
+        -:  272:    friend inline bool operator< (QLatin1String lhs, QStringView rhs) noexcept { return QtPrivate::compareStrings(lhs, rhs) <  0; }
+        -:  273:    friend inline bool operator<=(QLatin1String lhs, QStringView rhs) noexcept { return QtPrivate::compareStrings(lhs, rhs) <= 0; }
+        -:  274:    friend inline bool operator> (QLatin1String lhs, QStringView rhs) noexcept { return QtPrivate::compareStrings(lhs, rhs) >  0; }
+        -:  275:    friend inline bool operator>=(QLatin1String lhs, QStringView rhs) noexcept { return QtPrivate::compareStrings(lhs, rhs) >= 0; }
+        -:  276:
+        -:  277:
+        -:  278:#if !defined(QT_NO_CAST_FROM_ASCII) && !defined(QT_RESTRICTED_CAST_FROM_ASCII)
+        -:  279:    QT_ASCII_CAST_WARN inline bool operator==(const char *s) const;
+        -:  280:    QT_ASCII_CAST_WARN inline bool operator!=(const char *s) const;
+        -:  281:    QT_ASCII_CAST_WARN inline bool operator<(const char *s) const;
+        -:  282:    QT_ASCII_CAST_WARN inline bool operator>(const char *s) const;
+        -:  283:    QT_ASCII_CAST_WARN inline bool operator<=(const char *s) const;
+        -:  284:    QT_ASCII_CAST_WARN inline bool operator>=(const char *s) const;
+        -:  285:
+        -:  286:    QT_ASCII_CAST_WARN inline bool operator==(const QByteArray &s) const;
+        -:  287:    QT_ASCII_CAST_WARN inline bool operator!=(const QByteArray &s) const;
+        -:  288:    QT_ASCII_CAST_WARN inline bool operator<(const QByteArray &s) const;
+        -:  289:    QT_ASCII_CAST_WARN inline bool operator>(const QByteArray &s) const;
+        -:  290:    QT_ASCII_CAST_WARN inline bool operator<=(const QByteArray &s) const;
+        -:  291:    QT_ASCII_CAST_WARN inline bool operator>=(const QByteArray &s) const;
+        -:  292:
+        -:  293:    QT_ASCII_CAST_WARN friend bool operator==(const char *s1, QLatin1String s2) { return compare_helper(s2, s1) == 0; }
+        -:  294:    QT_ASCII_CAST_WARN friend bool operator!=(const char *s1, QLatin1String s2) { return compare_helper(s2, s1) != 0; }
+        -:  295:    QT_ASCII_CAST_WARN friend bool operator< (const char *s1, QLatin1String s2) { return compare_helper(s2, s1) >  0; }
+        -:  296:    QT_ASCII_CAST_WARN friend bool operator> (const char *s1, QLatin1String s2) { return compare_helper(s2, s1) <  0; }
+        -:  297:    QT_ASCII_CAST_WARN friend bool operator<=(const char *s1, QLatin1String s2) { return compare_helper(s2, s1) >= 0; }
+        -:  298:    QT_ASCII_CAST_WARN friend bool operator>=(const char *s1, QLatin1String s2) { return compare_helper(s2, s1) <= 0; }
+        -:  299:#endif // !defined(QT_NO_CAST_FROM_ASCII) && !defined(QT_RESTRICTED_CAST_FROM_ASCII)
+        -:  300:
+        -:  301:private:
+        -:  302:#if !defined(QT_NO_CAST_FROM_ASCII) && !defined(QT_RESTRICTED_CAST_FROM_ASCII)
+        -:  303:    static inline int compare_helper(const QLatin1String &s1, const char *s2);
+        -:  304:#endif
+        -:  305:    Q_ALWAYS_INLINE constexpr void verify(qsizetype pos, qsizetype n = 0) const
+        -:  306:    {
+        -:  307:        Q_ASSERT(pos >= 0);
+        -:  308:        Q_ASSERT(pos <= size());
+        -:  309:        Q_ASSERT(n >= 0);
+        -:  310:        Q_ASSERT(n <= size() - pos);
+        -:  311:    }
+        -:  312:    Q_CORE_EXPORT static int compare_helper(const QChar *data1, qsizetype length1,
+        -:  313:                                            QLatin1String s2,
+        -:  314:                                            Qt::CaseSensitivity cs = Qt::CaseSensitive) noexcept;
+        -:  315:    qsizetype m_size;
+        -:  316:    const char *m_data;
+        -:  317:};
+        -:  318:Q_DECLARE_TYPEINFO(QLatin1String, Q_RELOCATABLE_TYPE);
+        -:  319:
+        -:  320:// Qt 4.x compatibility
+        -:  321:
+        -:  322://
+        -:  323:// QLatin1String inline implementations
+        -:  324://
+        -:  325:constexpr bool QtPrivate::isLatin1(QLatin1String) noexcept
+        -:  326:{ return true; }
+        -:  327:
+        -:  328://
+        -:  329:// QStringView members that require QLatin1String:
+        -:  330://
+        -:  331:int QStringView::compare(QLatin1String s, Qt::CaseSensitivity cs) const noexcept
+        -:  332:{ return QtPrivate::compareStrings(*this, s, cs); }
+        -:  333:bool QStringView::startsWith(QLatin1String s, Qt::CaseSensitivity cs) const noexcept
+        -:  334:{ return QtPrivate::startsWith(*this, s, cs); }
+        -:  335:bool QStringView::endsWith(QLatin1String s, Qt::CaseSensitivity cs) const noexcept
+        -:  336:{ return QtPrivate::endsWith(*this, s, cs); }
+        -:  337:qsizetype QStringView::indexOf(QLatin1String s, qsizetype from, Qt::CaseSensitivity cs) const noexcept
+        -:  338:{ return QtPrivate::findString(*this, from, s, cs); }
+        -:  339:bool QStringView::contains(QLatin1String s, Qt::CaseSensitivity cs) const noexcept
+        -:  340:{ return indexOf(s, 0, cs) != qsizetype(-1); }
+        -:  341:qsizetype QStringView::lastIndexOf(QLatin1String s, Qt::CaseSensitivity cs) const noexcept
+        -:  342:{ return QtPrivate::lastIndexOf(*this, size(), s, cs); }
+        -:  343:qsizetype QStringView::lastIndexOf(QLatin1String s, qsizetype from, Qt::CaseSensitivity cs) const noexcept
+        -:  344:{ return QtPrivate::lastIndexOf(*this, from, s, cs); }
+        -:  345:
+        -:  346://
+        -:  347:// QAnyStringView members that require QLatin1String
+        -:  348://
+        -:  349:
+        -:  350:constexpr QAnyStringView::QAnyStringView(QLatin1String str) noexcept
+        -:  351:    : m_data{str.data()}, m_size{size_t(str.size()) | Tag::Latin1} {}
+        -:  352:
+        -:  353:constexpr QLatin1String QAnyStringView::asLatin1StringView() const
+        -:  354:{
+        -:  355:    Q_ASSERT(isLatin1());
+        -:  356:    return QLatin1String{m_data_utf8, int(size())};
+        -:  357:}
+        -:  358:
+        -:  359:template <typename Visitor>
+        -:  360:constexpr decltype(auto) QAnyStringView::visit(Visitor &&v) const
+        -:  361:{
+        -:  362:    if (isUtf16())
+        -:  363:        return std::forward<Visitor>(v)(asStringView());
+        -:  364:    else if (isLatin1())
+        -:  365:        return std::forward<Visitor>(v)(asLatin1StringView());
+        -:  366:    else
+        -:  367:        return std::forward<Visitor>(v)(asUtf8StringView());
+        -:  368:}
+        -:  369:
+        -:  370://
+        -:  371:// QAnyStringView members that require QAnyStringView::visit()
+        -:  372://
+        -:  373:
+        -:  374:constexpr QChar QAnyStringView::front() const
+        -:  375:{
+        -:  376:    return visit([] (auto that) { return QAnyStringView::toQChar(that.front()); });
+        -:  377:}
+        -:  378:constexpr QChar QAnyStringView::back() const
+        -:  379:{
+        -:  380:    return visit([] (auto that) { return QAnyStringView::toQChar(that.back()); });
+        -:  381:}
+        -:  382:
+        -:  383:
+        -:  384:class Q_CORE_EXPORT QString
+        -:  385:{
+        -:  386:    typedef QTypedArrayData<char16_t> Data;
+        -:  387:public:
+        -:  388:    typedef QStringPrivate DataPointer;
+        -:  389:
+        -:  390:    inline constexpr QString() noexcept;
+        -:  391:    explicit QString(const QChar *unicode, qsizetype size = -1);
+        -:  392:    QString(QChar c);
+        -:  393:    QString(qsizetype size, QChar c);
+        -:  394:    inline QString(QLatin1String latin1);
+        -:  395:#if defined(__cpp_char8_t) || defined(Q_CLANG_QDOC)
+        -:  396:    Q_WEAK_OVERLOAD
+        -:  397:    inline QString(const char8_t *str)
+        -:  398:        : QString(fromUtf8(str))
+        -:  399:    {}
+        -:  400:#endif
+        -:  401:    inline QString(const QString &) noexcept;
+        -:  402:    inline ~QString();
+        -:  403:    QString &operator=(QChar c);
+        -:  404:    QString &operator=(const QString &) noexcept;
+        -:  405:    QString &operator=(QLatin1String latin1);
+        -:  406:    inline QString(QString &&other) noexcept
+        -:  407:    { qSwap(d, other.d); }
+        -:  408:    QT_MOVE_ASSIGNMENT_OPERATOR_IMPL_VIA_PURE_SWAP(QString)
+        -:  409:    void swap(QString &other) noexcept { d.swap(other.d); }
+        -:  410:    inline qsizetype size() const { return d.size; }
+        -:  411:    inline qsizetype count() const { return d.size; }
+        -:  412:    inline qsizetype length() const { return d.size; }
+        -:  413:    inline bool isEmpty() const;
+        -:  414:    void resize(qsizetype size);
+        -:  415:    void resize(qsizetype size, QChar fillChar);
+        -:  416:
+        -:  417:    QString &fill(QChar c, qsizetype size = -1);
+        -:  418:    void truncate(qsizetype pos);
+        -:  419:    void chop(qsizetype n);
+        -:  420:
+        -:  421:    inline qsizetype capacity() const;
+        -:  422:    inline void reserve(qsizetype size);
+        -:  423:    inline void squeeze();
+        -:  424:
+        -:  425:    inline const QChar *unicode() const;
+        -:  426:    inline QChar *data();
+        -:  427:    inline const QChar *data() const;
+        -:  428:    inline const QChar *constData() const;
+        -:  429:
+        -:  430:    inline void detach();
+        -:  431:    inline bool isDetached() const;
+        -:  432:    inline bool isSharedWith(const QString &other) const { return d.isSharedWith(other.d); }
+        -:  433:    void clear();
+        -:  434:
+        -:  435:    inline const QChar at(qsizetype i) const;
+        -:  436:    const QChar operator[](qsizetype i) const;
+        -:  437:    [[nodiscard]] QChar &operator[](qsizetype i);
+        -:  438:
+        -:  439:    [[nodiscard]] inline QChar front() const { return at(0); }
+        -:  440:    [[nodiscard]] inline QChar &front();
+        -:  441:    [[nodiscard]] inline QChar back() const { return at(size() - 1); }
+        -:  442:    [[nodiscard]] inline QChar &back();
+        -:  443:
+        -:  444:    [[nodiscard]] QString arg(qlonglong a, int fieldwidth=0, int base=10,
+        -:  445:                QChar fillChar = QLatin1Char(' ')) const;
+        -:  446:    [[nodiscard]] QString arg(qulonglong a, int fieldwidth=0, int base=10,
+        -:  447:                QChar fillChar = QLatin1Char(' ')) const;
+        -:  448:    [[nodiscard]] QString arg(long a, int fieldwidth=0, int base=10,
+        -:  449:                QChar fillChar = QLatin1Char(' ')) const;
+        -:  450:    [[nodiscard]] QString arg(ulong a, int fieldwidth=0, int base=10,
+        -:  451:                QChar fillChar = QLatin1Char(' ')) const;
+        -:  452:    [[nodiscard]] QString arg(int a, int fieldWidth = 0, int base = 10,
+        -:  453:                QChar fillChar = QLatin1Char(' ')) const;
+        -:  454:    [[nodiscard]] QString arg(uint a, int fieldWidth = 0, int base = 10,
+        -:  455:                QChar fillChar = QLatin1Char(' ')) const;
+        -:  456:    [[nodiscard]] QString arg(short a, int fieldWidth = 0, int base = 10,
+        -:  457:                QChar fillChar = QLatin1Char(' ')) const;
+        -:  458:    [[nodiscard]] QString arg(ushort a, int fieldWidth = 0, int base = 10,
+        -:  459:                QChar fillChar = QLatin1Char(' ')) const;
+        -:  460:    [[nodiscard]] QString arg(double a, int fieldWidth = 0, char format = 'g', int precision = -1,
+        -:  461:                QChar fillChar = QLatin1Char(' ')) const;
+        -:  462:    [[nodiscard]] QString arg(char a, int fieldWidth = 0,
+        -:  463:                QChar fillChar = QLatin1Char(' ')) const;
+        -:  464:    [[nodiscard]] QString arg(QChar a, int fieldWidth = 0,
+        -:  465:                QChar fillChar = QLatin1Char(' ')) const;
+        -:  466:#if QT_STRINGVIEW_LEVEL < 2
+        -:  467:    [[nodiscard]] QString arg(const QString &a, int fieldWidth = 0,
+        -:  468:                QChar fillChar = QLatin1Char(' ')) const;
+        -:  469:#endif
+        -:  470:    [[nodiscard]] QString arg(QStringView a, int fieldWidth = 0,
+        -:  471:                QChar fillChar = QLatin1Char(' ')) const;
+        -:  472:    [[nodiscard]] QString arg(QLatin1String a, int fieldWidth = 0,
+        -:  473:                QChar fillChar = QLatin1Char(' ')) const;
+        -:  474:private:
+        -:  475:    template <typename T>
+        -:  476:    struct is_convertible_to_view_or_qstring_helper
+        -:  477:        : std::integral_constant<bool,
+        -:  478:            std::is_convertible<T, QString>::value ||
+        -:  479:            std::is_convertible<T, QStringView>::value ||
+        -:  480:            std::is_convertible<T, QLatin1String>::value> {};
+        -:  481:    template <typename T>
+        -:  482:    struct is_convertible_to_view_or_qstring
+        -:  483:        : is_convertible_to_view_or_qstring_helper<typename std::decay<T>::type> {};
+        -:  484:public:
+        -:  485:    template <typename...Args>
+        -:  486:    [[nodiscard]]
+        -:  487:#ifdef Q_CLANG_QDOC
+        -:  488:    QString
+        -:  489:#else
+        -:  490:    typename std::enable_if<
+        -:  491:        sizeof...(Args) >= 2 && std::is_same<
+        -:  492:            QtPrivate::BoolList<is_convertible_to_view_or_qstring<Args>::value..., true>,
+        -:  493:            QtPrivate::BoolList<true, is_convertible_to_view_or_qstring<Args>::value...>
+        -:  494:        >::value,
+        -:  495:        QString
+        -:  496:    >::type
+        -:  497:#endif
+        -:  498:    arg(Args &&...args) const
+        -:  499:    { return qToStringViewIgnoringNull(*this).arg(std::forward<Args>(args)...); }
+        -:  500:
+        -:  501:    static QString vasprintf(const char *format, va_list ap) Q_ATTRIBUTE_FORMAT_PRINTF(1, 0);
+        -:  502:    static QString asprintf(const char *format, ...) Q_ATTRIBUTE_FORMAT_PRINTF(1, 2);
+        -:  503:
+        -:  504:    [[nodiscard]] qsizetype indexOf(QChar c, qsizetype from = 0, Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
+        -:  505:    [[nodiscard]] qsizetype indexOf(QLatin1String s, qsizetype from = 0, Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
+        -:  506:#if QT_STRINGVIEW_LEVEL < 2
+        -:  507:    [[nodiscard]] qsizetype indexOf(const QString &s, qsizetype from = 0, Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
+        -:  508:#endif
+        -:  509:    [[nodiscard]] qsizetype indexOf(QStringView s, qsizetype from = 0, Qt::CaseSensitivity cs = Qt::CaseSensitive) const noexcept
+        -:  510:    { return QtPrivate::findString(*this, from, s, cs); }
+        -:  511:    [[nodiscard]] qsizetype lastIndexOf(QChar c, qsizetype from = -1, Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
+        -:  512:    [[nodiscard]] qsizetype lastIndexOf(QLatin1String s, Qt::CaseSensitivity cs = Qt::CaseSensitive) const
+        -:  513:    { return lastIndexOf(s, size(), cs); }
+        -:  514:    [[nodiscard]] qsizetype lastIndexOf(QLatin1String s, qsizetype from, Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
+        -:  515:#if QT_STRINGVIEW_LEVEL < 2
+        -:  516:    [[nodiscard]] qsizetype lastIndexOf(const QString &s, Qt::CaseSensitivity cs = Qt::CaseSensitive) const
+        -:  517:    { return lastIndexOf(s, size(), cs); }
+        -:  518:    [[nodiscard]] qsizetype lastIndexOf(const QString &s, qsizetype from, Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
+        -:  519:#endif
+        -:  520:
+        -:  521:    [[nodiscard]] qsizetype lastIndexOf(QStringView s, Qt::CaseSensitivity cs = Qt::CaseSensitive) const noexcept
+        -:  522:    { return lastIndexOf(s, size(), cs); }
+        -:  523:    [[nodiscard]] qsizetype lastIndexOf(QStringView s, qsizetype from, Qt::CaseSensitivity cs = Qt::CaseSensitive) const noexcept
+        -:  524:    { return QtPrivate::lastIndexOf(*this, from, s, cs); }
+        -:  525:
+        -:  526:    [[nodiscard]] inline bool contains(QChar c, Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
+        -:  527:#if QT_STRINGVIEW_LEVEL < 2
+        -:  528:    [[nodiscard]] inline bool contains(const QString &s, Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
+        -:  529:#endif
+        -:  530:    [[nodiscard]] inline bool contains(QLatin1String s, Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
+        -:  531:    [[nodiscard]] inline bool contains(QStringView s, Qt::CaseSensitivity cs = Qt::CaseSensitive) const noexcept;
+        -:  532:    [[nodiscard]] qsizetype count(QChar c, Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
+        -:  533:    [[nodiscard]] qsizetype count(const QString &s, Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
+        -:  534:    [[nodiscard]] qsizetype count(QStringView s, Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
+        -:  535:
+        -:  536:#if QT_CONFIG(regularexpression)
+        -:  537:    [[nodiscard]] qsizetype indexOf(const QRegularExpression &re, qsizetype from = 0,
+        -:  538:                                    QRegularExpressionMatch *rmatch = nullptr) const;
+        -:  539:#ifdef Q_QDOC
+        -:  540:    [[nodiscard]] qsizetype lastIndexOf(const QRegularExpression &re, QRegularExpressionMatch *rmatch = nullptr) const;
+        -:  541:#else
+        -:  542:    // prevent an ambiguity when called like this: lastIndexOf(re, 0)
+        -:  543:    template <typename T = QRegularExpressionMatch, std::enable_if_t<std::is_same_v<T, QRegularExpressionMatch>, bool> = false>
+        -:  544:    [[nodiscard]] qsizetype lastIndexOf(const QRegularExpression &re, T *rmatch = nullptr) const
+        -:  545:    { return lastIndexOf(re, size(), rmatch); }
+        -:  546:#endif
+        -:  547:    [[nodiscard]] qsizetype lastIndexOf(const QRegularExpression &re, qsizetype from,
+        -:  548:                                        QRegularExpressionMatch *rmatch = nullptr) const;
+        -:  549:    [[nodiscard]] bool contains(const QRegularExpression &re, QRegularExpressionMatch *rmatch = nullptr) const;
+        -:  550:    [[nodiscard]] qsizetype count(const QRegularExpression &re) const;
+        -:  551:#endif
+        -:  552:
+        -:  553:    enum SectionFlag {
+        -:  554:        SectionDefault             = 0x00,
+        -:  555:        SectionSkipEmpty           = 0x01,
+        -:  556:        SectionIncludeLeadingSep   = 0x02,
+        -:  557:        SectionIncludeTrailingSep  = 0x04,
+        -:  558:        SectionCaseInsensitiveSeps = 0x08
+        -:  559:    };
+        -:  560:    Q_DECLARE_FLAGS(SectionFlags, SectionFlag)
+        -:  561:
+        -:  562:    [[nodiscard]] QString section(QChar sep, qsizetype start, qsizetype end = -1, SectionFlags flags = SectionDefault) const;
+        -:  563:    [[nodiscard]] QString section(const QString &in_sep, qsizetype start, qsizetype end = -1, SectionFlags flags = SectionDefault) const;
+        -:  564:#if QT_CONFIG(regularexpression)
+        -:  565:    [[nodiscard]] QString section(const QRegularExpression &re, qsizetype start, qsizetype end = -1, SectionFlags flags = SectionDefault) const;
+        -:  566:#endif
+        -:  567:    [[nodiscard]] QString left(qsizetype n) const;
+        -:  568:    [[nodiscard]] QString right(qsizetype n) const;
+        -:  569:    [[nodiscard]] QString mid(qsizetype position, qsizetype n = -1) const;
+        -:  570:
+        -:  571:    [[nodiscard]] QString first(qsizetype n) const
+        -:  572:    { Q_ASSERT(n >= 0); Q_ASSERT(n <= size()); return QString(data(), n); }
+        -:  573:    [[nodiscard]] QString last(qsizetype n) const
+        -:  574:    { Q_ASSERT(n >= 0); Q_ASSERT(n <= size()); return QString(data() + size() - n, n); }
+        -:  575:    [[nodiscard]] QString sliced(qsizetype pos) const
+        -:  576:    { Q_ASSERT(pos >= 0); Q_ASSERT(pos <= size()); return QString(data() + pos, size() - pos); }
+        -:  577:    [[nodiscard]] QString sliced(qsizetype pos, qsizetype n) const
+        -:  578:    { Q_ASSERT(pos >= 0); Q_ASSERT(n >= 0); Q_ASSERT(size_t(pos) + size_t(n) <= size_t(size())); return QString(data() + pos, n); }
+        -:  579:    [[nodiscard]] QString chopped(qsizetype n) const
+        -:  580:    { Q_ASSERT(n >= 0); Q_ASSERT(n <= size()); return first(size() - n); }
+        -:  581:
+        -:  582:
+        -:  583:#if QT_STRINGVIEW_LEVEL < 2
+        -:  584:    bool startsWith(const QString &s, Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
+        -:  585:#endif
+        -:  586:    [[nodiscard]] bool startsWith(QStringView s, Qt::CaseSensitivity cs = Qt::CaseSensitive) const noexcept
+        -:  587:    { return QtPrivate::startsWith(*this, s, cs); }
+        -:  588:    bool startsWith(QLatin1String s, Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
+        -:  589:    bool startsWith(QChar c, Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
+        -:  590:
+        -:  591:#if QT_STRINGVIEW_LEVEL < 2
+        -:  592:    bool endsWith(const QString &s, Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
+        -:  593:#endif
+        -:  594:    [[nodiscard]] bool endsWith(QStringView s, Qt::CaseSensitivity cs = Qt::CaseSensitive) const noexcept
+        -:  595:    { return QtPrivate::endsWith(*this, s, cs); }
+        -:  596:    bool endsWith(QLatin1String s, Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
+        -:  597:    bool endsWith(QChar c, Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
+        -:  598:
+        -:  599:    bool isUpper() const;
+        -:  600:    bool isLower() const;
+        -:  601:
+        -:  602:    [[nodiscard]] QString leftJustified(qsizetype width, QChar fill = QLatin1Char(' '), bool trunc = false) const;
+        -:  603:    [[nodiscard]] QString rightJustified(qsizetype width, QChar fill = QLatin1Char(' '), bool trunc = false) const;
+        -:  604:
+        -:  605:#if !defined(Q_CLANG_QDOC)
+        -:  606:    [[nodiscard]] QString toLower() const &
+        -:  607:    { return toLower_helper(*this); }
+        -:  608:    [[nodiscard]] QString toLower() &&
+        -:  609:    { return toLower_helper(*this); }
+        -:  610:    [[nodiscard]] QString toUpper() const &
+        -:  611:    { return toUpper_helper(*this); }
+        -:  612:    [[nodiscard]] QString toUpper() &&
+        -:  613:    { return toUpper_helper(*this); }
+        -:  614:    [[nodiscard]] QString toCaseFolded() const &
+        -:  615:    { return toCaseFolded_helper(*this); }
+        -:  616:    [[nodiscard]] QString toCaseFolded() &&
+        -:  617:    { return toCaseFolded_helper(*this); }
+        -:  618:    [[nodiscard]] QString trimmed() const &
+        -:  619:    { return trimmed_helper(*this); }
+        -:  620:    [[nodiscard]] QString trimmed() &&
+        -:  621:    { return trimmed_helper(*this); }
+        -:  622:    [[nodiscard]] QString simplified() const &
+        -:  623:    { return simplified_helper(*this); }
+        -:  624:    [[nodiscard]] QString simplified() &&
+        -:  625:    { return simplified_helper(*this); }
+        -:  626:#else
+        -:  627:    [[nodiscard]] QString toLower() const;
+        -:  628:    [[nodiscard]] QString toUpper() const;
+        -:  629:    [[nodiscard]] QString toCaseFolded() const;
+        -:  630:    [[nodiscard]] QString trimmed() const;
+        -:  631:    [[nodiscard]] QString simplified() const;
+        -:  632:#endif
+        -:  633:    [[nodiscard]] QString toHtmlEscaped() const;
+        -:  634:
+        -:  635:    QString &insert(qsizetype i, QChar c);
+        -:  636:    QString &insert(qsizetype i, const QChar *uc, qsizetype len);
+        -:  637:#if QT_STRINGVIEW_LEVEL < 2
+        -:  638:    inline QString &insert(qsizetype i, const QString &s) { return insert(i, s.constData(), s.length()); }
+        -:  639:#endif
+        -:  640:    inline QString &insert(qsizetype i, QStringView v) { return insert(i, v.data(), v.length()); }
+        -:  641:    QString &insert(qsizetype i, QLatin1String s);
+        -:  642:
+        -:  643:    QString &append(QChar c);
+        -:  644:    QString &append(const QChar *uc, qsizetype len);
+        -:  645:#if QT_STRINGVIEW_LEVEL < 2
+        -:  646:    QString &append(const QString &s);
+        -:  647:#endif
+        -:  648:    inline QString &append(QStringView v) { return append(v.data(), v.length()); }
+        -:  649:    QString &append(QLatin1String s);
+        -:  650:
+        -:  651:    inline QString &prepend(QChar c) { return insert(0, c); }
+        -:  652:    inline QString &prepend(const QChar *uc, qsizetype len) { return insert(0, uc, len); }
+        -:  653:#if QT_STRINGVIEW_LEVEL < 2
+        -:  654:    inline QString &prepend(const QString &s) { return insert(0, s); }
+        -:  655:#endif
+        -:  656:    inline QString &prepend(QStringView v) { return prepend(v.data(), v.length()); }
+        -:  657:    inline QString &prepend(QLatin1String s) { return insert(0, s); }
+        -:  658:
+        -:  659:    inline QString &operator+=(QChar c) { return append(c); }
+        -:  660:
+        -:  661:#if QT_STRINGVIEW_LEVEL < 2
+        -:  662:    inline QString &operator+=(const QString &s) { return append(s); }
+        -:  663:#endif
+        -:  664:    inline QString &operator+=(QStringView v) { return append(v); }
+        -:  665:    inline QString &operator+=(QLatin1String s) { return append(s); }
+        -:  666:
+        -:  667:    QString &remove(qsizetype i, qsizetype len);
+        -:  668:    QString &remove(QChar c, Qt::CaseSensitivity cs = Qt::CaseSensitive);
+        -:  669:    QString &remove(QLatin1String s, Qt::CaseSensitivity cs = Qt::CaseSensitive);
+        -:  670:    QString &remove(const QString &s, Qt::CaseSensitivity cs = Qt::CaseSensitive);
+        -:  671:    template <typename Predicate>
+        -:  672:    QString &removeIf(Predicate pred)
+        -:  673:    {
+        -:  674:        QtPrivate::sequential_erase_if(*this, pred);
+        -:  675:        return *this;
+        -:  676:    }
+        -:  677:    QString &replace(qsizetype i, qsizetype len, QChar after);
+        -:  678:    QString &replace(qsizetype i, qsizetype len, const QChar *s, qsizetype slen);
+        -:  679:    QString &replace(qsizetype i, qsizetype len, const QString &after);
+        -:  680:    QString &replace(QChar before, QChar after, Qt::CaseSensitivity cs = Qt::CaseSensitive);
+        -:  681:    QString &replace(const QChar *before, qsizetype blen, const QChar *after, qsizetype alen, Qt::CaseSensitivity cs = Qt::CaseSensitive);
+        -:  682:    QString &replace(QLatin1String before, QLatin1String after, Qt::CaseSensitivity cs = Qt::CaseSensitive);
+        -:  683:    QString &replace(QLatin1String before, const QString &after, Qt::CaseSensitivity cs = Qt::CaseSensitive);
+        -:  684:    QString &replace(const QString &before, QLatin1String after, Qt::CaseSensitivity cs = Qt::CaseSensitive);
+        -:  685:    QString &replace(const QString &before, const QString &after,
+        -:  686:                     Qt::CaseSensitivity cs = Qt::CaseSensitive);
+        -:  687:    QString &replace(QChar c, const QString &after, Qt::CaseSensitivity cs = Qt::CaseSensitive);
+        -:  688:    QString &replace(QChar c, QLatin1String after, Qt::CaseSensitivity cs = Qt::CaseSensitive);
+        -:  689:#if QT_CONFIG(regularexpression)
+        -:  690:    QString &replace(const QRegularExpression &re, const QString  &after);
+        -:  691:    inline QString &remove(const QRegularExpression &re)
+        -:  692:    { return replace(re, QString()); }
+        -:  693:#endif
+        -:  694:
+        -:  695:public:
+        -:  696:    [[nodiscard]]
+        -:  697:    QStringList split(const QString &sep, Qt::SplitBehavior behavior = Qt::KeepEmptyParts,
+        -:  698:                      Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
+        -:  699:    [[nodiscard]]
+        -:  700:    QStringList split(QChar sep, Qt::SplitBehavior behavior = Qt::KeepEmptyParts,
+        -:  701:                      Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
+        -:  702:#ifndef QT_NO_REGULAREXPRESSION
+        -:  703:    [[nodiscard]]
+        -:  704:    QStringList split(const QRegularExpression &sep,
+        -:  705:                      Qt::SplitBehavior behavior = Qt::KeepEmptyParts) const;
+        -:  706:#endif
+        -:  707:
+        -:  708:    template <typename Needle, typename...Flags>
+        -:  709:    [[nodiscard]] inline auto tokenize(Needle &&needle, Flags...flags) const &
+        -:  710:        noexcept(noexcept(qTokenize(std::declval<const QString &>(), std::forward<Needle>(needle), flags...)))
+        -:  711:            -> decltype(qTokenize(*this, std::forward<Needle>(needle), flags...))
+        -:  712:    { return qTokenize(qToStringViewIgnoringNull(*this), std::forward<Needle>(needle), flags...); }
+        -:  713:
+        -:  714:    template <typename Needle, typename...Flags>
+        -:  715:    [[nodiscard]] inline auto tokenize(Needle &&needle, Flags...flags) const &&
+        -:  716:        noexcept(noexcept(qTokenize(std::declval<const QString>(), std::forward<Needle>(needle), flags...)))
+        -:  717:            -> decltype(qTokenize(std::move(*this), std::forward<Needle>(needle), flags...))
+        -:  718:    { return qTokenize(std::move(*this), std::forward<Needle>(needle), flags...); }
+        -:  719:
+        -:  720:    template <typename Needle, typename...Flags>
+        -:  721:    [[nodiscard]] inline auto tokenize(Needle &&needle, Flags...flags) &&
+        -:  722:        noexcept(noexcept(qTokenize(std::declval<QString>(), std::forward<Needle>(needle), flags...)))
+        -:  723:            -> decltype(qTokenize(std::move(*this), std::forward<Needle>(needle), flags...))
+        -:  724:    { return qTokenize(std::move(*this), std::forward<Needle>(needle), flags...); }
+        -:  725:
+        -:  726:
+        -:  727:    enum NormalizationForm {
+        -:  728:        NormalizationForm_D,
+        -:  729:        NormalizationForm_C,
+        -:  730:        NormalizationForm_KD,
+        -:  731:        NormalizationForm_KC
+        -:  732:    };
+        -:  733:    [[nodiscard]] QString normalized(NormalizationForm mode, QChar::UnicodeVersion version = QChar::Unicode_Unassigned) const;
+        -:  734:
+        -:  735:    [[nodiscard]] QString repeated(qsizetype times) const;
+        -:  736:
+        -:  737:    const ushort *utf16() const; // ### Qt 7 char16_t
+        -:  738:
+        -:  739:#if !defined(Q_CLANG_QDOC)
+        -:  740:    [[nodiscard]] QByteArray toLatin1() const &
+        -:  741:    { return toLatin1_helper(*this); }
+        -:  742:    [[nodiscard]] QByteArray toLatin1() &&
+        -:  743:    { return toLatin1_helper_inplace(*this); }
+        -:  744:    [[nodiscard]] QByteArray toUtf8() const &
+        -:  745:    { return toUtf8_helper(*this); }
+        -:  746:    [[nodiscard]] QByteArray toUtf8() &&
+        -:  747:    { return toUtf8_helper(*this); }
+        -:  748:    [[nodiscard]] QByteArray toLocal8Bit() const &
+        -:  749:    { return toLocal8Bit_helper(isNull() ? nullptr : constData(), size()); }
+        -:  750:    [[nodiscard]] QByteArray toLocal8Bit() &&
+        -:  751:    { return toLocal8Bit_helper(isNull() ? nullptr : constData(), size()); }
+        -:  752:#else
+        -:  753:    [[nodiscard]] QByteArray toLatin1() const;
+        -:  754:    [[nodiscard]] QByteArray toUtf8() const;
+        -:  755:    [[nodiscard]] QByteArray toLocal8Bit() const;
+        -:  756:#endif
+        -:  757:    [[nodiscard]] QList<uint> toUcs4() const; // ### Qt 7 char32_t
+        -:  758:
+        -:  759:    // note - this are all inline so we can benefit from strlen() compile time optimizations
+        -:  760:    static QString fromLatin1(QByteArrayView ba);
+        -:  761:    Q_WEAK_OVERLOAD
+        -:  762:    static inline QString fromLatin1(const QByteArray &ba) { return fromLatin1(QByteArrayView(ba)); }
+        -:  763:    static inline QString fromLatin1(const char *str, qsizetype size)
+        -:  764:    {
+        -:  765:        return fromLatin1(QByteArrayView(str, !str || size < 0 ? qstrlen(str) : size));
+        -:  766:    }
+        -:  767:    static QString fromUtf8(QByteArrayView utf8);
+        -:  768:    Q_WEAK_OVERLOAD
+        -:  769:    static inline QString fromUtf8(const QByteArray &ba) { return fromUtf8(QByteArrayView(ba)); }
+        -:  770:    static inline QString fromUtf8(const char *utf8, qsizetype size)
+        -:  771:    {
+        -:  772:        return fromUtf8(QByteArrayView(utf8, !utf8 || size < 0 ? qstrlen(utf8) : size));
+        -:  773:    }
+        -:  774:#if defined(__cpp_char8_t) || defined(Q_CLANG_QDOC)
+        -:  775:    Q_WEAK_OVERLOAD
+        -:  776:    static inline QString fromUtf8(const char8_t *str)
+        -:  777:    { return fromUtf8(reinterpret_cast<const char *>(str)); }
+        -:  778:    Q_WEAK_OVERLOAD
+        -:  779:    static inline QString fromUtf8(const char8_t *str, qsizetype size)
+        -:  780:    { return fromUtf8(reinterpret_cast<const char *>(str), size); }
+        -:  781:#endif
+        -:  782:    static QString fromLocal8Bit(QByteArrayView ba);
+        -:  783:    Q_WEAK_OVERLOAD
+        -:  784:    static inline QString fromLocal8Bit(const QByteArray &ba) { return fromLocal8Bit(QByteArrayView(ba)); }
+        -:  785:    static inline QString fromLocal8Bit(const char *str, qsizetype size)
+        -:  786:    {
+        -:  787:        return fromLocal8Bit(QByteArrayView(str, !str || size < 0 ? qstrlen(str) : size));
+        -:  788:    }
+        -:  789:    static QString fromUtf16(const char16_t *, qsizetype size = -1);
+        -:  790:    static QString fromUcs4(const char32_t *, qsizetype size = -1);
+        -:  791:    static QString fromRawData(const QChar *, qsizetype size);
+        -:  792:
+        -:  793:#if QT_DEPRECATED_SINCE(6, 0)
+        -:  794:    QT_DEPRECATED_VERSION_X_6_0("Use char16_t* overload.")
+        -:  795:    static QString fromUtf16(const ushort *str, qsizetype size = -1)
+        -:  796:    { return fromUtf16(reinterpret_cast<const char16_t *>(str), size); }
+        -:  797:    QT_DEPRECATED_VERSION_X_6_0("Use char32_t* overload.")
+        -:  798:    static QString fromUcs4(const uint *str, qsizetype size = -1)
+        -:  799:    { return fromUcs4(reinterpret_cast<const char32_t *>(str), size); }
+        -:  800:#endif
+        -:  801:
+        -:  802:    inline qsizetype toWCharArray(wchar_t *array) const;
+        -:  803:    [[nodiscard]] static inline QString fromWCharArray(const wchar_t *string, qsizetype size = -1);
+        -:  804:
+        -:  805:    QString &setRawData(const QChar *unicode, qsizetype size);
+        -:  806:    QString &setUnicode(const QChar *unicode, qsizetype size);
+        -:  807:    inline QString &setUtf16(const ushort *utf16, qsizetype size); // ### Qt 7 char16_t
+        -:  808:
+        -:  809:#if QT_STRINGVIEW_LEVEL < 2
+        -:  810:    int compare(const QString &s, Qt::CaseSensitivity cs = Qt::CaseSensitive) const noexcept;
+        -:  811:#endif
+        -:  812:    int compare(QLatin1String other, Qt::CaseSensitivity cs = Qt::CaseSensitive) const noexcept;
+        -:  813:    inline int compare(QStringView s, Qt::CaseSensitivity cs = Qt::CaseSensitive) const noexcept;
+        -:  814:    int compare(QChar ch, Qt::CaseSensitivity cs = Qt::CaseSensitive) const noexcept
+        -:  815:    { return compare(QStringView{&ch, 1}, cs); }
+        -:  816:
+        -:  817:    static inline int compare(const QString &s1, const QString &s2,
+        -:  818:                              Qt::CaseSensitivity cs = Qt::CaseSensitive) noexcept
+        -:  819:    { return s1.compare(s2, cs); }
+        -:  820:
+        -:  821:    static inline int compare(const QString &s1, QLatin1String s2,
+        -:  822:                              Qt::CaseSensitivity cs = Qt::CaseSensitive) noexcept
+        -:  823:    { return s1.compare(s2, cs); }
+        -:  824:    static inline int compare(QLatin1String s1, const QString &s2,
+        -:  825:                              Qt::CaseSensitivity cs = Qt::CaseSensitive) noexcept
+        -:  826:    { return -s2.compare(s1, cs); }
+        -:  827:    static int compare(const QString &s1, QStringView s2, Qt::CaseSensitivity cs = Qt::CaseSensitive) noexcept
+        -:  828:    { return s1.compare(s2, cs); }
+        -:  829:    static int compare(QStringView s1, const QString &s2, Qt::CaseSensitivity cs = Qt::CaseSensitive) noexcept
+        -:  830:    { return -s2.compare(s1, cs); }
+        -:  831:
+        -:  832:    int localeAwareCompare(const QString& s) const;
+        -:  833:    int localeAwareCompare(QStringView s) const;
+        -:  834:    static int localeAwareCompare(const QString& s1, const QString& s2)
+        -:  835:    { return s1.localeAwareCompare(s2); }
+        -:  836:
+        -:  837:    static int localeAwareCompare(QStringView s1, QStringView s2);
+        -:  838:
+        -:  839:    short toShort(bool *ok=nullptr, int base=10) const
+        -:  840:    { return toIntegral_helper<short>(*this, ok, base); }
+        -:  841:    ushort toUShort(bool *ok=nullptr, int base=10) const
+        -:  842:    { return toIntegral_helper<ushort>(*this, ok, base); }
+        -:  843:    int toInt(bool *ok=nullptr, int base=10) const
+        -:  844:    { return toIntegral_helper<int>(*this, ok, base); }
+        -:  845:    uint toUInt(bool *ok=nullptr, int base=10) const
+        -:  846:    { return toIntegral_helper<uint>(*this, ok, base); }
+        -:  847:    long toLong(bool *ok=nullptr, int base=10) const
+        -:  848:    { return toIntegral_helper<long>(*this, ok, base); }
+        -:  849:    ulong toULong(bool *ok=nullptr, int base=10) const
+        -:  850:    { return toIntegral_helper<ulong>(*this, ok, base); }
+        -:  851:    qlonglong toLongLong(bool *ok=nullptr, int base=10) const;
+        -:  852:    qulonglong toULongLong(bool *ok=nullptr, int base=10) const;
+        -:  853:    float toFloat(bool *ok=nullptr) const;
+        -:  854:    double toDouble(bool *ok=nullptr) const;
+        -:  855:
+        -:  856:    QString &setNum(short, int base=10);
+        -:  857:    QString &setNum(ushort, int base=10);
+        -:  858:    QString &setNum(int, int base=10);
+        -:  859:    QString &setNum(uint, int base=10);
+        -:  860:    QString &setNum(long, int base=10);
+        -:  861:    QString &setNum(ulong, int base=10);
+        -:  862:    QString &setNum(qlonglong, int base=10);
+        -:  863:    QString &setNum(qulonglong, int base=10);
+        -:  864:    QString &setNum(float, char format='g', int precision=6);
+        -:  865:    QString &setNum(double, char format='g', int precision=6);
+        -:  866:
+        -:  867:    static QString number(int, int base=10);
+        -:  868:    static QString number(uint, int base=10);
+        -:  869:    static QString number(long, int base=10);
+        -:  870:    static QString number(ulong, int base=10);
+        -:  871:    static QString number(qlonglong, int base=10);
+        -:  872:    static QString number(qulonglong, int base=10);
+        -:  873:    static QString number(double, char format='g', int precision=6);
+        -:  874:
+        -:  875:    friend bool operator==(const QString &s1, const QString &s2) noexcept
+        -:  876:    { return (s1.size() == s2.size()) && QtPrivate::compareStrings(s1, s2, Qt::CaseSensitive) == 0; }
+        -:  877:    friend bool operator< (const QString &s1, const QString &s2) noexcept
+        -:  878:    { return QtPrivate::compareStrings(s1, s2, Qt::CaseSensitive) < 0; }
+        -:  879:    friend bool operator> (const QString &s1, const QString &s2) noexcept { return s2 < s1; }
+        -:  880:    friend bool operator!=(const QString &s1, const QString &s2) noexcept { return !(s1 == s2); }
+        -:  881:    friend bool operator<=(const QString &s1, const QString &s2) noexcept { return !(s1 > s2); }
+        -:  882:    friend bool operator>=(const QString &s1, const QString &s2) noexcept { return !(s1 < s2); }
+        -:  883:
+        -:  884:    friend bool operator==(const QString &s1, QLatin1String s2) noexcept
+        -:  885:    { return (s1.size() == s2.size()) && QtPrivate::compareStrings(s1, s2, Qt::CaseSensitive) == 0; }
+        -:  886:    friend bool operator< (const QString &s1, QLatin1String s2) noexcept
+        -:  887:    { return QtPrivate::compareStrings(s1, s2, Qt::CaseSensitive) < 0; }
+        -:  888:    friend bool operator> (const QString &s1, QLatin1String s2) noexcept
+        -:  889:    { return QtPrivate::compareStrings(s1, s2, Qt::CaseSensitive) > 0; }
+        -:  890:    friend bool operator!=(const QString &s1, QLatin1String s2) noexcept { return !(s1 == s2); }
+        -:  891:    friend bool operator<=(const QString &s1, QLatin1String s2) noexcept { return !(s1 > s2); }
+        -:  892:    friend bool operator>=(const QString &s1, QLatin1String s2) noexcept { return !(s1 < s2); }
+        -:  893:
+        -:  894:    friend bool operator==(QLatin1String s1, const QString &s2) noexcept { return s2 == s1; }
+        -:  895:    friend bool operator< (QLatin1String s1, const QString &s2) noexcept { return s2 > s1; }
+        -:  896:    friend bool operator> (QLatin1String s1, const QString &s2) noexcept { return s2 < s1; }
+        -:  897:    friend bool operator!=(QLatin1String s1, const QString &s2) noexcept { return s2 != s1; }
+        -:  898:    friend bool operator<=(QLatin1String s1, const QString &s2) noexcept { return s2 >= s1; }
+        -:  899:    friend bool operator>=(QLatin1String s1, const QString &s2) noexcept { return s2 <= s1; }
+        -:  900:
+        -:  901:    // Check isEmpty() instead of isNull() for backwards compatibility.
+        -:  902:    friend bool operator==(const QString &s1, std::nullptr_t) noexcept { return s1.isEmpty(); }
+        -:  903:    friend bool operator!=(const QString &s1, std::nullptr_t) noexcept { return !s1.isEmpty(); }
+        -:  904:    friend bool operator< (const QString &  , std::nullptr_t) noexcept { return false; }
+        -:  905:    friend bool operator> (const QString &s1, std::nullptr_t) noexcept { return !s1.isEmpty(); }
+        -:  906:    friend bool operator<=(const QString &s1, std::nullptr_t) noexcept { return s1.isEmpty(); }
+        -:  907:    friend bool operator>=(const QString &  , std::nullptr_t) noexcept { return true; }
+        -:  908:    friend bool operator==(std::nullptr_t, const QString &s2) noexcept { return s2 == nullptr; }
+        -:  909:    friend bool operator!=(std::nullptr_t, const QString &s2) noexcept { return s2 != nullptr; }
+        -:  910:    friend bool operator< (std::nullptr_t, const QString &s2) noexcept { return s2 >  nullptr; }
+        -:  911:    friend bool operator> (std::nullptr_t, const QString &s2) noexcept { return s2 <  nullptr; }
+        -:  912:    friend bool operator<=(std::nullptr_t, const QString &s2) noexcept { return s2 >= nullptr; }
+        -:  913:    friend bool operator>=(std::nullptr_t, const QString &s2) noexcept { return s2 <= nullptr; }
+        -:  914:
+        -:  915:    friend bool operator==(const QString &s1, const char16_t *s2) noexcept { return s1 == QStringView(s2); }
+        -:  916:    friend bool operator!=(const QString &s1, const char16_t *s2) noexcept { return s1 != QStringView(s2); }
+        -:  917:    friend bool operator< (const QString &s1, const char16_t *s2) noexcept { return s1 <  QStringView(s2); }
+        -:  918:    friend bool operator> (const QString &s1, const char16_t *s2) noexcept { return s1 >  QStringView(s2); }
+        -:  919:    friend bool operator<=(const QString &s1, const char16_t *s2) noexcept { return s1 <= QStringView(s2); }
+        -:  920:    friend bool operator>=(const QString &s1, const char16_t *s2) noexcept { return s1 >= QStringView(s2); }
+        -:  921:
+        -:  922:    friend bool operator==(const char16_t *s1, const QString &s2) noexcept { return s2 == s1; }
+        -:  923:    friend bool operator!=(const char16_t *s1, const QString &s2) noexcept { return s2 != s1; }
+        -:  924:    friend bool operator< (const char16_t *s1, const QString &s2) noexcept { return s2 >  s1; }
+        -:  925:    friend bool operator> (const char16_t *s1, const QString &s2) noexcept { return s2 <  s1; }
+        -:  926:    friend bool operator<=(const char16_t *s1, const QString &s2) noexcept { return s2 >= s1; }
+        -:  927:    friend bool operator>=(const char16_t *s1, const QString &s2) noexcept { return s2 <= s1; }
+        -:  928:
+        -:  929:    // QChar <> QString
+        -:  930:    friend inline bool operator==(QChar lhs, const QString &rhs) noexcept
+        -:  931:    { return rhs.size() == 1 && lhs == rhs.front(); }
+        -:  932:    friend inline bool operator< (QChar lhs, const QString &rhs) noexcept
+        -:  933:    { return compare_helper(&lhs, 1, rhs.data(), rhs.size()) < 0; }
+        -:  934:    friend inline bool operator> (QChar lhs, const QString &rhs) noexcept
+        -:  935:    { return compare_helper(&lhs, 1, rhs.data(), rhs.size()) > 0; }
+        -:  936:
+        -:  937:    friend inline bool operator!=(QChar lhs, const QString &rhs) noexcept { return !(lhs == rhs); }
+        -:  938:    friend inline bool operator<=(QChar lhs, const QString &rhs) noexcept { return !(lhs >  rhs); }
+        -:  939:    friend inline bool operator>=(QChar lhs, const QString &rhs) noexcept { return !(lhs <  rhs); }
+        -:  940:
+        -:  941:    friend inline bool operator==(const QString &lhs, QChar rhs) noexcept { return   rhs == lhs; }
+        -:  942:    friend inline bool operator!=(const QString &lhs, QChar rhs) noexcept { return !(rhs == lhs); }
+        -:  943:    friend inline bool operator< (const QString &lhs, QChar rhs) noexcept { return   rhs >  lhs; }
+        -:  944:    friend inline bool operator> (const QString &lhs, QChar rhs) noexcept { return   rhs <  lhs; }
+        -:  945:    friend inline bool operator<=(const QString &lhs, QChar rhs) noexcept { return !(rhs <  lhs); }
+        -:  946:    friend inline bool operator>=(const QString &lhs, QChar rhs) noexcept { return !(rhs >  lhs); }
+        -:  947:
+        -:  948:    // ASCII compatibility
+        -:  949:#if defined(QT_RESTRICTED_CAST_FROM_ASCII)
+        -:  950:    template <qsizetype N>
+        -:  951:    inline QString(const char (&ch)[N])
+        -:  952:        : QString(fromUtf8(ch))
+        -:  953:    {}
+        -:  954:    template <qsizetype N>
+        -:  955:    QString(char (&)[N]) = delete;
+        -:  956:    template <qsizetype N>
+        -:  957:    inline QString &operator=(const char (&ch)[N])
+        -:  958:    { return (*this = fromUtf8(ch, N - 1)); }
+        -:  959:    template <qsizetype N>
+        -:  960:    QString &operator=(char (&)[N]) = delete;
+        -:  961:#endif
+        -:  962:#if !defined(QT_NO_CAST_FROM_ASCII) && !defined(QT_RESTRICTED_CAST_FROM_ASCII)
+        -:  963:    QT_ASCII_CAST_WARN inline QString(const char *ch)
+        -:  964:        : QString(fromUtf8(ch))
+        -:  965:    {}
+        -:  966:    QT_ASCII_CAST_WARN inline QString(const QByteArray &a)
+        -:  967:        : QString(fromUtf8(a))
+        -:  968:    {}
+        -:  969:    QT_ASCII_CAST_WARN inline QString &operator=(const char *ch)
+        -:  970:    { return (*this = fromUtf8(ch)); }
+        -:  971:    QT_ASCII_CAST_WARN inline QString &operator=(const QByteArray &a)
+        -:  972:    { return (*this = fromUtf8(a)); }
+        -:  973:
+        -:  974:    // these are needed, so it compiles with STL support enabled
+        -:  975:    QT_ASCII_CAST_WARN inline QString &prepend(const char *s)
+        -:  976:    { return prepend(QString::fromUtf8(s)); }
+        -:  977:    QT_ASCII_CAST_WARN inline QString &prepend(const QByteArray &s)
+        -:  978:    { return prepend(QString::fromUtf8(s)); }
+        -:  979:    QT_ASCII_CAST_WARN inline QString &append(const char *s)
+        -:  980:    { return append(QString::fromUtf8(s)); }
+        -:  981:    QT_ASCII_CAST_WARN inline QString &append(const QByteArray &s)
+        -:  982:    { return append(QString::fromUtf8(s)); }
+        -:  983:    QT_ASCII_CAST_WARN inline QString &insert(qsizetype i, const char *s)
+        -:  984:    { return insert(i, QString::fromUtf8(s)); }
+        -:  985:    QT_ASCII_CAST_WARN inline QString &insert(qsizetype i, const QByteArray &s)
+        -:  986:    { return insert(i, QString::fromUtf8(s)); }
+        -:  987:    QT_ASCII_CAST_WARN inline QString &operator+=(const char *s)
+        -:  988:    { return append(QString::fromUtf8(s)); }
+        -:  989:    QT_ASCII_CAST_WARN inline QString &operator+=(const QByteArray &s)
+        -:  990:    { return append(QString::fromUtf8(s)); }
+        -:  991:
+        -:  992:    QT_ASCII_CAST_WARN inline bool operator==(const char *s) const;
+        -:  993:    QT_ASCII_CAST_WARN inline bool operator!=(const char *s) const;
+        -:  994:    QT_ASCII_CAST_WARN inline bool operator<(const char *s) const;
+        -:  995:    QT_ASCII_CAST_WARN inline bool operator<=(const char *s) const;
+        -:  996:    QT_ASCII_CAST_WARN inline bool operator>(const char *s) const;
+        -:  997:    QT_ASCII_CAST_WARN inline bool operator>=(const char *s) const;
+        -:  998:
+        -:  999:    QT_ASCII_CAST_WARN inline bool operator==(const QByteArray &s) const;
+        -: 1000:    QT_ASCII_CAST_WARN inline bool operator!=(const QByteArray &s) const;
+        -: 1001:    QT_ASCII_CAST_WARN inline bool operator<(const QByteArray &s) const;
+        -: 1002:    QT_ASCII_CAST_WARN inline bool operator>(const QByteArray &s) const;
+        -: 1003:    QT_ASCII_CAST_WARN inline bool operator<=(const QByteArray &s) const;
+        -: 1004:    QT_ASCII_CAST_WARN inline bool operator>=(const QByteArray &s) const;
+        -: 1005:
+        -: 1006:    QT_ASCII_CAST_WARN friend bool operator==(const char *s1, const QString &s2)
+        -: 1007:    { return QString::compare_helper(s2.constData(), s2.size(), s1, -1) == 0; }
+        -: 1008:    QT_ASCII_CAST_WARN friend bool operator!=(const char *s1, const QString &s2)
+        -: 1009:    { return QString::compare_helper(s2.constData(), s2.size(), s1, -1) != 0; }
+        -: 1010:    QT_ASCII_CAST_WARN friend bool operator< (const char *s1, const QString &s2)
+        -: 1011:    { return QString::compare_helper(s2.constData(), s2.size(), s1, -1) > 0; }
+        -: 1012:    QT_ASCII_CAST_WARN friend bool operator> (const char *s1, const QString &s2)
+        -: 1013:    { return QString::compare_helper(s2.constData(), s2.size(), s1, -1) < 0; }
+        -: 1014:    QT_ASCII_CAST_WARN friend bool operator<=(const char *s1, const QString &s2)
+        -: 1015:    { return QString::compare_helper(s2.constData(), s2.size(), s1, -1) >= 0; }
+        -: 1016:    QT_ASCII_CAST_WARN friend bool operator>=(const char *s1, const QString &s2)
+        -: 1017:    { return QString::compare_helper(s2.constData(), s2.size(), s1, -1) <= 0; }
+        -: 1018:#endif
+        -: 1019:
+        -: 1020:    typedef QChar *iterator;
+        -: 1021:    typedef const QChar *const_iterator;
+        -: 1022:    typedef iterator Iterator;
+        -: 1023:    typedef const_iterator ConstIterator;
+        -: 1024:    typedef std::reverse_iterator<iterator> reverse_iterator;
+        -: 1025:    typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
+        -: 1026:    inline iterator begin();
+        -: 1027:    inline const_iterator begin() const;
+        -: 1028:    inline const_iterator cbegin() const;
+        -: 1029:    inline const_iterator constBegin() const;
+        -: 1030:    inline iterator end();
+        -: 1031:    inline const_iterator end() const;
+        -: 1032:    inline const_iterator cend() const;
+        -: 1033:    inline const_iterator constEnd() const;
+        -: 1034:    reverse_iterator rbegin() { return reverse_iterator(end()); }
+        -: 1035:    reverse_iterator rend() { return reverse_iterator(begin()); }
+        -: 1036:    const_reverse_iterator rbegin() const { return const_reverse_iterator(end()); }
+        -: 1037:    const_reverse_iterator rend() const { return const_reverse_iterator(begin()); }
+        -: 1038:    const_reverse_iterator crbegin() const { return const_reverse_iterator(end()); }
+        -: 1039:    const_reverse_iterator crend() const { return const_reverse_iterator(begin()); }
+        -: 1040:
+        -: 1041:    // STL compatibility
+        -: 1042:    typedef qsizetype size_type;
+        -: 1043:    typedef qptrdiff difference_type;
+        -: 1044:    typedef const QChar & const_reference;
+        -: 1045:    typedef QChar & reference;
+        -: 1046:    typedef QChar *pointer;
+        -: 1047:    typedef const QChar *const_pointer;
+        -: 1048:    typedef QChar value_type;
+        -: 1049:    inline void push_back(QChar c) { append(c); }
+        -: 1050:    inline void push_back(const QString &s) { append(s); }
+        -: 1051:    inline void push_front(QChar c) { prepend(c); }
+        -: 1052:    inline void push_front(const QString &s) { prepend(s); }
+        -: 1053:    void shrink_to_fit() { squeeze(); }
+        -: 1054:    iterator erase(const_iterator first, const_iterator last);
+        -: 1055:
+        -: 1056:    static inline QString fromStdString(const std::string &s);
+        -: 1057:    inline std::string toStdString() const;
+        -: 1058:    static inline QString fromStdWString(const std::wstring &s);
+        -: 1059:    inline std::wstring toStdWString() const;
+        -: 1060:
+        -: 1061:    static inline QString fromStdU16String(const std::u16string &s);
+        -: 1062:    inline std::u16string toStdU16String() const;
+        -: 1063:    static inline QString fromStdU32String(const std::u32string &s);
+        -: 1064:    inline std::u32string toStdU32String() const;
+        -: 1065:
+        -: 1066:#if defined(Q_OS_DARWIN) || defined(Q_QDOC)
+        -: 1067:    static QString fromCFString(CFStringRef string);
+        -: 1068:    CFStringRef toCFString() const Q_DECL_CF_RETURNS_RETAINED;
+        -: 1069:    static QString fromNSString(const NSString *string);
+        -: 1070:    NSString *toNSString() const Q_DECL_NS_RETURNS_AUTORELEASED;
+        -: 1071:#endif
+        -: 1072:
+        -: 1073:    inline bool isNull() const { return d->isNull(); }
+        -: 1074:
+        -: 1075:
+        -: 1076:    bool isSimpleText() const;
+        -: 1077:    bool isRightToLeft() const;
+        -: 1078:    [[nodiscard]] bool isValidUtf16() const noexcept
+        -: 1079:    { return QStringView(*this).isValidUtf16(); }
+        -: 1080:
+        -: 1081:    QString(qsizetype size, Qt::Initialization);
+        -: 1082:    explicit QString(DataPointer &&dd) : d(std::move(dd)) {}
+        -: 1083:
+        -: 1084:private:
+        -: 1085:#if defined(QT_NO_CAST_FROM_ASCII)
+        -: 1086:    QString &operator+=(const char *s);
+        -: 1087:    QString &operator+=(const QByteArray &s);
+        -: 1088:    QString(const char *ch);
+        -: 1089:    QString(const QByteArray &a);
+        -: 1090:    QString &operator=(const char  *ch);
+        -: 1091:    QString &operator=(const QByteArray &a);
+        -: 1092:#endif
+        -: 1093:
+        -: 1094:    DataPointer d;
+        -: 1095:    static const char16_t _empty;
+        -: 1096:
+        -: 1097:    void reallocData(qsizetype alloc, QArrayData::AllocationOption option);
+        -: 1098:    void reallocGrowData(qsizetype n);
+        -: 1099:    static int compare_helper(const QChar *data1, qsizetype length1,
+        -: 1100:                              const QChar *data2, qsizetype length2,
+        -: 1101:                              Qt::CaseSensitivity cs = Qt::CaseSensitive) noexcept;
+        -: 1102:    static int compare_helper(const QChar *data1, qsizetype length1,
+        -: 1103:                              const char *data2, qsizetype length2,
+        -: 1104:                              Qt::CaseSensitivity cs = Qt::CaseSensitive) noexcept;
+        -: 1105:    static int localeAwareCompare_helper(const QChar *data1, qsizetype length1,
+        -: 1106:                                         const QChar *data2, qsizetype length2);
+        -: 1107:    static QString toLower_helper(const QString &str);
+        -: 1108:    static QString toLower_helper(QString &str);
+        -: 1109:    static QString toUpper_helper(const QString &str);
+        -: 1110:    static QString toUpper_helper(QString &str);
+        -: 1111:    static QString toCaseFolded_helper(const QString &str);
+        -: 1112:    static QString toCaseFolded_helper(QString &str);
+        -: 1113:    static QString trimmed_helper(const QString &str);
+        -: 1114:    static QString trimmed_helper(QString &str);
+        -: 1115:    static QString simplified_helper(const QString &str);
+        -: 1116:    static QString simplified_helper(QString &str);
+        -: 1117:    static QByteArray toLatin1_helper(const QString &);
+        -: 1118:    static QByteArray toLatin1_helper_inplace(QString &);
+        -: 1119:    static QByteArray toUtf8_helper(const QString &);
+        -: 1120:    static QByteArray toLocal8Bit_helper(const QChar *data, qsizetype size);
+        -: 1121:    static qsizetype toUcs4_helper(const ushort *uc, qsizetype length, uint *out); // ### Qt 7 char16_t
+        -: 1122:    static qlonglong toIntegral_helper(QStringView string, bool *ok, int base);
+        -: 1123:    static qulonglong toIntegral_helper(QStringView string, bool *ok, uint base);
+        -: 1124:    void replace_helper(size_t *indices, qsizetype nIndices, qsizetype blen, const QChar *after, qsizetype alen);
+        -: 1125:    friend class QStringView;
+        -: 1126:    friend class QByteArray;
+        -: 1127:    friend class QCollator;
+        -: 1128:    friend struct QAbstractConcatenable;
+        -: 1129:
+        -: 1130:    template <typename T> static
+        -: 1131:    T toIntegral_helper(QStringView string, bool *ok, int base)
+        -: 1132:    {
+        -: 1133:        using Int64 = typename std::conditional<std::is_unsigned<T>::value, qulonglong, qlonglong>::type;
+        -: 1134:        using Int32 = typename std::conditional<std::is_unsigned<T>::value, uint, int>::type;
+        -: 1135:
+        -: 1136:        // we select the right overload by casting base to int or uint
+        -: 1137:        Int64 val = toIntegral_helper(string, ok, Int32(base));
+        -: 1138:        if (T(val) != val) {
+        -: 1139:            if (ok)
+        -: 1140:                *ok = false;
+        -: 1141:            val = 0;
+        -: 1142:        }
+        -: 1143:        return T(val);
+        -: 1144:    }
+        -: 1145:
+        -: 1146:public:
+        -: 1147:    inline DataPointer &data_ptr() { return d; }
+        -: 1148:    inline const DataPointer &data_ptr() const { return d; }
+        -: 1149:};
+        -: 1150:
+        -: 1151://
+        -: 1152:// QLatin1String inline members that require QString:
+        -: 1153://
+        -: 1154:
+        -: 1155:QString QLatin1String::toString() const { return *this; }
+        -: 1156:
+        -: 1157://
+        -: 1158:// QStringView inline members that require QString:
+        -: 1159://
+        -: 1160:
+        -: 1161:QString QStringView::toString() const
+        -: 1162:{ return Q_ASSERT(size() == length()), QString(data(), length()); }
+        -: 1163:
+        -: 1164:qint64 QStringView::toLongLong(bool *ok, int base) const
+        -: 1165:{ return QString::toIntegral_helper<qint64>(*this, ok, base); }
+        -: 1166:quint64 QStringView::toULongLong(bool *ok, int base) const
+        -: 1167:{ return QString::toIntegral_helper<quint64>(*this, ok, base); }
+        -: 1168:long QStringView::toLong(bool *ok, int base) const
+        -: 1169:{ return QString::toIntegral_helper<long>(*this, ok, base); }
+        -: 1170:ulong QStringView::toULong(bool *ok, int base) const
+        -: 1171:{ return QString::toIntegral_helper<ulong>(*this, ok, base); }
+        -: 1172:int QStringView::toInt(bool *ok, int base) const
+        -: 1173:{ return QString::toIntegral_helper<int>(*this, ok, base); }
+        -: 1174:uint QStringView::toUInt(bool *ok, int base) const
+        -: 1175:{ return QString::toIntegral_helper<uint>(*this, ok, base); }
+        -: 1176:short QStringView::toShort(bool *ok, int base) const
+        -: 1177:{ return QString::toIntegral_helper<short>(*this, ok, base); }
+        -: 1178:ushort QStringView::toUShort(bool *ok, int base) const
+        -: 1179:{ return QString::toIntegral_helper<ushort>(*this, ok, base); }
+        -: 1180:
+        -: 1181://
+        -: 1182:// QUtf8StringView inline members that require QString:
+        -: 1183://
+        -: 1184:
+        -: 1185:template <bool UseChar8T>
+        -: 1186:QString QBasicUtf8StringView<UseChar8T>::toString() const
+        -: 1187:{
+        -: 1188:    Q_ASSERT(size() == int(size()));
+        -: 1189:    return QString::fromUtf8(data(), int(size()));
+        -: 1190:}
+        -: 1191:
+        -: 1192://
+        -: 1193:// QAnyStringView inline members that require QString:
+        -: 1194://
+        -: 1195:
+        -: 1196:QAnyStringView::QAnyStringView(const QByteArray &str) noexcept
+        -: 1197:    : QAnyStringView{str.isNull() ? nullptr : str.data(), str.size()} {}
+        -: 1198:QAnyStringView::QAnyStringView(const QString &str) noexcept
+        -: 1199:    : QAnyStringView{str.isNull() ? nullptr : str.data(), str.size()} {}
+        -: 1200:
+        -: 1201:QString QAnyStringView::toString() const
+        -: 1202:{ return QtPrivate::convertToQString(*this); }
+        -: 1203:
+        -: 1204://
+        -: 1205:// QString inline members
+        -: 1206://
+        -: 1207:inline QString::QString(QLatin1String latin1)
+        -: 1208:{ *this = QString::fromLatin1(latin1.data(), latin1.size()); }
+        -: 1209:inline const QChar QString::at(qsizetype i) const
+        -: 1210:{ Q_ASSERT(size_t(i) < size_t(size())); return QChar(d.data()[i]); }
+        -: 1211:inline const QChar QString::operator[](qsizetype i) const
+        -: 1212:{ Q_ASSERT(size_t(i) < size_t(size())); return QChar(d.data()[i]); }
+        -: 1213:inline bool QString::isEmpty() const
+        -: 1214:{ return d.size == 0; }
+        -: 1215:inline const QChar *QString::unicode() const
+        -: 1216:{ return data(); }
+        -: 1217:inline const QChar *QString::data() const
+        -: 1218:{
+        -: 1219:#if QT5_NULL_STRINGS == 1
+        -: 1220:    return reinterpret_cast<const QChar *>(d.data() ? d.data() : &_empty);
+        -: 1221:#else
+        -: 1222:    return reinterpret_cast<const QChar *>(d.data());
+        -: 1223:#endif
+        -: 1224:}
+        -: 1225:inline QChar *QString::data()
+        -: 1226:{
+        -: 1227:    detach();
+        -: 1228:    Q_ASSERT(d.data());
+        -: 1229:    return reinterpret_cast<QChar *>(d.data());
+        -: 1230:}
+        -: 1231:inline const QChar *QString::constData() const
+        -: 1232:{ return data(); }
+        -: 1233:inline void QString::detach()
+        -: 1234:{ if (d->needsDetach()) reallocData(d.size, QArrayData::KeepSize); }
+        -: 1235:inline bool QString::isDetached() const
+        -: 1236:{ return !d->isShared(); }
+        -: 1237:inline void QString::clear()
+        -: 1238:{ if (!isNull()) *this = QString(); }
+        -: 1239:inline QString::QString(const QString &other) noexcept : d(other.d)
+        -: 1240:{ }
+        -: 1241:inline qsizetype QString::capacity() const { return qsizetype(d->constAllocatedCapacity()); }
+        -: 1242:inline QString &QString::setNum(short n, int base)
+        -: 1243:{ return setNum(qlonglong(n), base); }
+        -: 1244:inline QString &QString::setNum(ushort n, int base)
+        -: 1245:{ return setNum(qulonglong(n), base); }
+        -: 1246:inline QString &QString::setNum(int n, int base)
+        -: 1247:{ return setNum(qlonglong(n), base); }
+        -: 1248:inline QString &QString::setNum(uint n, int base)
+        -: 1249:{ return setNum(qulonglong(n), base); }
+        -: 1250:inline QString &QString::setNum(long n, int base)
+        -: 1251:{ return setNum(qlonglong(n), base); }
+        -: 1252:inline QString &QString::setNum(ulong n, int base)
+        -: 1253:{ return setNum(qulonglong(n), base); }
+        -: 1254:inline QString &QString::setNum(float n, char f, int prec)
+        -: 1255:{ return setNum(double(n),f,prec); }
+        -: 1256:inline QString QString::arg(int a, int fieldWidth, int base, QChar fillChar) const
+        -: 1257:{ return arg(qlonglong(a), fieldWidth, base, fillChar); }
+        -: 1258:inline QString QString::arg(uint a, int fieldWidth, int base, QChar fillChar) const
+        -: 1259:{ return arg(qulonglong(a), fieldWidth, base, fillChar); }
+        -: 1260:inline QString QString::arg(long a, int fieldWidth, int base, QChar fillChar) const
+        -: 1261:{ return arg(qlonglong(a), fieldWidth, base, fillChar); }
+        -: 1262:inline QString QString::arg(ulong a, int fieldWidth, int base, QChar fillChar) const
+        -: 1263:{ return arg(qulonglong(a), fieldWidth, base, fillChar); }
+        -: 1264:inline QString QString::arg(short a, int fieldWidth, int base, QChar fillChar) const
+        -: 1265:{ return arg(qlonglong(a), fieldWidth, base, fillChar); }
+        -: 1266:inline QString QString::arg(ushort a, int fieldWidth, int base, QChar fillChar) const
+        -: 1267:{ return arg(qulonglong(a), fieldWidth, base, fillChar); }
+        -: 1268:
+        -: 1269:inline QString QString::section(QChar asep, qsizetype astart, qsizetype aend, SectionFlags aflags) const
+        -: 1270:{ return section(QString(asep), astart, aend, aflags); }
+        -: 1271:
+        -: 1272:QT_WARNING_PUSH
+        -: 1273:QT_WARNING_DISABLE_MSVC(4127)   // "conditional expression is constant"
+        -: 1274:QT_WARNING_DISABLE_INTEL(111)   // "statement is unreachable"
+        -: 1275:
+        -: 1276:inline qsizetype QString::toWCharArray(wchar_t *array) const
+        -: 1277:{
+        -: 1278:    return qToStringViewIgnoringNull(*this).toWCharArray(array);
+        -: 1279:}
+        -: 1280:
+        -: 1281:qsizetype QStringView::toWCharArray(wchar_t *array) const
+        -: 1282:{
+        -: 1283:    if (sizeof(wchar_t) == sizeof(QChar)) {
+        -: 1284:        if (auto src = data())
+        -: 1285:            memcpy(array, src, sizeof(QChar) * size());
+        -: 1286:        return size();
+        -: 1287:    } else {
+        -: 1288:        return QString::toUcs4_helper(reinterpret_cast<const ushort *>(data()), size(),
+        -: 1289:                                      reinterpret_cast<uint *>(array));
+        -: 1290:    }
+        -: 1291:}
+        -: 1292:
+        -: 1293:QT_WARNING_POP
+        -: 1294:
+        -: 1295:inline QString QString::fromWCharArray(const wchar_t *string, qsizetype size)
+        -: 1296:{
+        -: 1297:    return sizeof(wchar_t) == sizeof(QChar) ? fromUtf16(reinterpret_cast<const char16_t *>(string), size)
+        -: 1298:                                            : fromUcs4(reinterpret_cast<const char32_t *>(string), size);
+        -: 1299:}
+        -: 1300:
+        -: 1301:inline constexpr QString::QString() noexcept {}
+    #####: 1302:inline QString::~QString() {}
+        -: 1303:
+        -: 1304:inline void QString::reserve(qsizetype asize)
+        -: 1305:{
+        -: 1306:    if (d->needsDetach() || asize >= capacity() - d.freeSpaceAtBegin())
+        -: 1307:        reallocData(qMax(asize, size()), QArrayData::KeepSize);
+        -: 1308:    if (d->constAllocatedCapacity())
+        -: 1309:        d->setFlag(Data::CapacityReserved);
+        -: 1310:}
+        -: 1311:
+        -: 1312:inline void QString::squeeze()
+        -: 1313:{
+        -: 1314:    if (!d.isMutable())
+        -: 1315:        return;
+        -: 1316:    if (d->needsDetach() || size() < capacity())
+        -: 1317:        reallocData(d.size, QArrayData::KeepSize);
+        -: 1318:    if (d->constAllocatedCapacity())
+        -: 1319:        d->clearFlag(Data::CapacityReserved);
+        -: 1320:}
+        -: 1321:
+        -: 1322:inline QString &QString::setUtf16(const ushort *autf16, qsizetype asize)
+        -: 1323:{ return setUnicode(reinterpret_cast<const QChar *>(autf16), asize); }
+        -: 1324:inline QChar &QString::operator[](qsizetype i)
+        -: 1325:{ Q_ASSERT(i >= 0 && i < size()); return data()[i]; }
+        -: 1326:inline QChar &QString::front() { return operator[](0); }
+        -: 1327:inline QChar &QString::back() { return operator[](size() - 1); }
+        -: 1328:inline QString::iterator QString::begin()
+        -: 1329:{ detach(); return reinterpret_cast<QChar*>(d.data()); }
+        -: 1330:inline QString::const_iterator QString::begin() const
+        -: 1331:{ return reinterpret_cast<const QChar*>(d.data()); }
+        -: 1332:inline QString::const_iterator QString::cbegin() const
+        -: 1333:{ return reinterpret_cast<const QChar*>(d.data()); }
+        -: 1334:inline QString::const_iterator QString::constBegin() const
+        -: 1335:{ return reinterpret_cast<const QChar*>(d.data()); }
+        -: 1336:inline QString::iterator QString::end()
+        -: 1337:{ detach(); return reinterpret_cast<QChar*>(d.data() + d.size); }
+        -: 1338:inline QString::const_iterator QString::end() const
+        -: 1339:{ return reinterpret_cast<const QChar*>(d.data() + d.size); }
+        -: 1340:inline QString::const_iterator QString::cend() const
+        -: 1341:{ return reinterpret_cast<const QChar*>(d.data() + d.size); }
+        -: 1342:inline QString::const_iterator QString::constEnd() const
+        -: 1343:{ return reinterpret_cast<const QChar*>(d.data() + d.size); }
+        -: 1344:#if QT_STRINGVIEW_LEVEL < 2
+        -: 1345:inline bool QString::contains(const QString &s, Qt::CaseSensitivity cs) const
+        -: 1346:{ return indexOf(s, 0, cs) != -1; }
+        -: 1347:#endif
+        -: 1348:inline bool QString::contains(QLatin1String s, Qt::CaseSensitivity cs) const
+        -: 1349:{ return indexOf(s, 0, cs) != -1; }
+        -: 1350:inline bool QString::contains(QChar c, Qt::CaseSensitivity cs) const
+        -: 1351:{ return indexOf(c, 0, cs) != -1; }
+        -: 1352:inline bool QString::contains(QStringView s, Qt::CaseSensitivity cs) const noexcept
+        -: 1353:{ return indexOf(s, 0, cs) != -1; }
+        -: 1354:
+        -: 1355:#if !defined(QT_NO_CAST_FROM_ASCII) && !defined(QT_RESTRICTED_CAST_FROM_ASCII)
+        -: 1356:inline bool QString::operator==(const char *s) const
+        -: 1357:{ return QString::compare_helper(constData(), size(), s, -1) == 0; }
+        -: 1358:inline bool QString::operator!=(const char *s) const
+        -: 1359:{ return QString::compare_helper(constData(), size(), s, -1) != 0; }
+        -: 1360:inline bool QString::operator<(const char *s) const
+        -: 1361:{ return QString::compare_helper(constData(), size(), s, -1) < 0; }
+        -: 1362:inline bool QString::operator>(const char *s) const
+        -: 1363:{ return QString::compare_helper(constData(), size(), s, -1) > 0; }
+        -: 1364:inline bool QString::operator<=(const char *s) const
+        -: 1365:{ return QString::compare_helper(constData(), size(), s, -1) <= 0; }
+        -: 1366:inline bool QString::operator>=(const char *s) const
+        -: 1367:{ return QString::compare_helper(constData(), size(), s, -1) >= 0; }
+        -: 1368:
+        -: 1369:QT_ASCII_CAST_WARN inline bool QLatin1String::operator==(const char *s) const
+        -: 1370:{ return QString::fromUtf8(s) == *this; }
+        -: 1371:QT_ASCII_CAST_WARN inline bool QLatin1String::operator!=(const char *s) const
+        -: 1372:{ return QString::fromUtf8(s) != *this; }
+        -: 1373:QT_ASCII_CAST_WARN inline bool QLatin1String::operator<(const char *s) const
+        -: 1374:{ return QString::fromUtf8(s) > *this; }
+        -: 1375:QT_ASCII_CAST_WARN inline bool QLatin1String::operator>(const char *s) const
+        -: 1376:{ return QString::fromUtf8(s) < *this; }
+        -: 1377:QT_ASCII_CAST_WARN inline bool QLatin1String::operator<=(const char *s) const
+        -: 1378:{ return QString::fromUtf8(s) >= *this; }
+        -: 1379:QT_ASCII_CAST_WARN inline bool QLatin1String::operator>=(const char *s) const
+        -: 1380:{ return QString::fromUtf8(s) <= *this; }
+        -: 1381:
+        -: 1382:QT_ASCII_CAST_WARN inline bool QLatin1String::operator==(const QByteArray &s) const
+        -: 1383:{ return QString::fromUtf8(s) == *this; }
+        -: 1384:QT_ASCII_CAST_WARN inline bool QLatin1String::operator!=(const QByteArray &s) const
+        -: 1385:{ return QString::fromUtf8(s) != *this; }
+        -: 1386:QT_ASCII_CAST_WARN inline bool QLatin1String::operator<(const QByteArray &s) const
+        -: 1387:{ return QString::fromUtf8(s) > *this; }
+        -: 1388:QT_ASCII_CAST_WARN inline bool QLatin1String::operator>(const QByteArray &s) const
+        -: 1389:{ return QString::fromUtf8(s) < *this; }
+        -: 1390:QT_ASCII_CAST_WARN inline bool QLatin1String::operator<=(const QByteArray &s) const
+        -: 1391:{ return QString::fromUtf8(s) >= *this; }
+        -: 1392:QT_ASCII_CAST_WARN inline bool QLatin1String::operator>=(const QByteArray &s) const
+        -: 1393:{ return QString::fromUtf8(s) <= *this; }
+        -: 1394:
+        -: 1395:inline int QLatin1String::compare_helper(const QLatin1String &s1, const char *s2)
+        -: 1396:{
+        -: 1397:    return QString::compare(s1, QString::fromUtf8(s2));
+        -: 1398:}
+        -: 1399:
+        -: 1400:QT_ASCII_CAST_WARN inline bool QString::operator==(const QByteArray &s) const
+        -: 1401:{ return QString::compare_helper(constData(), size(), s.constData(), s.size()) == 0; }
+        -: 1402:QT_ASCII_CAST_WARN inline bool QString::operator!=(const QByteArray &s) const
+        -: 1403:{ return QString::compare_helper(constData(), size(), s.constData(), s.size()) != 0; }
+        -: 1404:QT_ASCII_CAST_WARN inline bool QString::operator<(const QByteArray &s) const
+        -: 1405:{ return QString::compare_helper(constData(), size(), s.constData(), s.size()) < 0; }
+        -: 1406:QT_ASCII_CAST_WARN inline bool QString::operator>(const QByteArray &s) const
+        -: 1407:{ return QString::compare_helper(constData(), size(), s.constData(), s.size()) > 0; }
+        -: 1408:QT_ASCII_CAST_WARN inline bool QString::operator<=(const QByteArray &s) const
+        -: 1409:{ return QString::compare_helper(constData(), size(), s.constData(), s.size()) <= 0; }
+        -: 1410:QT_ASCII_CAST_WARN inline bool QString::operator>=(const QByteArray &s) const
+        -: 1411:{ return QString::compare_helper(constData(), size(), s.constData(), s.size()) >= 0; }
+        -: 1412:
+        -: 1413:inline bool QByteArray::operator==(const QString &s) const
+        -: 1414:{ return QString::compare_helper(s.constData(), s.size(), constData(), qstrnlen(constData(), size())) == 0; }
+        -: 1415:inline bool QByteArray::operator!=(const QString &s) const
+        -: 1416:{ return QString::compare_helper(s.constData(), s.size(), constData(), qstrnlen(constData(), size())) != 0; }
+        -: 1417:inline bool QByteArray::operator<(const QString &s) const
+        -: 1418:{ return QString::compare_helper(s.constData(), s.size(), constData(), size()) > 0; }
+        -: 1419:inline bool QByteArray::operator>(const QString &s) const
+        -: 1420:{ return QString::compare_helper(s.constData(), s.size(), constData(), size()) < 0; }
+        -: 1421:inline bool QByteArray::operator<=(const QString &s) const
+        -: 1422:{ return QString::compare_helper(s.constData(), s.size(), constData(), size()) >= 0; }
+        -: 1423:inline bool QByteArray::operator>=(const QString &s) const
+        -: 1424:{ return QString::compare_helper(s.constData(), s.size(), constData(), size()) <= 0; }
+        -: 1425:#endif // !defined(QT_NO_CAST_FROM_ASCII) && !defined(QT_RESTRICTED_CAST_FROM_ASCII)
+        -: 1426:
+        -: 1427:#if !defined(QT_USE_FAST_OPERATOR_PLUS) && !defined(QT_USE_QSTRINGBUILDER)
+        -: 1428:inline const QString operator+(const QString &s1, const QString &s2)
+        -: 1429:{ QString t(s1); t += s2; return t; }
+        -: 1430:inline const QString operator+(const QString &s1, QChar s2)
+        -: 1431:{ QString t(s1); t += s2; return t; }
+        -: 1432:inline const QString operator+(QChar s1, const QString &s2)
+        -: 1433:{ QString t(s1); t += s2; return t; }
+        -: 1434:#  if !defined(QT_NO_CAST_FROM_ASCII) && !defined(QT_RESTRICTED_CAST_FROM_ASCII)
+        -: 1435:QT_ASCII_CAST_WARN inline const QString operator+(const QString &s1, const char *s2)
+        -: 1436:{ QString t(s1); t += QString::fromUtf8(s2); return t; }
+        -: 1437:QT_ASCII_CAST_WARN inline const QString operator+(const char *s1, const QString &s2)
+        -: 1438:{ QString t = QString::fromUtf8(s1); t += s2; return t; }
+        -: 1439:QT_ASCII_CAST_WARN inline const QString operator+(const QByteArray &ba, const QString &s)
+        -: 1440:{ QString t = QString::fromUtf8(ba); t += s; return t; }
+        -: 1441:QT_ASCII_CAST_WARN inline const QString operator+(const QString &s, const QByteArray &ba)
+        -: 1442:{ QString t(s); t += QString::fromUtf8(ba); return t; }
+        -: 1443:#  endif // QT_NO_CAST_FROM_ASCII
+        -: 1444:#endif // QT_USE_QSTRINGBUILDER
+        -: 1445:
+        -: 1446:inline std::string QString::toStdString() const
+        -: 1447:{ return toUtf8().toStdString(); }
+        -: 1448:
+        -: 1449:inline QString QString::fromStdString(const std::string &s)
+        -: 1450:{ return fromUtf8(s.data(), int(s.size())); }
+        -: 1451:
+        -: 1452:inline std::wstring QString::toStdWString() const
+        -: 1453:{
+        -: 1454:    std::wstring str;
+        -: 1455:    str.resize(length());
+        -: 1456:#if __cplusplus >= 201703L
+        -: 1457:    str.resize(toWCharArray(str.data()));
+        -: 1458:#else
+        -: 1459:    if (length())
+        -: 1460:        str.resize(toWCharArray(&str.front()));
+        -: 1461:#endif
+        -: 1462:    return str;
+        -: 1463:}
+        -: 1464:
+        -: 1465:inline QString QString::fromStdWString(const std::wstring &s)
+        -: 1466:{ return fromWCharArray(s.data(), int(s.size())); }
+        -: 1467:
+        -: 1468:inline QString QString::fromStdU16String(const std::u16string &s)
+        -: 1469:{ return fromUtf16(s.data(), int(s.size())); }
+        -: 1470:
+        -: 1471:inline std::u16string QString::toStdU16String() const
+        -: 1472:{ return std::u16string(reinterpret_cast<const char16_t*>(utf16()), length()); }
+        -: 1473:
+        -: 1474:inline QString QString::fromStdU32String(const std::u32string &s)
+        -: 1475:{ return fromUcs4(s.data(), int(s.size())); }
+        -: 1476:
+        -: 1477:inline std::u32string QString::toStdU32String() const
+        -: 1478:{
+        -: 1479:    std::u32string u32str(length(), char32_t(0));
+        -: 1480:    qsizetype len = toUcs4_helper(reinterpret_cast<const ushort *>(constData()),
+        -: 1481:                                  length(), reinterpret_cast<uint*>(&u32str[0]));
+        -: 1482:    u32str.resize(len);
+        -: 1483:    return u32str;
+        -: 1484:}
+        -: 1485:
+        -: 1486:#if !defined(QT_NO_DATASTREAM) || defined(QT_BOOTSTRAPPED)
+        -: 1487:Q_CORE_EXPORT QDataStream &operator<<(QDataStream &, const QString &);
+        -: 1488:Q_CORE_EXPORT QDataStream &operator>>(QDataStream &, QString &);
+        -: 1489:#endif
+        -: 1490:
+        -: 1491:Q_DECLARE_SHARED(QString)
+        -: 1492:Q_DECLARE_OPERATORS_FOR_FLAGS(QString::SectionFlags)
+        -: 1493:
+        -: 1494:inline int QString::compare(QStringView s, Qt::CaseSensitivity cs) const noexcept
+        -: 1495:{ return -s.compare(*this, cs); }
+        -: 1496:
+        -: 1497:inline int QString::localeAwareCompare(QStringView s) const
+        -: 1498:{ return localeAwareCompare_helper(constData(), length(), s.constData(), s.length()); }
+        -: 1499:inline int QString::localeAwareCompare(QStringView s1, QStringView s2)
+        -: 1500:{ return localeAwareCompare_helper(s1.constData(), s1.length(), s2.constData(), s2.length()); }
+        -: 1501:
+        -: 1502:namespace QtPrivate {
+        -: 1503:// used by qPrintable() and qUtf8Printable() macros
+        -: 1504:inline const QString &asString(const QString &s)    { return s; }
+        -: 1505:inline QString &&asString(QString &&s)              { return std::move(s); }
+        -: 1506:}
+        -: 1507:
+        -: 1508://
+        -: 1509:// QStringView::arg() implementation
+        -: 1510://
+        -: 1511:
+        -: 1512:namespace QtPrivate {
+        -: 1513:
+        -: 1514:struct ArgBase {
+        -: 1515:    enum Tag : uchar { L1, U8, U16 } tag;
+        -: 1516:};
+        -: 1517:
+        -: 1518:struct QStringViewArg : ArgBase {
+        -: 1519:    QStringView string;
+        -: 1520:    QStringViewArg() = default;
+        -: 1521:    constexpr explicit QStringViewArg(QStringView v) noexcept : ArgBase{U16}, string{v} {}
+        -: 1522:};
+        -: 1523:
+        -: 1524:struct QLatin1StringArg : ArgBase {
+        -: 1525:    QLatin1String string;
+        -: 1526:    QLatin1StringArg() = default;
+        -: 1527:    constexpr explicit QLatin1StringArg(QLatin1String v) noexcept : ArgBase{L1}, string{v} {}
+        -: 1528:};
+        -: 1529:
+        -: 1530:[[nodiscard]] Q_CORE_EXPORT QString argToQString(QStringView pattern, size_t n, const ArgBase **args);
+        -: 1531:[[nodiscard]] Q_CORE_EXPORT QString argToQString(QLatin1String pattern, size_t n, const ArgBase **args);
+        -: 1532:
+        -: 1533:template <typename StringView, typename...Args>
+        -: 1534:[[nodiscard]] Q_ALWAYS_INLINE QString argToQStringDispatch(StringView pattern, const Args &...args)
+        -: 1535:{
+        -: 1536:    const ArgBase *argBases[] = {&args..., /* avoid zero-sized array */ nullptr};
+        -: 1537:    return QtPrivate::argToQString(pattern, sizeof...(Args), argBases);
+        -: 1538:}
+        -: 1539:
+        -: 1540:          inline QStringViewArg   qStringLikeToArg(const QString &s) noexcept { return QStringViewArg{qToStringViewIgnoringNull(s)}; }
+        -: 1541:constexpr inline QStringViewArg   qStringLikeToArg(QStringView s) noexcept { return QStringViewArg{s}; }
+        -: 1542:          inline QStringViewArg   qStringLikeToArg(const QChar &c) noexcept { return QStringViewArg{QStringView{&c, 1}}; }
+        -: 1543:constexpr inline QLatin1StringArg qStringLikeToArg(QLatin1String s) noexcept { return QLatin1StringArg{s}; }
+        -: 1544:
+        -: 1545:} // namespace QtPrivate
+        -: 1546:
+        -: 1547:template <typename...Args>
+        -: 1548:Q_ALWAYS_INLINE
+        -: 1549:QString QStringView::arg(Args &&...args) const
+        -: 1550:{
+        -: 1551:    return QtPrivate::argToQStringDispatch(*this, QtPrivate::qStringLikeToArg(args)...);
+        -: 1552:}
+        -: 1553:
+        -: 1554:template <typename...Args>
+        -: 1555:Q_ALWAYS_INLINE
+        -: 1556:QString QLatin1String::arg(Args &&...args) const
+        -: 1557:{
+        -: 1558:    return QtPrivate::argToQStringDispatch(*this, QtPrivate::qStringLikeToArg(args)...);
+        -: 1559:}
+        -: 1560:
+        -: 1561:template <typename T>
+        -: 1562:qsizetype erase(QString &s, const T &t)
+        -: 1563:{
+        -: 1564:    return QtPrivate::sequential_erase(s, t);
+        -: 1565:}
+        -: 1566:
+        -: 1567:template <typename Predicate>
+        -: 1568:qsizetype erase_if(QString &s, Predicate pred)
+        -: 1569:{
+        -: 1570:    return QtPrivate::sequential_erase_if(s, pred);
+        -: 1571:}
+        -: 1572:
+        -: 1573:inline namespace QtLiterals {
+        -: 1574:inline QString operator"" _qs(const char16_t *str, size_t size) noexcept
+        -: 1575:{
+        -: 1576:    return QString(QStringPrivate(nullptr, const_cast<char16_t *>(str), qsizetype(size)));
+        -: 1577:}
+        -: 1578:} // QtLiterals
+        -: 1579:
+        -: 1580:QT_END_NAMESPACE
+        -: 1581:
+        -: 1582:#if defined(QT_USE_FAST_OPERATOR_PLUS) || defined(QT_USE_QSTRINGBUILDER)
+        -: 1583:#include <QtCore/qstringbuilder.h>
+        -: 1584:#endif
+        -: 1585:
+        -: 1586:#endif // QSTRING_H

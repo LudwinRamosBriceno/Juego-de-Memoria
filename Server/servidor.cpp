@@ -10,6 +10,7 @@
 #include <QCoreApplication>
 #include <socketserver.h>
 #include <QDebug>
+using namespace std;
 
 Servidor::Servidor(QObject *parent): QObject(parent){
 
@@ -58,11 +59,12 @@ bool Servidor::leer_mensaje(){
     } else{
         QString mensajeAenviar = manejadorMensajes->logicHandler(mensajeCliente);
         //socket->write(mensajeAenviar.toUtf8().constData(),mensajeAenviar.size());
-        if (QString(mensajeCliente).contains("segundaTarjeta")){
+        if (mensajeCliente.contains("segundaTarjeta")){
             QTimer::singleShot(1000,this,SLOT(enviarCambioTurno()));
             return true;
+        }else if(mensajeCliente.contains("primeraTarjeta")){
+            return true;
         }
-        return true;
     }
     return false;
 }

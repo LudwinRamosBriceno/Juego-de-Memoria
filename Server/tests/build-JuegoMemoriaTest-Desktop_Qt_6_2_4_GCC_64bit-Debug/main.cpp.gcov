@@ -1,0 +1,293 @@
+        -:    0:Source:../JuegoMemoriaTest/main.cpp
+        -:    0:Graph:main.gcno
+        -:    0:Data:main.gcda
+        -:    0:Runs:1
+        -:    1:#include <QCoreApplication>
+        -:    2:#include <gtest/gtest.h>
+        -:    3:#include <socketserver.h>
+        -:    4:#include <servidor.h>
+        -:    5:#include <QtDebug>
+        -:    6:
+        -:    7:class Mensajes{
+        -:    8:
+        -:    9:};
+        -:   10:
+        -:   11:class MockClient: public socketServer{ // simulacion del cliente, con los posibles casos
+        -:   12:    public:
+        -:   13:        int numCaso = 0;
+        9:   14:        MockClient(int caso){
+        9:   15:            numCaso = caso;
+        9:   16:        }
+        -:   17:        QString read(){
+        -:   18:            switch(numCaso){
+        -:   19:                case 1:
+        -:   20:                    return "iniciar,Juan,Pablo"; // Mensaje de Inicio
+        -:   21:                case 2:
+        -:   22:                    return "primeraTarjeta,6"; // primera tarjeta en memoria
+        -:   23:                case 3:
+        -:   24:                    return "segundaTarjeta,25"; // segunda tarjeta en disco
+        -:   25:                case 4:
+        -:   26:                    return "primeraTarjeta,20"; // primera tarjeta en disco
+        -:   27:                case 5:
+        -:   28:                    return "segundaTarjeta,3"; // segunda tarjeta en memoria
+        -:   29:                case 6:
+        -:   30:                    return "finalizar";
+        -:   31:                default:
+        -:   32:                    return "";
+        -:   33:            }
+        -:   34:        }
+        -:   35:        void setCaso(int casoNuevo){
+        -:   36:            numCaso = casoNuevo;
+        -:   37:        }
+        -:   38:};
+        2:   39:TEST(verificacionMensajes,mensajeInicio){ // primer mensaje
+        -:   40:    // Arrange
+        1:   41:    MockClient *mockclient = new MockClient(1);
+        2:   42:    Servidor server = Servidor(mockclient);
+        -:   43:    //mockclient->setCaso(3);
+        -:   44:
+        -:   45:    // Act
+        1:   46:    bool resultado = server.leer_mensaje();
+        -:   47:    //Assert
+        1:   48:    delete mockclient;
+        1:   49:    mockclient = nullptr;
+       1*:   50:    EXPECT_EQ(resultado,true);
+        1:   51:}
+------------------
+_ZN39verificacionMensajes_mensajeInicio_Test8TestBodyEv:
+        1:   39:TEST(verificacionMensajes,mensajeInicio){ // primer mensaje
+        -:   40:    // Arrange
+        1:   41:    MockClient *mockclient = new MockClient(1);
+        2:   42:    Servidor server = Servidor(mockclient);
+        -:   43:    //mockclient->setCaso(3);
+        -:   44:
+        -:   45:    // Act
+        1:   46:    bool resultado = server.leer_mensaje();
+        -:   47:    //Assert
+        1:   48:    delete mockclient;
+        1:   49:    mockclient = nullptr;
+       1*:   50:    EXPECT_EQ(resultado,true);
+        1:   51:}
+------------------
+_ZN39verificacionMensajes_mensajeInicio_TestC2Ev:
+        1:   39:TEST(verificacionMensajes,mensajeInicio){ // primer mensaje
+------------------
+        2:   52:TEST(verificacionMensajes,primeraTarjetaEnMemoria){ // Solicitar Imagen primera tarjeta en memoria
+        -:   53:    // Arrange
+        1:   54:    MockClient *mockclient = new MockClient(1);
+        2:   55:    Servidor server = Servidor(mockclient);
+        -:   56:
+        -:   57:    // Act
+        1:   58:    bool resultado = server.leer_mensaje();
+        -:   59:    //Assert
+       1*:   60:    EXPECT_EQ(resultado,true);
+        1:   61:}
+------------------
+_ZN49verificacionMensajes_primeraTarjetaEnMemoria_Test8TestBodyEv:
+        1:   52:TEST(verificacionMensajes,primeraTarjetaEnMemoria){ // Solicitar Imagen primera tarjeta en memoria
+        -:   53:    // Arrange
+        1:   54:    MockClient *mockclient = new MockClient(1);
+        2:   55:    Servidor server = Servidor(mockclient);
+        -:   56:
+        -:   57:    // Act
+        1:   58:    bool resultado = server.leer_mensaje();
+        -:   59:    //Assert
+       1*:   60:    EXPECT_EQ(resultado,true);
+        1:   61:}
+------------------
+_ZN49verificacionMensajes_primeraTarjetaEnMemoria_TestC2Ev:
+        1:   52:TEST(verificacionMensajes,primeraTarjetaEnMemoria){ // Solicitar Imagen primera tarjeta en memoria
+------------------
+        2:   62:TEST(verificacionMensajes,primeraTarjetaEnDisco){ // Solicitar Imagen de primera tarjeta en Disco
+        -:   63:    // Arrange
+        1:   64:    MockClient *mockclient = new MockClient(1);
+        2:   65:    Servidor server = Servidor(mockclient);
+        -:   66:
+        -:   67:    // Act
+        1:   68:    bool resultado = server.leer_mensaje();
+        -:   69:    //Assert
+       1*:   70:    EXPECT_EQ(resultado,true);
+        1:   71:}
+------------------
+_ZN47verificacionMensajes_primeraTarjetaEnDisco_Test8TestBodyEv:
+        1:   62:TEST(verificacionMensajes,primeraTarjetaEnDisco){ // Solicitar Imagen de primera tarjeta en Disco
+        -:   63:    // Arrange
+        1:   64:    MockClient *mockclient = new MockClient(1);
+        2:   65:    Servidor server = Servidor(mockclient);
+        -:   66:
+        -:   67:    // Act
+        1:   68:    bool resultado = server.leer_mensaje();
+        -:   69:    //Assert
+       1*:   70:    EXPECT_EQ(resultado,true);
+        1:   71:}
+------------------
+_ZN47verificacionMensajes_primeraTarjetaEnDisco_TestC2Ev:
+        1:   62:TEST(verificacionMensajes,primeraTarjetaEnDisco){ // Solicitar Imagen de primera tarjeta en Disco
+------------------
+        2:   72:TEST(verificacionMensajes,segundaTarjetaEnMemoria){ // Solicitar Imagen de segunda tarjeta en memoria
+        -:   73:    // Arrange
+        1:   74:    MockClient *mockclient = new MockClient(1);
+        2:   75:    Servidor server = Servidor(mockclient);
+        -:   76:
+        -:   77:    // Act
+        1:   78:    bool resultado = server.leer_mensaje();
+        -:   79:    //Assert
+       1*:   80:    EXPECT_EQ(resultado,true);
+        1:   81:}
+------------------
+_ZN49verificacionMensajes_segundaTarjetaEnMemoria_Test8TestBodyEv:
+        1:   72:TEST(verificacionMensajes,segundaTarjetaEnMemoria){ // Solicitar Imagen de segunda tarjeta en memoria
+        -:   73:    // Arrange
+        1:   74:    MockClient *mockclient = new MockClient(1);
+        2:   75:    Servidor server = Servidor(mockclient);
+        -:   76:
+        -:   77:    // Act
+        1:   78:    bool resultado = server.leer_mensaje();
+        -:   79:    //Assert
+       1*:   80:    EXPECT_EQ(resultado,true);
+        1:   81:}
+------------------
+_ZN49verificacionMensajes_segundaTarjetaEnMemoria_TestC2Ev:
+        1:   72:TEST(verificacionMensajes,segundaTarjetaEnMemoria){ // Solicitar Imagen de segunda tarjeta en memoria
+------------------
+        2:   82:TEST(verificacionMensajes,segundaTarjetaEnDisco){ // Solicitar Imagen de segunda tarjeta en Disco
+        -:   83:    // Arrange
+        1:   84:    MockClient *mockclient = new MockClient(1);
+        2:   85:    Servidor server = Servidor(mockclient);
+        -:   86:
+        -:   87:    // Act
+        1:   88:    bool resultado = server.leer_mensaje();
+        -:   89:    //Assert
+       1*:   90:    EXPECT_EQ(resultado,true);
+        1:   91:}
+------------------
+_ZN47verificacionMensajes_segundaTarjetaEnDisco_Test8TestBodyEv:
+        1:   82:TEST(verificacionMensajes,segundaTarjetaEnDisco){ // Solicitar Imagen de segunda tarjeta en Disco
+        -:   83:    // Arrange
+        1:   84:    MockClient *mockclient = new MockClient(1);
+        2:   85:    Servidor server = Servidor(mockclient);
+        -:   86:
+        -:   87:    // Act
+        1:   88:    bool resultado = server.leer_mensaje();
+        -:   89:    //Assert
+       1*:   90:    EXPECT_EQ(resultado,true);
+        1:   91:}
+------------------
+_ZN47verificacionMensajes_segundaTarjetaEnDisco_TestC2Ev:
+        1:   82:TEST(verificacionMensajes,segundaTarjetaEnDisco){ // Solicitar Imagen de segunda tarjeta en Disco
+------------------
+        2:   92:TEST(verificacionMensajes,AmbasTarjetasEnMemoria){ // Solicitar Imagen de Ambas de tarjetas en Memoria
+        -:   93:    // Arrange
+        1:   94:    MockClient *mockclient = new MockClient(1);
+        2:   95:    Servidor server = Servidor(mockclient);
+        -:   96:
+        -:   97:    // Act
+        1:   98:    bool resultado = server.leer_mensaje();
+        -:   99:    //Assert
+        1:  100:    EXPECT_EQ(resultado,false);
+        1:  101:}
+------------------
+_ZN48verificacionMensajes_AmbasTarjetasEnMemoria_Test8TestBodyEv:
+        1:   92:TEST(verificacionMensajes,AmbasTarjetasEnMemoria){ // Solicitar Imagen de Ambas de tarjetas en Memoria
+        -:   93:    // Arrange
+        1:   94:    MockClient *mockclient = new MockClient(1);
+        2:   95:    Servidor server = Servidor(mockclient);
+        -:   96:
+        -:   97:    // Act
+        1:   98:    bool resultado = server.leer_mensaje();
+        -:   99:    //Assert
+        1:  100:    EXPECT_EQ(resultado,false);
+        1:  101:}
+------------------
+_ZN48verificacionMensajes_AmbasTarjetasEnMemoria_TestC2Ev:
+        1:   92:TEST(verificacionMensajes,AmbasTarjetasEnMemoria){ // Solicitar Imagen de Ambas de tarjetas en Memoria
+------------------
+        2:  102:TEST(verificacionMensajes,AmbasTarjetasEnDisco){ // Solicitar Imagen de Ambas de tarjetas en Disco
+        -:  103:    // Arrange
+        1:  104:    MockClient *mockclient = new MockClient(1);
+        2:  105:    Servidor server = Servidor(mockclient);
+        -:  106:
+        -:  107:    // Act
+        1:  108:    bool resultado = server.leer_mensaje();
+        -:  109:    //Assert
+       1*:  110:    EXPECT_EQ(resultado,true);
+        1:  111:}
+------------------
+_ZN46verificacionMensajes_AmbasTarjetasEnDisco_Test8TestBodyEv:
+        1:  102:TEST(verificacionMensajes,AmbasTarjetasEnDisco){ // Solicitar Imagen de Ambas de tarjetas en Disco
+        -:  103:    // Arrange
+        1:  104:    MockClient *mockclient = new MockClient(1);
+        2:  105:    Servidor server = Servidor(mockclient);
+        -:  106:
+        -:  107:    // Act
+        1:  108:    bool resultado = server.leer_mensaje();
+        -:  109:    //Assert
+       1*:  110:    EXPECT_EQ(resultado,true);
+        1:  111:}
+------------------
+_ZN46verificacionMensajes_AmbasTarjetasEnDisco_TestC2Ev:
+        1:  102:TEST(verificacionMensajes,AmbasTarjetasEnDisco){ // Solicitar Imagen de Ambas de tarjetas en Disco
+------------------
+        2:  112:TEST(verificacionMensajes,tarjeta1EnMemoriaTarjeta2EnDisco){ /* Solicitar Imagen de la primera tarjeta en memoria y
+        -:  113:                                                                la imagen de la segunda tarjeta en Disco */
+        -:  114:    // Arrange
+        1:  115:    MockClient *mockclient = new MockClient(1);
+        2:  116:    Servidor server = Servidor(mockclient);
+        -:  117:
+        -:  118:    // Act
+        1:  119:    bool resultado = server.leer_mensaje();
+        -:  120:    //Assert
+       1*:  121:    EXPECT_EQ(resultado,true);
+        1:  122:}
+------------------
+_ZN58verificacionMensajes_tarjeta1EnMemoriaTarjeta2EnDisco_Test8TestBodyEv:
+        1:  112:TEST(verificacionMensajes,tarjeta1EnMemoriaTarjeta2EnDisco){ /* Solicitar Imagen de la primera tarjeta en memoria y
+        -:  113:                                                                la imagen de la segunda tarjeta en Disco */
+        -:  114:    // Arrange
+        1:  115:    MockClient *mockclient = new MockClient(1);
+        2:  116:    Servidor server = Servidor(mockclient);
+        -:  117:
+        -:  118:    // Act
+        1:  119:    bool resultado = server.leer_mensaje();
+        -:  120:    //Assert
+       1*:  121:    EXPECT_EQ(resultado,true);
+        1:  122:}
+------------------
+_ZN58verificacionMensajes_tarjeta1EnMemoriaTarjeta2EnDisco_TestC2Ev:
+        1:  112:TEST(verificacionMensajes,tarjeta1EnMemoriaTarjeta2EnDisco){ /* Solicitar Imagen de la primera tarjeta en memoria y
+------------------
+        2:  123:TEST(verificacionMensajes,tarjeta1EnDiscoTarjeta2EnMemoria){/* Solicitar Imagen de la primera tarjeta en Disco y
+        -:  124:                                                                la imagen de la segunda tarjeta en memoria */
+        -:  125:    // Arrange
+        1:  126:    MockClient *mockclient = new MockClient(1);
+        2:  127:    Servidor server = Servidor(mockclient);
+        -:  128:
+        -:  129:    // Act
+        1:  130:    bool resultado = server.leer_mensaje();
+        -:  131:    //Assert
+       1*:  132:    EXPECT_EQ(resultado,true);
+        1:  133:}
+------------------
+_ZN58verificacionMensajes_tarjeta1EnDiscoTarjeta2EnMemoria_Test8TestBodyEv:
+        1:  123:TEST(verificacionMensajes,tarjeta1EnDiscoTarjeta2EnMemoria){/* Solicitar Imagen de la primera tarjeta en Disco y
+        -:  124:                                                                la imagen de la segunda tarjeta en memoria */
+        -:  125:    // Arrange
+        1:  126:    MockClient *mockclient = new MockClient(1);
+        2:  127:    Servidor server = Servidor(mockclient);
+        -:  128:
+        -:  129:    // Act
+        1:  130:    bool resultado = server.leer_mensaje();
+        -:  131:    //Assert
+       1*:  132:    EXPECT_EQ(resultado,true);
+        1:  133:}
+------------------
+_ZN58verificacionMensajes_tarjeta1EnDiscoTarjeta2EnMemoria_TestC2Ev:
+        1:  123:TEST(verificacionMensajes,tarjeta1EnDiscoTarjeta2EnMemoria){/* Solicitar Imagen de la primera tarjeta en Disco y
+------------------
+        -:  134:
+        1:  135:int main(int argc, char *argv[]) {
+        2:  136:    QCoreApplication a(argc, argv);
+        1:  137:    testing::InitGoogleTest(&argc,argv);
+        -:  138:
+        1:  139:    return RUN_ALL_TESTS();
+        -:  140:}
